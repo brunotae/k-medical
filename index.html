@@ -231,6 +231,27 @@ body.staff{font-size:13px}
 .qr{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .qr button{font-size:11.5px;padding:4px 10px;border-radius:99px;background:var(--surf);border:1px solid var(--line2)}
 .mini{font-size:11.5px}
+.stars i{font-style:normal;color:var(--line2)}.stars i.on{color:#C9993F}
+.rv{box-shadow:none}.rv-reply{margin-top:8px;padding:8px 10px;background:var(--surf2);border-radius:9px;font-size:12.5px;color:var(--ink2)}
+.hs>a .rv{height:100%}
+.starpick{display:flex;gap:4px}.starpick button{font-size:30px;line-height:1;color:var(--line2);padding:2px}.starpick button.on{color:#C9993F}
+.md-h{font-family:var(--serif);font-size:21px;margin:18px 0 6px}.md-p{margin:0 0 10px;color:var(--ink2);line-height:1.6}.md-ul{margin:0 0 10px;padding-left:20px;color:var(--ink2);line-height:1.6}.md-ul li{margin:3px 0}
+.gsec .md-p:last-child,.gsec .md-ul:last-child{margin-bottom:0}.gsec .kick{margin-bottom:6px}
+.art .md-p{font-size:15px}
+.phwrap{position:relative;border-radius:14px;overflow:hidden;background:#1F1A17;line-height:0;user-select:none;-webkit-user-select:none}
+.phwrap img{width:100%;height:auto;display:block}
+.phwrap.edit{cursor:crosshair}
+.phm{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:4px;line-height:1.2;cursor:pointer}
+.phm b{width:24px;height:24px;border-radius:99px;background:var(--acc);color:#fff;font-size:12px;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.phm em{font-style:normal;font-size:11px;font-weight:600;background:rgba(255,255,255,.92);color:var(--ink);padding:2px 7px;border-radius:99px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.phdrop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:220px;border:2px dashed var(--line2);border-radius:16px;background:var(--surf2);cursor:pointer;padding:20px;color:var(--acc)}
+.phthumb{width:58px;height:58px;border-radius:12px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--surf2);display:grid;place-items:center;font-size:22px;color:var(--muted);cursor:pointer}
+.phthumb img{width:100%;height:100%;object-fit:cover}.phthumb.on{border-color:var(--acc)}.phthumb.add{border:2px dashed var(--line2)}
+.phmini{width:48px;height:48px;border-radius:10px;object-fit:cover}
+.aibox{background:var(--goldbg);border-radius:12px;padding:12px}
+.spin{width:18px;height:18px;border-radius:99px;border:2.5px solid var(--line2);border-top-color:var(--acc);animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+code{background:var(--surf2);padding:1px 5px;border-radius:5px;font-size:11.5px}
 </style>
 </head>
 <body>
@@ -702,6 +723,81 @@ legal_note:"Somos un facilitador de turismo médico, no una clínica. Las decisi
 new_trip:"Nueva solicitud",details:"Detalles",your_trip:"Tu viaje",welcome:"Bienvenida",
 };
 
+/* V2: locais além de hospitais, K-beauty, foto, guia, avaliações */
+const I18N_V2 = {
+en:{nav_clinics:"Places",hero_title:"Korea's best clinics and beauty centers, with someone by your side",sec_verified:"Vetted clinics & centers",cta_browse:"Browse places",clinics_offering:"Where to get it",trust1:"Every partner personally vetted",
+cat_beauty:"K-beauty & spa",kind_clinic:"Clinic",kind_hospital:"Hospital",kind_aesthetic:"Skin care center",kind_wellness:"Spa & wellness",kind_salon:"Beauty salon",all_kinds:"All types",
+nav_guide:"Guide",guide_title:"Guide",guide_sub:"Clear, honest explanations of each treatment and of how medical travel to Korea works.",read_more:"Read",min_read:"{n} min read",guide_general:"Before you go",guide_treat:"Treatments explained",related:"Related",guide_disclaimer:"General information only — not medical advice. Your doctor will tell you what is right for you.",
+g_what:"What it is",g_how:"How it's done",g_who:"Good for",g_steps:"Your days in Seoul",g_recovery:"Recovery",g_risks:"Things to know",
+photo_cta:"Not sure? Send a photo",photo_title:"Show us where",photo_sub:"Upload a photo and tap the areas you'd like to improve. We'll suggest options — your coordinator and the doctor confirm what's right for you.",photo_pick:"Take or choose a photo",photo_tap:"Tap the photo where you'd like a change",photo_area:"What is this area?",area_eyes:"Eyes",area_nose:"Nose",area_lips:"Lips",area_face:"Face shape / jaw",area_skin:"Skin, spots, pores",area_wrinkle:"Wrinkles / sagging",area_teeth:"Teeth / smile",area_hair:"Hair / scalp",area_body:"Body",
+photo_ai:"Analyze with AI",photo_ai_wait:"Analyzing… (about 10 seconds)",photo_ai_off:"AI analysis isn't available right now — your marks are enough.",photo_ai_login:"Sign in to use the AI analysis.",photo_suggest:"Suggested for you",photo_use:"Use these in my request",photo_private:"Your photo is private: only you, your coordinator and the clinics you choose can see it.",photo_remove:"Remove",photo_attached:"Photos attached",ai_note:"AI suggestions are only a starting point, not a diagnosis.",photo_clear:"Clear marks",photo_more:"Add another photo",photo_max:"Up to 3 photos",
+reviews:"Reviews",reviews_none:"No reviews yet. Reviews come only from patients who completed treatment through us.",review_write:"Write a review",review_rating:"Your rating",review_title:"Title (optional)",review_body:"Tell others about your experience",review_send:"Send review",review_thanks:"Thank you! Your review will appear after a quick check.",review_verified:"Verified patient",review_reply:"Reply",review_need:"Only patients who completed treatment can write reviews — this keeps them honest.",review_place:"Clinic or center",err_rating:"Choose a rating.",err_review:"Write at least a few words.",sec_reviews:"What patients say",review_pending:"Waiting for approval"},
+ko:{nav_clinics:"제휴처",hero_title:"한국 최고의 병원·뷰티센터, 처음부터 끝까지 함께합니다",sec_verified:"엄선된 병원·센터",cta_browse:"제휴처 둘러보기",clinics_offering:"받을 수 있는 곳",trust1:"모든 제휴처를 직접 검증",
+cat_beauty:"K-뷰티·스파",kind_clinic:"의원",kind_hospital:"병원",kind_aesthetic:"피부관리실",kind_wellness:"스파·웰니스",kind_salon:"뷰티살롱",all_kinds:"전체 유형",
+nav_guide:"가이드",guide_title:"가이드",guide_sub:"시술마다, 그리고 한국 의료관광이 어떻게 진행되는지 알기 쉽고 정직하게 설명합니다.",read_more:"읽기",min_read:"{n}분 분량",guide_general:"떠나기 전에",guide_treat:"시술 설명",related:"관련 내용",guide_disclaimer:"일반 정보이며 의학적 조언이 아닙니다. 나에게 맞는 시술은 의사가 알려드립니다.",
+g_what:"어떤 시술인가요",g_how:"진행 방법",g_who:"이런 분께 추천",g_steps:"서울 일정",g_recovery:"회복",g_risks:"알아둘 점",
+photo_cta:"잘 모르겠다면? 사진 보내기",photo_title:"원하는 부위를 알려주세요",photo_sub:"사진을 올리고 개선하고 싶은 부위를 눌러 주세요. 가능한 시술을 제안해 드리고, 최종 판단은 코디네이터와 의사가 함께합니다.",photo_pick:"사진 찍기 또는 선택",photo_tap:"바꾸고 싶은 곳을 사진에서 눌러 주세요",photo_area:"어느 부위인가요?",area_eyes:"눈",area_nose:"코",area_lips:"입술",area_face:"얼굴형·턱",area_skin:"피부·잡티·모공",area_wrinkle:"주름·처짐",area_teeth:"치아·미소",area_hair:"모발·두피",area_body:"바디",
+photo_ai:"AI로 분석하기",photo_ai_wait:"분석 중… (약 10초)",photo_ai_off:"지금은 AI 분석을 사용할 수 없어요. 표시한 부위만으로도 충분합니다.",photo_ai_login:"AI 분석은 로그인 후 사용할 수 있어요.",photo_suggest:"추천 시술",photo_use:"요청에 반영하기",photo_private:"사진은 비공개입니다. 본인, 담당 코디네이터, 선택한 병원만 볼 수 있어요.",photo_remove:"삭제",photo_attached:"첨부한 사진",ai_note:"AI 추천은 참고용이며 진단이 아닙니다.",photo_clear:"표시 지우기",photo_more:"사진 추가",photo_max:"최대 3장",
+reviews:"후기",reviews_none:"아직 후기가 없습니다. 후기는 저희를 통해 시술을 받은 환자만 작성할 수 있습니다.",review_write:"후기 작성",review_rating:"평점",review_title:"제목 (선택)",review_body:"다른 분들께 경험을 들려주세요",review_send:"후기 보내기",review_thanks:"감사합니다! 간단한 확인 후 게시됩니다.",review_verified:"인증된 환자",review_reply:"답변",review_need:"시술을 받은 환자만 후기를 쓸 수 있어 믿을 수 있습니다.",review_place:"병원 또는 센터",err_rating:"평점을 선택해 주세요.",err_review:"몇 마디라도 적어 주세요.",sec_reviews:"환자 후기",review_pending:"승인 대기 중"},
+ja:{nav_clinics:"提携先",hero_title:"韓国の一流クリニック・ビューティーセンターを、ずっと寄り添うサポートで",sec_verified:"厳選クリニック・センター",cta_browse:"提携先を見る",clinics_offering:"受けられる場所",trust1:"全提携先を直接審査",
+cat_beauty:"Kビューティー・スパ",kind_clinic:"クリニック",kind_hospital:"病院",kind_aesthetic:"エステサロン",kind_wellness:"スパ・ウェルネス",kind_salon:"ビューティーサロン",all_kinds:"すべての種類",
+nav_guide:"ガイド",guide_title:"ガイド",guide_sub:"各施術と韓国での医療旅行の流れを、わかりやすく誠実に解説します。",read_more:"読む",min_read:"約{n}分",guide_general:"出発前に",guide_treat:"施術の解説",related:"関連情報",guide_disclaimer:"一般的な情報であり、医学的アドバイスではありません。最適な施術は医師が判断します。",
+g_what:"どんな施術？",g_how:"施術の流れ",g_who:"こんな方に",g_steps:"ソウルでの日程",g_recovery:"回復",g_risks:"知っておきたいこと",
+photo_cta:"迷ったら写真を送る",photo_title:"気になる部位を教えてください",photo_sub:"写真をアップロードして、気になる部位をタップしてください。施術の候補をご提案し、最終判断はコーディネーターと医師が行います。",photo_pick:"写真を撮る・選ぶ",photo_tap:"変えたい場所を写真でタップ",photo_area:"どの部位ですか？",area_eyes:"目",area_nose:"鼻",area_lips:"唇",area_face:"輪郭・あご",area_skin:"肌・シミ・毛穴",area_wrinkle:"シワ・たるみ",area_teeth:"歯・笑顔",area_hair:"髪・頭皮",area_body:"ボディ",
+photo_ai:"AIで分析",photo_ai_wait:"分析中…（約10秒）",photo_ai_off:"現在AI分析は利用できません。マークだけで十分です。",photo_ai_login:"AI分析はログイン後にご利用いただけます。",photo_suggest:"おすすめ",photo_use:"依頼に反映する",photo_private:"写真は非公開です。ご本人、担当コーディネーター、選んだクリニックのみ閲覧できます。",photo_remove:"削除",photo_attached:"添付した写真",ai_note:"AIの提案は参考であり、診断ではありません。",photo_clear:"マークを消す",photo_more:"写真を追加",photo_max:"最大3枚",
+reviews:"口コミ",reviews_none:"まだ口コミはありません。口コミは当社を通じて施術を受けた方のみ投稿できます。",review_write:"口コミを書く",review_rating:"評価",review_title:"タイトル（任意）",review_body:"体験を教えてください",review_send:"送信する",review_thanks:"ありがとうございます！確認後に掲載されます。",review_verified:"認証済みの患者",review_reply:"返信",review_need:"施術を受けた方のみ投稿できるので、信頼できる口コミです。",review_place:"クリニック・センター",err_rating:"評価を選んでください。",err_review:"ひとことでも書いてください。",sec_reviews:"患者さまの声",review_pending:"承認待ち"},
+zh:{nav_clinics:"合作機構",hero_title:"韓國頂尖診所與美容中心，全程有人陪伴",sec_verified:"嚴選診所與中心",cta_browse:"瀏覽合作機構",clinics_offering:"可以做的地方",trust1:"每個合作機構皆親自審核",
+cat_beauty:"韓式美容・SPA",kind_clinic:"診所",kind_hospital:"醫院",kind_aesthetic:"皮膚管理中心",kind_wellness:"SPA・身心保養",kind_salon:"美容沙龍",all_kinds:"所有類型",
+nav_guide:"指南",guide_title:"指南",guide_sub:"清楚誠實地說明每項療程，以及到韓國醫療旅行的流程。",read_more:"閱讀",min_read:"約{n}分鐘",guide_general:"出發之前",guide_treat:"療程說明",related:"相關內容",guide_disclaimer:"僅為一般資訊，並非醫療建議。適合您的療程由醫師判斷。",
+g_what:"這是什麼",g_how:"如何進行",g_who:"適合誰",g_steps:"首爾行程",g_recovery:"恢復",g_risks:"注意事項",
+photo_cta:"不確定？傳照片給我們",photo_title:"告訴我們想改善的部位",photo_sub:"上傳照片並點選想改善的部位。我們會提出建議，最後由顧問與醫師確認適合您的方案。",photo_pick:"拍照或選擇照片",photo_tap:"在照片上點選想改變的地方",photo_area:"這是哪個部位？",area_eyes:"眼睛",area_nose:"鼻子",area_lips:"嘴唇",area_face:"臉型・下巴",area_skin:"皮膚・斑點・毛孔",area_wrinkle:"皺紋・鬆弛",area_teeth:"牙齒・笑容",area_hair:"頭髮・頭皮",area_body:"身體",
+photo_ai:"用AI分析",photo_ai_wait:"分析中…（約10秒）",photo_ai_off:"目前無法使用AI分析，您標記的部位就足夠了。",photo_ai_login:"登入後即可使用AI分析。",photo_suggest:"為您推薦",photo_use:"加入我的申請",photo_private:"照片不公開：只有您、您的顧問和您選擇的診所看得到。",photo_remove:"刪除",photo_attached:"已附照片",ai_note:"AI建議僅供參考，並非診斷。",photo_clear:"清除標記",photo_more:"新增照片",photo_max:"最多3張",
+reviews:"評價",reviews_none:"目前還沒有評價。只有透過我們完成療程的患者才能留下評價。",review_write:"寫評價",review_rating:"評分",review_title:"標題（選填）",review_body:"分享您的經驗",review_send:"送出評價",review_thanks:"謝謝！審核後就會刊登。",review_verified:"認證患者",review_reply:"回覆",review_need:"只有完成療程的患者能留評價，確保真實可信。",review_place:"診所或中心",err_rating:"請選擇評分。",err_review:"請至少寫幾個字。",sec_reviews:"患者怎麼說",review_pending:"等待審核"},
+th:{nav_clinics:"สถานที่",hero_title:"คลินิกและศูนย์ความงามชั้นนำของเกาหลี พร้อมคนดูแลคุณตลอดทาง",sec_verified:"คลินิกและศูนย์คัดสรร",cta_browse:"ดูสถานที่",clinics_offering:"ทำได้ที่ไหน",trust1:"ทุกสถานที่ผ่านการตรวจสอบโดยตรง",
+cat_beauty:"K-บิวตี้และสปา",kind_clinic:"คลินิก",kind_hospital:"โรงพยาบาล",kind_aesthetic:"ศูนย์ดูแลผิว",kind_wellness:"สปาและเวลเนส",kind_salon:"บิวตี้ซาลอน",all_kinds:"ทุกประเภท",
+nav_guide:"คู่มือ",guide_title:"คู่มือ",guide_sub:"อธิบายแต่ละทรีตเมนต์และขั้นตอนการเดินทางรักษาที่เกาหลีอย่างชัดเจนและตรงไปตรงมา",read_more:"อ่าน",min_read:"อ่าน {n} นาที",guide_general:"ก่อนออกเดินทาง",guide_treat:"อธิบายทรีตเมนต์",related:"ที่เกี่ยวข้อง",guide_disclaimer:"เป็นข้อมูลทั่วไป ไม่ใช่คำแนะนำทางการแพทย์ แพทย์จะบอกว่าอะไรเหมาะกับคุณ",
+g_what:"คืออะไร",g_how:"ทำอย่างไร",g_who:"เหมาะกับใคร",g_steps:"แผนวันในโซล",g_recovery:"การพักฟื้น",g_risks:"สิ่งที่ควรรู้",
+photo_cta:"ไม่แน่ใจ? ส่งรูปมาได้",photo_title:"บอกเราว่าตรงไหน",photo_sub:"อัปโหลดรูปแล้วแตะจุดที่อยากปรับ เราจะเสนอทางเลือก แล้วผู้ประสานงานกับแพทย์จะยืนยันสิ่งที่เหมาะกับคุณ",photo_pick:"ถ่ายหรือเลือกรูป",photo_tap:"แตะบนรูปตรงที่อยากเปลี่ยน",photo_area:"ส่วนนี้คืออะไร",area_eyes:"ตา",area_nose:"จมูก",area_lips:"ริมฝีปาก",area_face:"รูปหน้า / กราม",area_skin:"ผิว ฝ้า รูขุมขน",area_wrinkle:"ริ้วรอย / หย่อนคล้อย",area_teeth:"ฟัน / รอยยิ้ม",area_hair:"ผม / หนังศีรษะ",area_body:"รูปร่าง",
+photo_ai:"วิเคราะห์ด้วย AI",photo_ai_wait:"กำลังวิเคราะห์… (ประมาณ 10 วินาที)",photo_ai_off:"ตอนนี้ใช้การวิเคราะห์ AI ไม่ได้ จุดที่คุณแตะก็เพียงพอแล้ว",photo_ai_login:"เข้าสู่ระบบเพื่อใช้การวิเคราะห์ AI",photo_suggest:"แนะนำสำหรับคุณ",photo_use:"ใช้ในคำขอของฉัน",photo_private:"รูปของคุณเป็นส่วนตัว เห็นได้เฉพาะคุณ ผู้ประสานงาน และคลินิกที่คุณเลือก",photo_remove:"ลบ",photo_attached:"รูปที่แนบ",ai_note:"คำแนะนำจาก AI เป็นเพียงจุดเริ่มต้น ไม่ใช่การวินิจฉัย",photo_clear:"ล้างจุดที่แตะ",photo_more:"เพิ่มรูป",photo_max:"สูงสุด 3 รูป",
+reviews:"รีวิว",reviews_none:"ยังไม่มีรีวิว รีวิวมาจากผู้ที่รับการรักษาผ่านเราเท่านั้น",review_write:"เขียนรีวิว",review_rating:"คะแนนของคุณ",review_title:"หัวข้อ (ไม่บังคับ)",review_body:"เล่าประสบการณ์ให้คนอื่นฟัง",review_send:"ส่งรีวิว",review_thanks:"ขอบคุณ! รีวิวจะแสดงหลังตรวจสอบเล็กน้อย",review_verified:"ผู้ป่วยที่ยืนยันแล้ว",review_reply:"ตอบกลับ",review_need:"เฉพาะผู้ที่รับการรักษาแล้วเท่านั้นที่เขียนรีวิวได้ รีวิวจึงเชื่อถือได้",review_place:"คลินิกหรือศูนย์",err_rating:"กรุณาเลือกคะแนน",err_review:"กรุณาเขียนสักสองสามคำ",sec_reviews:"เสียงจากผู้ป่วย",review_pending:"รอการอนุมัติ"},
+vi:{nav_clinics:"Cơ sở",hero_title:"Phòng khám và trung tâm làm đẹp hàng đầu Hàn Quốc, luôn có người đồng hành",sec_verified:"Phòng khám & trung tâm tuyển chọn",cta_browse:"Xem các cơ sở",clinics_offering:"Làm ở đâu",trust1:"Mọi đối tác đều được thẩm định trực tiếp",
+cat_beauty:"K-beauty & spa",kind_clinic:"Phòng khám",kind_hospital:"Bệnh viện",kind_aesthetic:"Trung tâm chăm sóc da",kind_wellness:"Spa & thư giãn",kind_salon:"Salon làm đẹp",all_kinds:"Tất cả loại",
+nav_guide:"Cẩm nang",guide_title:"Cẩm nang",guide_sub:"Giải thích rõ ràng, trung thực về từng dịch vụ và hành trình du lịch y tế Hàn Quốc.",read_more:"Đọc",min_read:"{n} phút đọc",guide_general:"Trước khi đi",guide_treat:"Giải thích dịch vụ",related:"Liên quan",guide_disclaimer:"Thông tin chung, không phải lời khuyên y tế. Bác sĩ sẽ cho bạn biết điều gì phù hợp.",
+g_what:"Đó là gì",g_how:"Thực hiện thế nào",g_who:"Phù hợp với",g_steps:"Lịch trình ở Seoul",g_recovery:"Hồi phục",g_risks:"Điều cần biết",
+photo_cta:"Chưa chắc? Gửi ảnh cho chúng tôi",photo_title:"Cho chúng tôi biết vùng nào",photo_sub:"Tải ảnh lên và chạm vào vùng bạn muốn cải thiện. Chúng tôi sẽ gợi ý — điều phối viên và bác sĩ sẽ xác nhận điều phù hợp với bạn.",photo_pick:"Chụp hoặc chọn ảnh",photo_tap:"Chạm vào ảnh ở chỗ bạn muốn thay đổi",photo_area:"Đây là vùng nào?",area_eyes:"Mắt",area_nose:"Mũi",area_lips:"Môi",area_face:"Khuôn mặt / hàm",area_skin:"Da, nám, lỗ chân lông",area_wrinkle:"Nếp nhăn / chảy xệ",area_teeth:"Răng / nụ cười",area_hair:"Tóc / da đầu",area_body:"Cơ thể",
+photo_ai:"Phân tích bằng AI",photo_ai_wait:"Đang phân tích… (khoảng 10 giây)",photo_ai_off:"Hiện chưa dùng được phân tích AI — các điểm bạn đánh dấu là đủ.",photo_ai_login:"Đăng nhập để dùng phân tích AI.",photo_suggest:"Gợi ý cho bạn",photo_use:"Dùng cho yêu cầu của tôi",photo_private:"Ảnh của bạn được bảo mật: chỉ bạn, điều phối viên và phòng khám bạn chọn được xem.",photo_remove:"Xóa",photo_attached:"Ảnh đã đính kèm",ai_note:"Gợi ý của AI chỉ để tham khảo, không phải chẩn đoán.",photo_clear:"Xóa đánh dấu",photo_more:"Thêm ảnh",photo_max:"Tối đa 3 ảnh",
+reviews:"Đánh giá",reviews_none:"Chưa có đánh giá. Chỉ bệnh nhân đã điều trị qua chúng tôi mới có thể đánh giá.",review_write:"Viết đánh giá",review_rating:"Điểm của bạn",review_title:"Tiêu đề (không bắt buộc)",review_body:"Chia sẻ trải nghiệm của bạn",review_send:"Gửi đánh giá",review_thanks:"Cảm ơn bạn! Đánh giá sẽ hiện sau khi được kiểm tra.",review_verified:"Bệnh nhân đã xác thực",review_reply:"Phản hồi",review_need:"Chỉ người đã điều trị mới có thể đánh giá — nên các đánh giá đều đáng tin.",review_place:"Phòng khám hoặc trung tâm",err_rating:"Hãy chọn số sao.",err_review:"Hãy viết vài dòng.",sec_reviews:"Bệnh nhân nói gì",review_pending:"Chờ duyệt"},
+id:{nav_clinics:"Tempat",hero_title:"Klinik dan pusat kecantikan terbaik Korea, dengan pendamping di sisi Anda",sec_verified:"Klinik & pusat terkurasi",cta_browse:"Lihat tempat",clinics_offering:"Bisa dilakukan di",trust1:"Setiap mitra diperiksa langsung",
+cat_beauty:"K-beauty & spa",kind_clinic:"Klinik",kind_hospital:"Rumah sakit",kind_aesthetic:"Pusat perawatan kulit",kind_wellness:"Spa & wellness",kind_salon:"Salon kecantikan",all_kinds:"Semua jenis",
+nav_guide:"Panduan",guide_title:"Panduan",guide_sub:"Penjelasan jelas dan jujur tentang setiap perawatan dan cara kerja perjalanan medis ke Korea.",read_more:"Baca",min_read:"{n} menit baca",guide_general:"Sebelum berangkat",guide_treat:"Penjelasan perawatan",related:"Terkait",guide_disclaimer:"Informasi umum, bukan nasihat medis. Dokter akan menentukan yang tepat untuk Anda.",
+g_what:"Apa itu",g_how:"Bagaimana dilakukan",g_who:"Cocok untuk",g_steps:"Hari-hari Anda di Seoul",g_recovery:"Pemulihan",g_risks:"Yang perlu diketahui",
+photo_cta:"Belum yakin? Kirim foto",photo_title:"Tunjukkan bagian mana",photo_sub:"Unggah foto dan ketuk area yang ingin Anda perbaiki. Kami akan memberi saran — koordinator dan dokter yang memastikan pilihan yang tepat.",photo_pick:"Ambil atau pilih foto",photo_tap:"Ketuk foto di bagian yang ingin diubah",photo_area:"Area apa ini?",area_eyes:"Mata",area_nose:"Hidung",area_lips:"Bibir",area_face:"Bentuk wajah / rahang",area_skin:"Kulit, flek, pori",area_wrinkle:"Kerutan / kendur",area_teeth:"Gigi / senyum",area_hair:"Rambut / kulit kepala",area_body:"Tubuh",
+photo_ai:"Analisis dengan AI",photo_ai_wait:"Menganalisis… (sekitar 10 detik)",photo_ai_off:"Analisis AI belum tersedia — tanda dari Anda sudah cukup.",photo_ai_login:"Masuk untuk memakai analisis AI.",photo_suggest:"Saran untuk Anda",photo_use:"Pakai di permintaan saya",photo_private:"Foto Anda bersifat pribadi: hanya Anda, koordinator, dan klinik pilihan Anda yang bisa melihat.",photo_remove:"Hapus",photo_attached:"Foto terlampir",ai_note:"Saran AI hanya titik awal, bukan diagnosis.",photo_clear:"Hapus tanda",photo_more:"Tambah foto",photo_max:"Maks. 3 foto",
+reviews:"Ulasan",reviews_none:"Belum ada ulasan. Ulasan hanya dari pasien yang sudah dirawat melalui kami.",review_write:"Tulis ulasan",review_rating:"Nilai Anda",review_title:"Judul (opsional)",review_body:"Ceritakan pengalaman Anda",review_send:"Kirim ulasan",review_thanks:"Terima kasih! Ulasan akan tampil setelah diperiksa.",review_verified:"Pasien terverifikasi",review_reply:"Balasan",review_need:"Hanya pasien yang sudah dirawat yang bisa menulis ulasan — agar tetap jujur.",review_place:"Klinik atau pusat",err_rating:"Pilih nilai.",err_review:"Tulis minimal beberapa kata.",sec_reviews:"Kata pasien",review_pending:"Menunggu persetujuan"},
+my:{nav_clinics:"နေရာများ",hero_title:"ကိုရီးယား၏ အကောင်းဆုံး ဆေးခန်းနှင့် အလှပြင်စင်တာများ၊ သင့်ဘေးတွင် အမြဲရှိနေမည်",sec_verified:"စစ်ဆေးထားသော ဆေးခန်းနှင့် စင်တာများ",cta_browse:"နေရာများ ကြည့်ရန်",clinics_offering:"ပြုလုပ်နိုင်သည့်နေရာ",trust1:"မိတ်ဖက်တိုင်းကို ကိုယ်တိုင်စစ်ဆေးထားသည်",
+cat_beauty:"K-beauty နှင့် စပါ",kind_clinic:"ဆေးခန်း",kind_hospital:"ဆေးရုံ",kind_aesthetic:"အသားအရေ ထိန်းသိမ်းရေးစင်တာ",kind_wellness:"စပါ",kind_salon:"အလှပြင်ဆိုင်",all_kinds:"အမျိုးအစားအားလုံး",
+nav_guide:"လမ်းညွှန်",guide_title:"လမ်းညွှန်",guide_sub:"ကုသမှုတစ်ခုချင်းစီနှင့် ကိုရီးယား ဆေးဘက်ခရီးစဉ်အကြောင်း ရှင်းလင်းစွာ ရှင်းပြထားသည်။",read_more:"ဖတ်ရန်",min_read:"{n} မိနစ် ဖတ်ရန်",guide_general:"မသွားမီ",guide_treat:"ကုသမှု ရှင်းလင်းချက်",related:"ဆက်စပ်",guide_disclaimer:"အထွေထွေ အချက်အလက်သာ ဖြစ်ပြီး ဆေးဘက်ဆိုင်ရာ အကြံဉာဏ် မဟုတ်ပါ။ သင့်အတွက် သင့်တော်သည်ကို ဆရာဝန်က ပြောပါမည်။",
+g_what:"ဘာလဲ",g_how:"မည်သို့ ပြုလုပ်သနည်း",g_who:"မည်သူ့အတွက် သင့်တော်သနည်း",g_steps:"ဆိုးလ်ရှိ နေ့ရက်များ",g_recovery:"ပြန်လည်နာလန်ထ",g_risks:"သိထားသင့်သည်များ",
+photo_cta:"မသေချာဘူးလား? ဓာတ်ပုံ ပို့ပါ",photo_title:"ဘယ်နေရာလဲ ပြပါ",photo_sub:"ဓာတ်ပုံ တင်ပြီး ပြင်လိုသည့်နေရာကို နှိပ်ပါ။ ရွေးချယ်စရာများ အကြံပြုပါမည် — သင့်တော်မှုကို ညှိနှိုင်းရေးမှူးနှင့် ဆရာဝန်က အတည်ပြုပါမည်။",photo_pick:"ဓာတ်ပုံ ရိုက်ရန် သို့မဟုတ် ရွေးရန်",photo_tap:"ပြောင်းလိုသည့်နေရာကို ဓာတ်ပုံပေါ်တွင် နှိပ်ပါ",photo_area:"ဘယ်နေရာလဲ?",area_eyes:"မျက်လုံး",area_nose:"နှာခေါင်း",area_lips:"နှုတ်ခမ်း",area_face:"မျက်နှာပုံ / မေးရိုး",area_skin:"အသားအရေ၊ အစက်၊ ချွေးပေါက်",area_wrinkle:"အရေးအကြောင်း / တွဲကျမှု",area_teeth:"သွား / အပြုံး",area_hair:"ဆံပင် / ဦးရေပြား",area_body:"ခန္ဓာကိုယ်",
+photo_ai:"AI ဖြင့် ခွဲခြမ်းစိတ်ဖြာရန်",photo_ai_wait:"ခွဲခြမ်းစိတ်ဖြာနေသည်… (၁၀ စက္ကန့်ခန့်)",photo_ai_off:"ယခု AI ခွဲခြမ်းစိတ်ဖြာမှု မရနိုင်ပါ — သင်မှတ်သားထားသည်များ လုံလောက်ပါသည်။",photo_ai_login:"AI ခွဲခြမ်းစိတ်ဖြာမှု သုံးရန် ဝင်ရောက်ပါ။",photo_suggest:"သင့်အတွက် အကြံပြုချက်",photo_use:"ကျွန်ုပ်၏ တောင်းဆိုချက်တွင် သုံးရန်",photo_private:"သင့်ဓာတ်ပုံသည် သီးသန့်ဖြစ်သည်။ သင်၊ ညှိနှိုင်းရေးမှူးနှင့် သင်ရွေးသော ဆေးခန်းများသာ ကြည့်နိုင်သည်။",photo_remove:"ဖျက်ရန်",photo_attached:"ပူးတွဲထားသော ဓာတ်ပုံ",ai_note:"AI အကြံပြုချက်သည် စတင်ရာသာ ဖြစ်ပြီး ရောဂါရှာဖွေမှု မဟုတ်ပါ။",photo_clear:"မှတ်သားချက်များ ဖျက်ရန်",photo_more:"ဓာတ်ပုံ ထပ်ထည့်ရန်",photo_max:"အများဆုံး ၃ ပုံ",
+reviews:"သုံးသပ်ချက်များ",reviews_none:"သုံးသပ်ချက် မရှိသေးပါ။ ကျွန်ုပ်တို့မှတစ်ဆင့် ကုသပြီးသူများသာ ရေးနိုင်သည်။",review_write:"သုံးသပ်ချက် ရေးရန်",review_rating:"သင့်အမှတ်",review_title:"ခေါင်းစဉ် (မဖြစ်မနေမဟုတ်)",review_body:"သင့်အတွေ့အကြုံကို ပြောပြပါ",review_send:"ပို့ရန်",review_thanks:"ကျေးဇူးတင်ပါသည်! စစ်ဆေးပြီးနောက် ဖော်ပြပါမည်။",review_verified:"အတည်ပြုထားသော လူနာ",review_reply:"ပြန်ကြားချက်",review_need:"ကုသပြီးသူများသာ ရေးနိုင်သဖြင့် ယုံကြည်စိတ်ချရသည်။",review_place:"ဆေးခန်း သို့မဟုတ် စင်တာ",err_rating:"အမှတ် ရွေးပါ။",err_review:"စကားလုံး အနည်းငယ် ရေးပါ။",sec_reviews:"လူနာများ၏ အသံ",review_pending:"အတည်ပြုရန် စောင့်ဆိုင်းဆဲ"},
+pt:{nav_clinics:"Locais",hero_title:"As melhores clínicas e centros de beleza da Coreia, com alguém ao seu lado",sec_verified:"Clínicas e centros avaliados",cta_browse:"Ver locais",clinics_offering:"Onde fazer",trust1:"Todo parceiro avaliado pessoalmente",
+cat_beauty:"K-beauty e spa",kind_clinic:"Clínica",kind_hospital:"Hospital",kind_aesthetic:"Centro de estética",kind_wellness:"Spa e bem-estar",kind_salon:"Salão de beleza",all_kinds:"Todos os tipos",
+nav_guide:"Guia",guide_title:"Guia",guide_sub:"Explicações claras e honestas sobre cada tratamento e sobre como funciona a viagem médica para a Coreia.",read_more:"Ler",min_read:"{n} min de leitura",guide_general:"Antes de ir",guide_treat:"Tratamentos explicados",related:"Relacionados",guide_disclaimer:"Informação geral, não é orientação médica. O médico dirá o que é certo para você.",
+g_what:"O que é",g_how:"Como é feito",g_who:"Indicado para",g_steps:"Seus dias em Seul",g_recovery:"Recuperação",g_risks:"Bom saber",
+photo_cta:"Em dúvida? Mande uma foto",photo_title:"Mostre onde",photo_sub:"Envie uma foto e toque nas áreas que você gostaria de melhorar. A gente sugere opções — sua coordenadora e o médico confirmam o que é certo para você.",photo_pick:"Tirar ou escolher foto",photo_tap:"Toque na foto onde você quer mudar algo",photo_area:"Que área é essa?",area_eyes:"Olhos",area_nose:"Nariz",area_lips:"Lábios",area_face:"Formato do rosto / mandíbula",area_skin:"Pele, manchas, poros",area_wrinkle:"Rugas / flacidez",area_teeth:"Dentes / sorriso",area_hair:"Cabelo / couro cabeludo",area_body:"Corpo",
+photo_ai:"Analisar com IA",photo_ai_wait:"Analisando… (uns 10 segundos)",photo_ai_off:"A análise por IA não está disponível agora — suas marcações já bastam.",photo_ai_login:"Entre na sua conta para usar a análise por IA.",photo_suggest:"Sugestões para você",photo_use:"Usar no meu pedido",photo_private:"Sua foto é privada: só você, sua coordenadora e as clínicas que você escolher podem ver.",photo_remove:"Remover",photo_attached:"Fotos anexadas",ai_note:"As sugestões da IA são só um ponto de partida, não um diagnóstico.",photo_clear:"Limpar marcações",photo_more:"Adicionar outra foto",photo_max:"Até 3 fotos",
+reviews:"Avaliações",reviews_none:"Ainda não há avaliações. Só pacientes que fizeram o tratamento com a gente podem avaliar.",review_write:"Escrever avaliação",review_rating:"Sua nota",review_title:"Título (opcional)",review_body:"Conte sua experiência para outras pessoas",review_send:"Enviar avaliação",review_thanks:"Obrigado! Sua avaliação aparece depois de uma rápida conferência.",review_verified:"Paciente verificado",review_reply:"Resposta",review_need:"Só quem fez o tratamento pode avaliar — assim as avaliações são confiáveis.",review_place:"Clínica ou centro",err_rating:"Escolha uma nota.",err_review:"Escreva pelo menos algumas palavras.",sec_reviews:"O que dizem os pacientes",review_pending:"Aguardando aprovação"},
+es:{nav_clinics:"Lugares",hero_title:"Las mejores clínicas y centros de belleza de Corea, con alguien a tu lado",sec_verified:"Clínicas y centros evaluados",cta_browse:"Ver lugares",clinics_offering:"Dónde hacerlo",trust1:"Cada socio evaluado en persona",
+cat_beauty:"K-beauty y spa",kind_clinic:"Clínica",kind_hospital:"Hospital",kind_aesthetic:"Centro de estética",kind_wellness:"Spa y bienestar",kind_salon:"Salón de belleza",all_kinds:"Todos los tipos",
+nav_guide:"Guía",guide_title:"Guía",guide_sub:"Explicaciones claras y honestas de cada tratamiento y de cómo funciona el viaje médico a Corea.",read_more:"Leer",min_read:"{n} min de lectura",guide_general:"Antes de viajar",guide_treat:"Tratamientos explicados",related:"Relacionado",guide_disclaimer:"Información general, no es consejo médico. Tu médico te dirá qué es lo adecuado para ti.",
+g_what:"Qué es",g_how:"Cómo se hace",g_who:"Indicado para",g_steps:"Tus días en Seúl",g_recovery:"Recuperación",g_risks:"Conviene saber",
+photo_cta:"¿Dudas? Envía una foto",photo_title:"Muéstranos dónde",photo_sub:"Sube una foto y toca las zonas que te gustaría mejorar. Te sugerimos opciones — tu coordinadora y el médico confirman lo adecuado para ti.",photo_pick:"Tomar o elegir foto",photo_tap:"Toca la foto donde quieres un cambio",photo_area:"¿Qué zona es?",area_eyes:"Ojos",area_nose:"Nariz",area_lips:"Labios",area_face:"Forma de la cara / mandíbula",area_skin:"Piel, manchas, poros",area_wrinkle:"Arrugas / flacidez",area_teeth:"Dientes / sonrisa",area_hair:"Cabello / cuero cabelludo",area_body:"Cuerpo",
+photo_ai:"Analizar con IA",photo_ai_wait:"Analizando… (unos 10 segundos)",photo_ai_off:"El análisis con IA no está disponible ahora — tus marcas son suficientes.",photo_ai_login:"Inicia sesión para usar el análisis con IA.",photo_suggest:"Sugerencias para ti",photo_use:"Usar en mi solicitud",photo_private:"Tu foto es privada: solo tú, tu coordinadora y las clínicas que elijas pueden verla.",photo_remove:"Quitar",photo_attached:"Fotos adjuntas",ai_note:"Las sugerencias de la IA son solo un punto de partida, no un diagnóstico.",photo_clear:"Borrar marcas",photo_more:"Añadir otra foto",photo_max:"Hasta 3 fotos",
+reviews:"Opiniones",reviews_none:"Aún no hay opiniones. Solo pueden opinar pacientes que se trataron con nosotros.",review_write:"Escribir opinión",review_rating:"Tu valoración",review_title:"Título (opcional)",review_body:"Cuenta tu experiencia a otras personas",review_send:"Enviar opinión",review_thanks:"¡Gracias! Tu opinión aparecerá tras una breve revisión.",review_verified:"Paciente verificado",review_reply:"Respuesta",review_need:"Solo quienes completaron su tratamiento pueden opinar — así las opiniones son fiables.",review_place:"Clínica o centro",err_rating:"Elige una valoración.",err_review:"Escribe al menos unas palabras.",sec_reviews:"Lo que dicen los pacientes",review_pending:"Pendiente de aprobación"},
+};
+for (const l in I18N_V2) { I18N[l] = Object.assign(I18N[l] || {}, I18N_V2[l]); }
+
 </script>
 <script>
 'use strict';
@@ -745,17 +841,17 @@ const COUNTRIES = [
 ];
 const MESSENGERS = ['LINE','Zalo','WhatsApp','Viber','Telegram','WeChat','KakaoTalk','Email'];
 const CUR = { KRW:{s:'₩'}, USD:{s:'US$'}, BRL:{s:'R$ '}, EUR:{s:' €',suf:1}, MXN:{s:'MX$'}, JPY:{s:'¥'}, TWD:{s:'NT$'}, THB:{s:'฿'}, VND:{s:'₫',suf:1}, IDR:{s:'Rp '}, MMK:{s:' Ks',suf:1} };
-const CATS = ['plastic','derma','dental','checkup','hair'];
-const CAT_IC = { plastic:'✨', derma:'🌸', dental:'🦷', checkup:'🩺', hair:'💇' };
+const CATS = ['plastic','derma','dental','checkup','hair','beauty'];
+const CAT_IC = { plastic:'✨', derma:'🌸', dental:'🦷', checkup:'🩺', hair:'💇', beauty:'💆' };
 const STAGES = ['new','consulting','quoted','booked','travel','in_korea','procedure','recovery','done'];
 /* palavras que o paciente digita na busca (além do nome) */
-const KW = { eyelid:'eye eyes eyelid ptosis 目 眼 ตา mắt mata 눈 쌍꺼풀 olhos pálpebra ojos párpado', rhino:'nose nasal 鼻 จมูก mũi hidung 코 nariz', contour:'jaw face chin cheekbone vline 顎 輪郭 下巴 กราม hàm rahang 턱 윤곽 queixo mandíbula rosto mandíbula cara', fatgraft:'fat face volume 지방이식 gordura grasa', lipo:'fat body belly arm thigh 脂肪 抽脂 ไขมัน mỡ lemak 지방흡입 lipo gordura barriga grasa', lifting:'thread lift sagging 실리프팅 fios hilos flacidez', botox:'wrinkle jaw slim 皺 小顔 ริ้วรอย nhăn kerutan 보톡스 rugas arrugas bótox', filler:'lips nose chin volume 唇 ปาก môi bibir 필러 lábios labios', ulthera:'lift sagging hifu 울쎄라 flacidez', thermage:'lift tightening rf 써마지 flacidez', booster:'glow skin hydration pdrn 肌 ผิว da kulit 리쥬란 피부 pele piel', laser:'spots melasma pigment acne シミ 斑 ฝ้า nám flek 레이저 기미 manchas melasma', implant:'tooth teeth 歯 牙 ฟัน răng gigi 임플란트 치아 dente diente', veneer:'teeth smile 歯 牙 ฟัน răng gigi 라미네이트 치아 dente diente lentes', whitening:'teeth white 歯 牙 ฟัน răng gigi 미백 치아 clareamento blanqueamiento dente diente', checkup:'health medical mri ct 健診 體檢 สุขภาพ sức khỏe kesehatan 건강검진 exames saúde chequeo salud', hair:'baldness hair loss 髪 薄毛 頭髮 ผม tóc rambut 모발 탈모 cabelo calvície cabello calvicie' };
+const KW = { headspa:'head spa scalp massage relax 헤드스파 두피 ヘッドスパ 頭皮 สปา gội đầu couro cabeludo cuero cabelludo', facial:'facial skin care glow 피부관리 エステ 護膚 ทรีตเมนต์หน้า chăm sóc da limpeza de pele', personalcolor:'personal color colour 퍼스널컬러 パーソナルカラー 個人色彩 สีผิว màu cá nhân coloração', makeup:'makeup hair styling photo 메이크업 ヘアメイク 彩妝 แต่งหน้า trang điểm maquiagem maquillaje peinado', eyelid:'eye eyes eyelid ptosis 目 眼 ตา mắt mata 눈 쌍꺼풀 olhos pálpebra ojos párpado', rhino:'nose nasal 鼻 จมูก mũi hidung 코 nariz', contour:'jaw face chin cheekbone vline 顎 輪郭 下巴 กราม hàm rahang 턱 윤곽 queixo mandíbula rosto mandíbula cara', fatgraft:'fat face volume 지방이식 gordura grasa', lipo:'fat body belly arm thigh 脂肪 抽脂 ไขมัน mỡ lemak 지방흡입 lipo gordura barriga grasa', lifting:'thread lift sagging 실리프팅 fios hilos flacidez', botox:'wrinkle jaw slim 皺 小顔 ริ้วรอย nhăn kerutan 보톡스 rugas arrugas bótox', filler:'lips nose chin volume 唇 ปาก môi bibir 필러 lábios labios', ulthera:'lift sagging hifu 울쎄라 flacidez', thermage:'lift tightening rf 써마지 flacidez', booster:'glow skin hydration pdrn 肌 ผิว da kulit 리쥬란 피부 pele piel', laser:'spots melasma pigment acne シミ 斑 ฝ้า nám flek 레이저 기미 manchas melasma', implant:'tooth teeth 歯 牙 ฟัน răng gigi 임플란트 치아 dente diente', veneer:'teeth smile 歯 牙 ฟัน răng gigi 라미네이트 치아 dente diente lentes', whitening:'teeth white 歯 牙 ฟัน răng gigi 미백 치아 clareamento blanqueamiento dente diente', checkup:'health medical mri ct 健診 體檢 สุขภาพ sức khỏe kesehatan 건강검진 exames saúde chequeo salud', hair:'baldness hair loss 髪 薄毛 頭髮 ผม tóc rambut 모발 탈모 cabelo calvície cabello calvicie' };
 const CHECKS = ['license','specialist','intl','er','aftercare','price'];
 const LANG_FLAG = { en:'EN', ko:'KO', ja:'JA', zh:'ZH', th:'TH', vi:'VI', id:'ID', my:'MY', pt:'PT', es:'ES' };
 
 /* --- textos do painel (equipe) em português --- */
 const STAGE_PT = { new:'Novo', consulting:'Em consulta', quoted:'Orçado', booked:'Reservado', travel:'Planejando viagem', in_korea:'Na Coreia', procedure:'Procedimento', recovery:'Recuperação', done:'Concluído', canceled:'Cancelado' };
-const CAT_PT = { plastic:'Cirurgia plástica', derma:'Dermatologia', dental:'Odontologia', checkup:'Check-up', hair:'Capilar' };
+const CAT_PT = { plastic:'Cirurgia plástica', derma:'Dermatologia', dental:'Odontologia', checkup:'Check-up', hair:'Capilar', beauty:'K-beauty e spa' };
 const CHECK_PT = { license:'Licença médica', specialist:'Especialistas certificados', intl:'Experiência com estrangeiros', er:'Anestesista / emergência', aftercare:'Acompanhamento pós', price:'Tabela de preços clara' };
 const EV_PT = { created:'Pedido criado', stage:'Etapa alterada', assigned:'Coordenador definido', quote_sent:'Orçamento enviado', quote_accepted:'Orçamento aceito pelo paciente', quote_declined:'Orçamento recusado', quote_withdrawn:'Orçamento retirado', canceled:'Pedido cancelado', note:'Nota interna', clinic_saved:'Clínica salva', treatment_saved:'Tratamento salvo', role:'Papel alterado', rates:'Câmbio alterado' };
 const QUICK = [
@@ -807,7 +903,7 @@ const S = {
 if (!S.cur) S.cur = defaultCur(S.lang);
 let RQ = LS.get('kmt-draft', null) || newDraft();
 function newDraft() { return { step: 1, t: [], c: [], notes: '', from: '', to: '', flexible: true, companions: 0, budget: '', hotel: false, pickup: true, interp: true, name: '', country: '', msg: '', msgid: '', by: '', cp: false, cs: false, email: '', pw: '' }; }
-function saveDraft() { const d = { ...RQ }; delete d.pw; LS.set('kmt-draft', d); }
+function saveDraft() { const d = { ...RQ }; delete d.pw; delete d.photos; LS.set('kmt-draft', d); }
 
 /* =====================================================================
    UTILITÁRIOS
@@ -891,13 +987,16 @@ const HERO_ART = `<svg class="art" viewBox="0 0 400 400" fill="none" aria-hidden
    DADOS
    ===================================================================== */
 async function loadPublic() {
-  const [c, tr, s] = await Promise.all([
+  const [c, tr, s, ar, rv] = await Promise.all([
     sb.from('kmt_clinics').select('*').order('name'),
     sb.from('kmt_treatments').select('*').order('sort'),
     sb.from('kmt_settings').select('*'),
-  ]);
+    sb.from('kmt_articles').select('*').order('sort'),
+    sb.from('kmt_reviews').select('*').order('created_at', { ascending: false }),
+  ]).then(x => x);
   if (c.error) throw c.error;
   S.clinics = c.data || []; S.treats = tr.data || [];
+  S.articles = (ar && ar.data) || []; S.reviews = (rv && rv.data) || [];
   for (const r of (s.data || [])) { if (r.key === 'rates') S.rates = r.value || {}; if (r.key === 'company') S.company = r.value || {}; }
 }
 async function loadPrivate() {
@@ -905,6 +1004,7 @@ async function loadPrivate() {
   const all = (tb, o, asc) => sb.from(tb).select('*').order(o || 'created_at', { ascending: !!asc });
   const [r, q, m, e] = await Promise.all([all('kmt_requests'), all('kmt_quotes'), all('kmt_messages', 'created_at', true), sb.from('kmt_events').select('*').order('id', { ascending: false }).limit(1500)]);
   S.reqs = r.data || []; S.quotes = q.data || []; S.msgs = m.data || []; S.events = e.data || [];
+  try { const rv = await sb.from('kmt_reviews').select('*').order('created_at', { ascending: false }); if (rv.data) S.reviews = rv.data; } catch (x) {}
   if (isStaff()) {
     const [p, tm, qi] = await Promise.all([all('kmt_profiles'), sb.from('kmt_clinic_terms').select('*'), sb.from('kmt_quote_internal').select('*')]);
     S.profiles = p.data || []; S.terms = tm.data || []; S.qint = qi.data || [];
@@ -962,12 +1062,13 @@ function render(keepScroll) {
   if (changed && !keepScroll) window.scrollTo(0, 0); else window.scrollTo(0, y);
 }
 function shellPatient(r, body) {
-  const on = p => (r.p[0] === p || (p === 'trips' && r.p[0] === 'trip') || (p === 'clinics' && r.p[0] === 'clinic') || (p === 'treatments' && r.p[0] === 'treatment')) ? 'on' : '';
+  const on = p => (r.p[0] === p || (p === 'trips' && r.p[0] === 'trip') || (p === 'clinics' && r.p[0] === 'clinic') || (p === 'treatments' && r.p[0] === 'treatment') || (p === 'guide' && r.p[0] === 'treatment')) ? 'on' : '';
   const un = S.user && !isStaff() ? unreadAll() : 0;
-  const nav = [['home','home',t('nav_home')],['clinics','clinic',t('nav_clinics')],['treatments','spark',t('nav_treat')],['trips','plane',t('nav_trips')],['me','user',t('nav_me')]];
+  const nav = [['home','home',t('nav_home')],['clinics','clinic',t('nav_clinics')],['guide','book',t('nav_guide')],['trips','plane',t('nav_trips')],['me','user',t('nav_me')]];
+  const tnavItems = [nav[1], ['treatments','spark',t('nav_treat')], nav[2], nav[3]];
   return `<header class="top"><div class="top-in">
     <a class="logo" href="#/home"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>${esc(BRAND.tag)}</small></span></a>
-    <nav class="tnav">${nav.slice(0, 4).map(n => `<a class="${on(n[0])}" href="#/${n[0]}">${esc(n[2])}</a>`).join('')}</nav>
+    <nav class="tnav">${tnavItems.map(n => `<a class="${on(n[0])}" href="#/${n[0]}">${esc(n[2])}</a>`).join('')}</nav>
     <div class="grow"></div>
     <select class="langsel" data-ch="lang" aria-label="${esc(t('language'))}">${LANGS.map(l => `<option value="${l[0]}" ${l[0] === S.lang ? 'selected' : ''}>${l[1]}</option>`).join('')}</select>
     ${isStaff() ? `<a class="iconbtn" href="#/admin" title="${esc(t('staff_panel'))}">${IC.chart.replace('<svg', '<svg width="17" height="17"')}</a>` : ''}
@@ -986,6 +1087,8 @@ function pagePatient(r) {
     case 'trips': return pageTrips();
     case 'trip': return pageTrip(r.p[1]);
     case 'me': return pageMe();
+    case 'guide': return r.p[1] ? pageArticle(r.p[1]) : pageGuide();
+    case 'photo': return pagePhoto();
     default: return pageHome();
   }
 }
@@ -1005,7 +1108,7 @@ function clinicCard(c) {
     <div class="cover tone${(c.tone || 0) % 7}"><span class="mono">${esc((c.name || '?')[0])}</span>
       <span class="vb">${c.verified ? `<span class="tag ok">${IC.check} ${esc(t('verified'))}</span>` : `<span class="tag">${esc(t('under_review'))}</span>`}</span>
       <span class="ds">${esc(c.district || 'Seoul')}</span></div>
-    <div class="bd"><div class="nm">${esc(c.name)}</div><div class="small muted">${esc(sp)}</div>
+    <div class="bd"><div class="row between" style="gap:6px">${kindTag(c)}${ratingOf(c.id) ? `<span class="small nowrap">${stars(ratingOf(c.id).avg, 11)} <b>${ratingOf(c.id).avg.toFixed(1)}</b> <span class="muted">(${ratingOf(c.id).n})</span></span>` : ''}</div><div class="nm">${esc(c.name)}</div><div class="small muted">${esc(sp)}</div>
       <div class="meta">${(c.languages || []).map(l => `<span class="tag">${LANG_FLAG[l] || l}</span>`).join('')}</div>
       ${isFinite(minP) ? `<div class="small" style="margin-top:auto"><span class="muted">${esc(t('from'))}</span> <b>${krw(minP)}</b>${local(minP) ? ` <span class="muted">≈ ${local(minP)}</span>` : ''}</div>` : ''}
     </div></a>`;
@@ -1028,7 +1131,7 @@ function pageHome() {
     <h1 class="h1" style="margin-top:8px">${esc(t('hero_title'))}</h1>
     <p>${esc(t('hero_sub'))}</p>
     <form class="search" data-sub="search"><span class="muted">${IC.search}</span><input name="q" placeholder="${esc(t('search_ph'))}" autocomplete="off"><button class="btn acc sm" type="submit">${IC.search}</button></form>
-    <div class="row wrap mt"><a class="btn acc" href="#/request">${esc(t('cta_quote'))}</a><a class="btn ghost" href="#/clinics">${esc(t('cta_browse'))}</a></div>
+    <div class="row wrap mt"><a class="btn acc" href="#/request">${esc(t('cta_quote'))}</a><a class="btn ghost" href="#/photo">${IC.camera} ${esc(t('photo_cta'))}</a></div>
     <div class="trust">${[['✓', 'trust1'], ['文', 'trust2'], ['₩', 'trust3'], ['♡', 'trust4']].map(x => `<div><i>${x[0]}</i>${esc(t(x[1]))}</div>`).join('')}</div>
   </div></section>
   <div class="chips mt2">${CATS.map(c => `<a class="chip" href="#/treatments?cat=${c}">${CAT_IC[c]} ${esc(t('cat_' + c))}</a>`).join('')}</div>
@@ -1037,6 +1140,8 @@ function pageHome() {
   <section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_popular'))}</h2><a href="#/treatments">${esc(t('see_all'))} →</a></div>
     <div class="grid g2">${pop.map(treatCard).join('')}</div>
     <p class="tiny muted mt">${esc(t('indicative'))}</p></section>
+  ${pubReviews().length ? `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_reviews'))}</h2></div><div class="hs">${pubReviews().slice(0, 8).map(v => `<a href="#/clinic/${v.clinic_id}" style="display:block">${reviewCard(v)}</a>`).join('')}</div></section>` : ''}
+  ${S.articles.length ? `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('guide_title'))}</h2><a href="#/guide">${esc(t('see_all'))} →</a></div><div class="hs">${S.articles.filter(a => a.published !== false).slice(0, 4).map(articleCard).join('')}</div></section>` : ''}
   <section class="sec"><h2 class="h2 mb">${esc(t('sec_how'))}</h2>
     <div class="grid g3">${[1, 2, 3, 4].map(i => `<div class="card pad"><div class="serif" style="font-size:30px;color:var(--gold);line-height:1">0${i}</div><div class="h3 mt">${esc(t('how' + i + '_t'))}</div><div class="small muted" style="margin-top:4px">${esc(t('how' + i + '_d'))}</div></div>`).join('')}</div>
     <div class="mt2" style="text-align:center"><a class="btn acc" href="#/request">${esc(t('cta_quote'))} →</a></div></section>
@@ -1047,9 +1152,11 @@ function pageClinics(r) {
   let list = S.clinics.filter(c => c.active !== false);
   if (S.f.cat !== 'all') list = list.filter(c => (c.specialties || []).includes(S.f.cat));
   if (S.f.mylang) list = list.filter(c => (c.languages || []).includes(S.lang));
+  if (S.f.kind && S.f.kind !== 'all') list = list.filter(c => (c.kind || 'clinic') === S.f.kind);
   list.sort((a, b) => (b.verified - a.verified) || (b.intl_patients || 0) - (a.intl_patients || 0));
   return `<h1 class="h2">${esc(t('nav_clinics'))}</h1>
   <div class="chips mt">${['all', ...CATS].map(c => `<button class="chip ${S.f.cat === c ? 'on' : ''}" data-act="fcat" data-v="${c}">${c === 'all' ? '' : CAT_IC[c] + ' '}${esc(t('cat_' + c))}</button>`).join('')}</div>
+  <div class="row wrap mt" style="gap:6px">${['all', ...KINDS].filter(k => k === 'all' || S.clinics.some(c => (c.kind || 'clinic') === k)).map(k => `<button class="chip ${(S.f.kind || 'all') === k ? 'on' : ''}" style="min-height:30px;font-size:12px;padding:4px 11px" data-act="fkind" data-v="${k}">${k === 'all' ? esc(t('all_kinds')) : KIND_IC[k] + ' ' + esc(t('kind_' + k))}</button>`).join('')}</div>
   ${S.lang !== 'en' ? `<label class="check"><input type="checkbox" data-ch="mylang" ${S.f.mylang ? 'checked' : ''}> ${esc(t('filter_lang'))}</label>` : ''}
   <div class="grid g3 mt">${list.map(clinicCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>${footer()}`;
 }
@@ -1062,6 +1169,7 @@ function pageClinic(id) {
     <span class="vb">${c.verified ? `<span class="tag ok">${IC.check} ${esc(t('verified'))}</span>` : `<span class="tag">${esc(t('under_review'))}</span>`}</span>
     <div><div class="ds">${esc(c.district || 'Seoul')} · Seoul</div><div class="serif" style="font-size:27px;font-weight:700;line-height:1.1">${esc(c.name)}</div></div></div>
     <div class="bd">
+      <div class="row wrap" style="gap:6px">${kindTag(c)}${ratingOf(c.id) ? `<span class="small">${stars(ratingOf(c.id).avg)} <b>${ratingOf(c.id).avg.toFixed(1)}</b> <span class="muted">(${ratingOf(c.id).n})</span></span>` : ''}</div>
       <div class="meta">${c.founded ? `<span>${esc(t('since'))} ${c.founded}</span>` : ''}${c.doctors ? `<span>${esc(t('doctors'))}: ${c.doctors}</span>` : ''}${c.intl_patients ? `<span>${fmtN(c.intl_patients)} ${esc(t('intl_year'))}</span>` : ''}</div>
       ${tn(c.about) ? `<p style="margin:6px 0 2px;color:var(--ink2)">${esc(tn(c.about))}</p>` : ''}
       <div class="row wrap"><span class="small muted">${esc(t('languages'))}:</span>${(c.languages || []).map(l => `<span class="tag">${esc((LANGS.find(x => x[0] === l) || [l, l])[1])}</span>`).join('')}</div>
@@ -1070,6 +1178,7 @@ function pageClinic(id) {
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">${CHECKS.map(k => `<div class="row small" style="align-items:flex-start"><span style="color:${chk[k] ? 'var(--ok)' : 'var(--line2)'}">${chk[k] ? '●' : '○'}</span><span class="${chk[k] ? '' : 'muted'}">${esc(t('chk_' + k))}</span></div>`).join('')}</div></div>
   <section class="sec"><div class="sech"><h2 class="h2">${esc(t('treatments_here'))}</h2></div>
     <div class="grid g2">${trs.map(treatCard).join('')}</div><p class="tiny muted mt">${esc(t('indicative'))}</p></section>
+  ${reviewsSection(c.id)}
   <div class="mt2"><a class="btn acc block" href="#/request?c=${c.id}">${esc(t('quote_this'))}</a></div>${footer()}`;
 }
 function pageTreatments(r) {
@@ -1088,7 +1197,7 @@ function pageTreatments(r) {
 function pageTreatment(id) {
   const x = treat(id); if (!x) return `<div class="empty">${esc(t('no_results'))}</div>`;
   const cls = S.clinics.filter(c => c.active !== false && (c.treatment_ids || []).includes(id)).sort((a, b) => b.verified - a.verified);
-  return `<a class="row small muted mb" href="#/treatments">${IC.back} ${esc(t('nav_treat'))}</a>
+  return `<a class="row small muted mb" href="javascript:history.back()">${IC.back} ${esc(t('back'))}</a>
   <div class="card pad"><div class="row"><span class="tr" style="padding:0"><span class="ic" style="width:54px;height:54px;font-size:26px">${CAT_IC[x.category]}</span></span>
     <div class="grow"><div class="kick">${esc(t('cat_' + x.category))}</div><h1 class="h2">${esc(tn(x.name))}</h1></div></div>
     <div class="grid mt" style="grid-template-columns:repeat(3,1fr);gap:8px">
@@ -1097,6 +1206,7 @@ function pageTreatment(id) {
       <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('recovery'))}</div><div class="b">${x.recovery_days ?? '—'} ${esc(t('days'))}</div></div>
     </div><p class="tiny muted mt">${esc(t('indicative'))}</p>
     <a class="btn acc block mt" href="#/request?t=${x.id}">${esc(t('quote_this'))}</a></div>
+  ${guideSections(x)}
   <section class="sec"><h2 class="h2 mb">${esc(t('clinics_offering'))}</h2><div class="grid g3">${cls.map(clinicCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div></section>${footer()}`;
 }
 
@@ -1126,7 +1236,7 @@ function pageRequest(r) {
       return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid" style="gap:6px">${items.map(x => opt(sel.includes(x.id), esc(tn(x.name)), 'rq-t', x.id, `${t('from')} ${krw(x.price_from_krw)}${local(x.price_from_krw) ? ' · ≈ ' + local(x.price_from_krw) : ''}`)).join('')}</div>`;
     }).join('');
     const rel = S.clinics.filter(c => c.active !== false && (!sel.length || sel.some(id => (c.treatment_ids || []).includes(id)))).sort((a, b) => b.verified - a.verified);
-    body = `<div class="h3">${esc(t('req_what'))}</div>${byCat}
+    body = `${rqPhotoCard()}<div class="h3">${esc(t('req_what'))}</div>${byCat}
       <div class="h3 mt2">${esc(t('req_clinics'))}</div>
       <div class="grid mt" style="gap:6px">${opt(!RQ.c.length, esc(t('req_any')), 'rq-c', '')}${rel.map(c => opt(RQ.c.includes(c.id), esc(c.name), 'rq-c', c.id, esc((c.district || '') + (c.verified ? ' · ✓ ' + t('verified') : '')))).join('')}</div>
       <label class="field mt2"><span>${esc(t('req_notes'))}</span><textarea class="in" data-bind="notes" maxlength="2000">${esc(RQ.notes)}</textarea></label>`;
@@ -1218,9 +1328,10 @@ async function submitRequest() {
       budget_usd: RQ.budget ? Number(RQ.budget) : null, need_hotel: !!RQ.hotel, need_pickup: !!RQ.pickup, need_interpreter: !!RQ.interp,
       consent_privacy_at: now, consent_share_at: now, stage: 'new',
     };
+    await attachPhotos(row);
     const { data, error } = await sb.from('kmt_requests').insert(row).select().single();
     if (error) throw error;
-    RQ = newDraft(); LS.del('kmt-draft');
+    RQ = newDraft(); LS.del('kmt-draft'); PH = newPH();
     S.justSent = data.id;
     await ensureProfile(); await loadPrivate();
     go('#/trip/' + data.id);
@@ -1325,6 +1436,7 @@ function pageTrip(id) {
     <div class="mt">${journeyHTML(r.stage)}</div>
     <div class="row mt" style="background:var(--surf2);border-radius:10px;padding:10px"><span style="font-size:20px">👤</span><div class="grow"><div class="tiny muted">${esc(t('your_coord'))}</div><div class="small b">${esc(r.coordinator_name || t('coord_pending'))}</div></div></div>
   </div>
+  ${tripExtras(r)}
   <div class="two mt">
     <div>
       <div class="card pad"><div class="h3 mb">${esc(t('quotes'))}</div>
@@ -1384,10 +1496,11 @@ function staffNav(r) {
   const newN = S.reqs.filter(x => x.stage === 'new').length;
   const un = unreadAll();
   const items = [
-    ['Operação', [['dash', 'chart', 'Painel', 'Dashboard'], ['reqs', 'list', 'Pedidos', 'Requests', newN + un], ['clinics', 'clinic', 'Clínicas', 'Clinics'], ['treats', 'tag', 'Tratamentos', 'Treatments']]],
+    ['Operação', [['dash', 'chart', 'Painel', 'Dashboard'], ['reqs', 'list', 'Pedidos', 'Requests', newN + un], ['clinics', 'clinic', 'Clínicas', 'Clinics'], ['treats', 'tag', 'Tratamentos', 'Treatments'], ['reviews', 'star', 'Avaliações', 'Reviews', S.reviews.filter(v => v.status === 'pending').length]]],
+    ['Conteúdo', [['guide', 'book', 'Guia', 'Guide / blog']]],
     ['Gestão', [['history', 'clock', 'Histórico', 'Audit log'], ['config', 'gear', 'Equipe e câmbio', 'Team & rates']]],
   ];
-  const isOn = k => (a === k || (k === 'reqs' && a === 'r') || (k === 'clinics' && a === 'clinic') || (k === 'treats' && a === 'treat')) ? 'on' : '';
+  const isOn = k => (a === k || (k === 'reqs' && a === 'r') || (k === 'clinics' && a === 'clinic') || (k === 'treats' && a === 'treat') || (k === 'guide' && a === 'article')) ? 'on' : '';
   const side = `<aside class="side"><a class="logo" href="#/admin"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>Equipe</small></span></a>
     ${items.map(g => `<div class="grp">${g[0]}</div>${g[1].map(i => `<a class="${isOn(i[0])}" href="#/admin/${i[0]}">${IC[i[1]]}<span>${i[2]}<small>${i[3]}</small></span>${i[4] ? `<span class="n">${i[4]}</span>` : ''}</a>`).join('')}`).join('')}
     <div class="grow"></div><a href="#/home">${IC.home}<span>Ver site do paciente<small>Patient view</small></span></a>
@@ -1407,6 +1520,9 @@ function renderStaff(r) {
     case 'treat': page = sTreat(r.p[2]); break;
     case 'history': page = sHistory(); break;
     case 'config': page = sConfig(); break;
+    case 'reviews': page = sReviews(); break;
+    case 'guide': page = sGuide(); break;
+    case 'article': page = sArticle(r.p[2]); break;
     default: page = sDash();
   }
   return `<div class="st">${side}<div class="smain">${page}</div>${bn}</div>`;
@@ -1533,6 +1649,7 @@ function sReq(id) {
         <form class="composer" data-sub="schat" data-v="${id}"><textarea class="in" name="body" id="schat" rows="2" placeholder="Mensagem para o paciente…" maxlength="3000"></textarea><button class="btn acc" type="submit">Enviar</button></form></div>
     </div>
     <div class="col">
+      ${staffPhotos(r)}
       <div class="card pad"><div class="h3 mb">Dados do pedido</div>
         <dl class="kv">
           <dt>Tratamentos</dt><dd>${(r.treatment_ids || []).map(x => esc(tnEn((treat(x) || {}).name))).join('<br>') || '—'}</dd>
@@ -1633,6 +1750,7 @@ function sClinic(id) {
       <div class="card pad col"><div class="h3">Dados públicos <span class="tiny muted">(o paciente vê)</span></div>
         <div class="grid" style="grid-template-columns:2fr 1fr;gap:8px"><label class="field"><span>Nome *</span><input class="in" name="name" value="${esc(c.name)}"></label><label class="field"><span>Bairro</span><input class="in" name="district" list="districts" value="${esc(c.district || '')}"></label></div>
         <datalist id="districts">${['Gangnam', 'Sinsa', 'Apgujeong', 'Cheongdam', 'Myeongdong', 'Hongdae', 'Jamsil', 'Seocho', 'Yeouido'].map(d => `<option>${d}</option>`).join('')}</datalist>
+        <label class="field"><span>Tipo de local</span><select class="in" name="kind">${KINDS.map(k => `<option value="${k}" ${(c.kind || 'clinic') === k ? 'selected' : ''}>${KIND_IC[k]} ${KIND_PT[k]}</option>`).join('')}</select></label>
         <div class="field"><span>Especialidades *</span>${chipBox('specialties', CATS, c.specialties || [], s => CAT_PT[s])}</div>
         <div class="field"><span>Idiomas atendidos</span>${chipBox('languages', Object.keys(LANG_FLAG), c.languages || [], l => (LANGS.find(x => x[0] === l) || [l, l])[1])}</div>
         <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px"><label class="field"><span>Fundação</span><input class="in" name="founded" inputmode="numeric" value="${esc(c.founded || '')}"></label><label class="field"><span>Médicos</span><input class="in" name="doctors" inputmode="numeric" value="${esc(c.doctors || '')}"></label><label class="field"><span>Estrang./ano</span><input class="in" name="intl_patients" inputmode="numeric" value="${esc(c.intl_patients || '')}"></label></div>
@@ -1687,7 +1805,9 @@ function sTreat(id) {
       <label class="check"><input type="checkbox" name="active" ${x.active !== false ? 'checked' : ''}> Ativo no site</label></div>
       <div class="row"><a class="btn ghost" href="#/admin/treats">Voltar</a><div class="grow"></div><button class="btn acc" type="submit">Salvar</button></div>
       <div id="tf-err" class="err-msg" hidden></div></div>
-  </form>`;
+  </form>
+  <div class="h3 mt2 mb">Guia do procedimento <span class="tiny muted">(o que o paciente lê na página do tratamento — salve com o botão Salvar acima)</span></div>
+  ${(edInit('treat', id, x.guide || {}), guideEditor(GUIDE_KEYS, GUIDE_PT, GUIDE_KEYS))}`;
 }
 function sHistory() {
   const f = S.hf || (S.hf = { kind: '' });
@@ -1728,6 +1848,7 @@ function sConfig() {
    ===================================================================== */
 function afterRender(r) {
   const cb = $('#chatbox'); if (cb) cb.scrollTop = cb.scrollHeight;
+  fillSigned();
   const rid = r.p[0] === 'trip' ? r.p[1] : (r.p[0] === 'admin' && r.p[1] === 'r' ? r.p[2] : null);
   if (rid && unreadFor(rid)) markRead(rid).then(() => { const d = $$('.dot'); d.forEach(x => x.remove()); });
 }
@@ -1908,7 +2029,7 @@ async function saveClinic(f, fd) {
   if (S.clinics.some(c => c.id !== id && c.name.trim().toLowerCase() === name.toLowerCase())) return fail('Já existe uma clínica com esse nome.');
   const about = {}; LANGS.forEach(l => { const v = (fd.get('about_' + l[0]) || '').trim(); if (v) about[l[0]] = v; });
   const checks = {}; CHECKS.forEach(k => checks[k] = fd.get('chk_' + k) === 'on');
-  const row = { name, district: (fd.get('district') || '').trim(), specialties: spec, languages: fd.getAll('languages'), founded: num(fd.get('founded')), doctors: num(fd.get('doctors')), intl_patients: num(fd.get('intl_patients')), about, checks, treatment_ids: fd.getAll('treatment_ids'), verified: fd.get('verified') === 'on', active: fd.get('active') === 'on' };
+  const row = { name, kind: fd.get('kind') || 'clinic', district: (fd.get('district') || '').trim(), specialties: spec, languages: fd.getAll('languages'), founded: num(fd.get('founded')), doctors: num(fd.get('doctors')), intl_patients: num(fd.get('intl_patients')), about, checks, treatment_ids: fd.getAll('treatment_ids'), verified: fd.get('verified') === 'on', active: fd.get('active') === 'on' };
   let cid = id;
   if (id) { const { error } = await sb.from('kmt_clinics').update(row).eq('id', id); if (error) throw error; }
   else { row.tone = Math.floor(Math.random() * 6) + 1; const { data, error } = await sb.from('kmt_clinics').insert(row).select().single(); if (error) throw error; cid = data.id; }
@@ -1926,12 +2047,358 @@ async function saveTreat(f, fd) {
   if (to && to < from) return fail('O "preço até" está menor que o "preço de".');
   const code = (fd.get('code') || '').trim().toLowerCase() || name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 24);
   if (S.treats.some(x => x.id !== id && x.code === code)) return fail('Esse código já existe. Use outro.');
-  const row = { code, category: fd.get('category'), name, price_from_krw: from, price_to_krw: to, unit: fd.get('unit'), stay_days: num(fd.get('stay_days')), recovery_days: num(fd.get('recovery_days')), sort: num(fd.get('sort')) ?? 100, popular: fd.get('popular') === 'on', active: fd.get('active') === 'on' };
+  const guide = S.ed && S.ed.kind === 'treat' && S.ed.id === (id || 'new') ? S.ed.data : undefined;
+  const row = { code, category: fd.get('category'), name, ...(guide ? { guide } : {}), price_from_krw: from, price_to_krw: to, unit: fd.get('unit'), stay_days: num(fd.get('stay_days')), recovery_days: num(fd.get('recovery_days')), sort: num(fd.get('sort')) ?? 100, popular: fd.get('popular') === 'on', active: fd.get('active') === 'on' };
   const res = id ? await sb.from('kmt_treatments').update(row).eq('id', id) : await sb.from('kmt_treatments').insert(row);
   if (res.error) throw res.error;
   await logEvent(null, 'treatment_saved', { code }, false);
-  toast('Tratamento salvo'); await refresh(true); go('#/admin/treats');
+  S.ed = null; toast('Tratamento salvo'); await refresh(true); go('#/admin/treats');
 }
+
+/* =====================================================================
+   V2 — locais além de hospitais, foto com marcação + IA, guia, avaliações
+   ===================================================================== */
+const KINDS = ['clinic', 'hospital', 'aesthetic', 'wellness', 'salon'];
+const KIND_PT = { clinic: 'Clínica', hospital: 'Hospital', aesthetic: 'Centro de estética', wellness: 'Spa / bem-estar', salon: 'Salão de beleza' };
+const KIND_IC = { clinic: '🏥', hospital: '🏨', aesthetic: '🧖', wellness: '💆', salon: '💄' };
+const AREAS = ['eyes', 'nose', 'lips', 'face', 'skin', 'wrinkle', 'teeth', 'hair', 'body'];
+const AREA_T = { eyes: ['eyelid'], nose: ['rhino', 'filler'], lips: ['filler'], face: ['contour', 'botox', 'lifting', 'fatgraft'], skin: ['booster', 'laser', 'facial'], wrinkle: ['botox', 'ulthera', 'thermage', 'lifting'], teeth: ['whitening', 'veneer', 'implant'], hair: ['hair', 'headspa'], body: ['lipo'] };
+const GUIDE_KEYS = ['what', 'how', 'who', 'steps', 'recovery', 'risks'];
+const GUIDE_PT = { what: 'O que é', how: 'Como é feito', who: 'Indicado para', steps: 'Dias em Seul', recovery: 'Recuperação', risks: 'Bom saber / riscos' };
+const ART_KEYS = ['title', 'summary', 'body'];
+const newPH = () => ({ photos: [], cur: 0, busy: false, aiErr: false, pick: [], areas: [] });
+let PH = newPH();
+S.articles = []; S.reviews = []; S.signed = {}; S.rvf = 'pending';
+Object.assign(IC, {
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7M8 11h7"/></svg>',
+  camera: '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h2l2-3h6l2 3h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></svg>',
+});
+
+/* ---------- utilidades ---------- */
+function md(s) {
+  const lines = esc(s || '').split('\n'); let out = '', ul = false;
+  const inl = x => x.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  for (const l of lines) {
+    if (/^- /.test(l)) { if (!ul) { out += '<ul class="md-ul">'; ul = true; } out += '<li>' + inl(l.slice(2)) + '</li>'; continue; }
+    if (ul) { out += '</ul>'; ul = false; }
+    if (/^## /.test(l)) out += '<h3 class="md-h">' + inl(l.slice(3)) + '</h3>';
+    else if (l.trim()) out += '<p class="md-p">' + inl(l) + '</p>';
+  }
+  return out + (ul ? '</ul>' : '');
+}
+function guideOf(x) { const g = (x && x.guide) || {}; return (g[S.lang] && g[S.lang].what) ? g[S.lang] : (g.en && g.en.what ? g.en : null); }
+const pubReviews = () => S.reviews.filter(r => r.status === 'published');
+function ratingOf(cid) { const rs = pubReviews().filter(r => r.clinic_id === cid); if (!rs.length) return null; return { avg: rs.reduce((s, r) => s + r.rating, 0) / rs.length, n: rs.length }; }
+const stars = (n, size) => `<span class="stars" style="font-size:${size || 13}px" aria-label="${n}/5">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= Math.round(n) ? 'on' : ''}">★</i>`).join('')}</span>`;
+const kindTag = c => `<span class="tag">${KIND_IC[c.kind || 'clinic']} ${esc(t('kind_' + (c.kind || 'clinic')))}</span>`;
+function reviewCard(rv, staffView) {
+  const c = clinic(rv.clinic_id) || {};
+  return `<div class="card pad rv"><div class="row between">${stars(rv.rating)}<span class="tiny muted">${staffView ? ptt(rv.created_at) : dt(rv.created_at)}</span></div>
+    ${rv.title ? `<div class="b" style="margin-top:6px">${esc(rv.title)}</div>` : ''}
+    <div class="small" style="margin-top:4px;white-space:pre-wrap;color:var(--ink2)">${esc(rv.body || '')}</div>
+    <div class="row wrap tiny muted" style="margin-top:8px">${esc(rv.display_name || '')} <span class="tag ok">✓ ${esc(staffView ? 'Paciente verificado' : t('review_verified'))}</span>${(rv.treatment_ids || []).map(id => treat(id)).filter(Boolean).map(x => `<span class="tag">${esc(staffView ? tnEn(x.name) : tn(x.name))}</span>`).join('')}${staffView || !rv.clinic_id ? '' : ''}</div>
+    ${staffView ? `<div class="tiny muted" style="margin-top:4px">${esc(c.name || '')}</div>` : ''}
+    ${rv.staff_reply ? `<div class="rv-reply"><b>${esc(staffView ? 'Resposta' : t('review_reply'))}:</b> ${esc(rv.staff_reply)}</div>` : ''}</div>`;
+}
+async function fillSigned() {
+  const imgs = $$('img[data-path]'); if (!imgs.length) return;
+  const need = [...new Set(imgs.map(i => i.dataset.path).filter(p => !S.signed[p]))];
+  for (const p of need) { try { const { data } = await sb.storage.from('kmt-photos').createSignedUrl(p, 600); if (data && data.signedUrl) S.signed[p] = data.signedUrl; } catch (e) { console.warn(e); } }
+  $$('img[data-path]').forEach(i => { if (S.signed[i.dataset.path] && i.src !== S.signed[i.dataset.path]) i.src = S.signed[i.dataset.path]; });
+}
+function photoView(p, idx, editable) {
+  const src = p.data ? `src="${p.data}"` : `data-path="${esc(p.path)}" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="`;
+  return `<div class="phwrap ${editable ? 'edit' : ''}" ${editable ? 'data-act="ph-tap"' : ''}><img ${src} alt="" draggable="false">
+    ${(p.marks || []).map((m, k) => `<span class="phm" style="left:${m.x}%;top:${m.y}%" ${editable ? `data-act="ph-mark" data-v="${k}"` : ''}><b>${k + 1}</b>${m.area ? `<em>${esc(editable || !isStaff() ? t('area_' + m.area) : (AREA_PT[m.area] || m.area))}</em>` : ''}</span>`).join('')}</div>`;
+}
+const AREA_PT = { eyes: 'Olhos', nose: 'Nariz', lips: 'Lábios', face: 'Rosto / mandíbula', skin: 'Pele / manchas', wrinkle: 'Rugas / flacidez', teeth: 'Dentes', hair: 'Cabelo', body: 'Corpo' };
+
+/* ---------- guia (paciente) ---------- */
+function pageGuide() {
+  const arts = S.articles.filter(a => a.published !== false).sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  return `<div class="kick">${esc(t('guide_title'))}</div><h1 class="h1" style="font-size:30px;margin-top:4px">${esc(t('guide_title'))}</h1>
+  <p class="muted" style="margin:6px 0 0;max-width:620px">${esc(t('guide_sub'))}</p>
+  <section class="sec"><h2 class="h2 mb">${esc(t('guide_general'))}</h2><div class="grid g2">${arts.map(articleCard).join('')}</div></section>
+  <section class="sec"><h2 class="h2 mb">${esc(t('guide_treat'))}</h2>
+    ${CATS.map(c => { const items = S.treats.filter(x => x.category === c && x.active !== false); if (!items.length) return ''; return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid g2">${items.map(x => `<a class="card tr" href="#/treatment/${x.id}"><span class="ic">${CAT_IC[x.category]}</span><div class="grow"><div class="b">${esc(tn(x.name))}</div><div class="small muted" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc((guideOf(x) || {}).what || '')}</div></div><span class="muted">›</span></a>`).join('')}</div>`; }).join('')}
+  </section><p class="tiny muted mt">${esc(t('guide_disclaimer'))}</p>${footer()}`;
+}
+function articleCard(a) {
+  return `<a class="card cl" href="#/guide/${esc(a.slug)}"><div class="cover tone${(a.tone || 0) % 7}" style="height:84px"><span class="mono" style="font-size:80px">${esc((tn(a.title) || '?')[0])}</span><span class="ds">${esc(t('min_read', { n: a.minutes || 3 }))}</span></div>
+    <div class="bd"><div class="nm">${esc(tn(a.title))}</div><div class="small muted">${esc(tn(a.summary))}</div><div class="small b" style="color:var(--acc);margin-top:auto">${esc(t('read_more'))} →</div></div></a>`;
+}
+function pageArticle(slug) {
+  const a = S.articles.find(x => x.slug === slug); if (!a) return `<div class="empty">${esc(t('no_results'))}</div>`;
+  const others = S.articles.filter(x => x.slug !== slug && x.published !== false).slice(0, 3);
+  return `<a class="row small muted mb" href="#/guide">${IC.back} ${esc(t('guide_title'))}</a>
+  <article class="card pad art" style="max-width:720px;margin:0 auto"><div class="kick">${esc(t('guide_general'))} · ${esc(t('min_read', { n: a.minutes || 3 }))}</div>
+    <h1 class="h1" style="font-size:30px;margin:6px 0 4px">${esc(tn(a.title))}</h1><p class="muted" style="margin:0 0 10px">${esc(tn(a.summary))}</p>
+    ${md(tn(a.body))}
+    <div class="info mt">${esc(t('guide_disclaimer'))}</div>
+    <div class="row wrap mt"><a class="btn acc" href="#/request">${esc(t('cta_quote'))}</a><a class="btn ghost" href="#/photo">${IC.camera} ${esc(t('photo_cta'))}</a></div></article>
+  ${others.length ? `<section class="sec" style="max-width:720px;margin-left:auto;margin-right:auto"><h2 class="h2 mb">${esc(t('related'))}</h2><div class="grid g2">${others.map(articleCard).join('')}</div></section>` : ''}${footer()}`;
+}
+function guideSections(x) {
+  const g = guideOf(x); if (!g) return '';
+  return `<section class="sec"><h2 class="h2 mb">${esc(t('guide_title'))}</h2><div class="grid g2">
+    ${GUIDE_KEYS.filter(k => g[k]).map(k => `<div class="card pad gsec"><div class="kick" style="letter-spacing:1.2px">${esc(t('g_' + k))}</div>${md(g[k])}</div>`).join('')}</div>
+    <p class="tiny muted mt">${esc(t('guide_disclaimer'))}</p></section>`;
+}
+
+/* ---------- foto com marcação + IA (paciente) ---------- */
+function phCodes() {
+  const codes = []; const areas = phAreas();
+  areas.forEach(a => (AREA_T[a] || []).forEach(c => { if (!codes.includes(c)) codes.push(c); }));
+  PH.photos.forEach(p => ((p.ai || {}).suggestions || []).forEach(s => { if (!codes.includes(s.code)) codes.unshift(s.code); }));
+  return codes.map(c => S.treats.find(x => x.code === c && x.active !== false)).filter(Boolean);
+}
+function phAreas() { const s = new Set(PH.areas); PH.photos.forEach(p => (p.marks || []).forEach(m => m.area && s.add(m.area))); return [...s]; }
+function aiWhy(code) { for (const p of PH.photos) { const s = ((p.ai || {}).suggestions || []).find(x => x.code === code); if (s) return s.why; } return ''; }
+function pagePhoto() {
+  const p = PH.photos[PH.cur];
+  const sugg = phCodes();
+  const ai = PH.photos.map(x => x.ai).find(Boolean);
+  return `<a class="row small muted mb" href="#/home">${IC.back} ${esc(t('nav_home'))}</a>
+  <div class="card pad" style="max-width:640px;margin:0 auto">
+    <div class="kick">${IC.camera} ${esc(t('photo_cta'))}</div><h1 class="h2" style="margin-top:6px">${esc(t('photo_title'))}</h1>
+    <p class="small muted" style="margin:6px 0 12px">${esc(t('photo_sub'))}</p>
+    ${PH.photos.length ? `<div class="row wrap mb" style="gap:6px">${PH.photos.map((x, i) => `<button class="phthumb ${i === PH.cur ? 'on' : ''}" data-act="ph-sel" data-v="${i}"><img src="${x.data}" alt=""></button>`).join('')}
+        ${PH.photos.length < 3 ? `<label class="phthumb add"><input type="file" accept="image/*" hidden data-ph-file>＋</label>` : ''}</div>` : ''}
+    ${p ? `<div class="small b mb">${esc(t('photo_tap'))}</div>${photoView(p, PH.cur, true)}
+        <div class="row wrap mt" style="gap:6px"><button class="btn sm ghost" data-act="ph-clear">${esc(t('photo_clear'))}</button><button class="btn sm ghost" data-act="ph-del">${esc(t('photo_remove'))}</button><span class="tiny muted">${esc(t('photo_max'))}</span></div>`
+      : `<label class="phdrop"><input type="file" accept="image/*" hidden data-ph-file>${IC.camera.replace('width="17" height="17"', 'width="34" height="34"')}<span class="b">${esc(t('photo_pick'))}</span><span class="tiny muted">${esc(t('photo_private'))}</span></label>`}
+    <div class="h3 mt2">${esc(t('photo_area'))}</div>
+    <div class="row wrap mt" style="gap:6px">${AREAS.map(a => `<button class="chip ${phAreas().includes(a) ? 'on' : ''}" data-act="ph-areachip" data-v="${a}">${esc(t('area_' + a))}</button>`).join('')}</div>
+    ${p ? `<div class="aibox mt2">${PH.busy ? `<div class="row"><span class="spin"></span><span class="small">${esc(t('photo_ai_wait'))}</span></div>`
+        : S.user ? `<button class="btn soft" data-act="ph-ai">✦ ${esc(t('photo_ai'))}</button>` : `<div class="small muted">✦ ${esc(t('photo_ai_login'))} <a class="b" style="color:var(--acc)" href="#/me">${esc(t('login'))}</a></div>`}
+        ${PH.aiErr ? `<div class="small muted mt">${esc(t('photo_ai_off'))}</div>` : ''}
+        ${ai && ai.summary ? `<div class="small mt" style="color:var(--ink2)">${esc(ai.summary)}</div>` : ''}</div>` : ''}
+    ${sugg.length ? `<div class="h3 mt2">${esc(t('photo_suggest'))}</div><div class="grid mt" style="gap:6px">${sugg.map(x => opt(PH.pick.includes(x.id), esc(tn(x.name)), 'ph-pick', x.id, esc(aiWhy(x.code) || (t('from') + ' ' + krw(x.price_from_krw) + (local(x.price_from_krw) ? ' · ≈ ' + local(x.price_from_krw) : ''))))).join('')}</div>
+       <p class="tiny muted mt">${esc(t('ai_note'))}</p>` : ''}
+    <div class="row mt2"><div class="grow"></div><button class="btn acc" data-act="ph-use" ${PH.photos.length || phAreas().length ? '' : 'disabled'}>${esc(t('photo_use'))} →</button></div>
+  </div><p class="tiny muted mt" style="text-align:center">${esc(t('photo_private'))}</p>`;
+}
+async function loadPhotoFile(file) {
+  if (!file || !/^image\//.test(file.type)) return;
+  const url = URL.createObjectURL(file);
+  const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
+  const max = 1080; const k = Math.min(1, max / Math.max(img.width, img.height));
+  const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+  PH.photos.push({ data: c.toDataURL('image/jpeg', 0.82), marks: [], ai: null }); PH.cur = PH.photos.length - 1; PH.aiErr = false;
+  render(true);
+}
+function areaSheet(k) {
+  openSheet(`<div class="h3">${esc(t('photo_area'))}</div><div class="grid mt" style="grid-template-columns:1fr 1fr;gap:8px">${AREAS.map(a => `<button class="btn ghost" data-act="ph-area" data-v="${k}:${a}">${esc(t('area_' + a))}</button>`).join('')}</div>
+    <div class="row mt"><button class="btn danger sm" data-act="ph-unmark" data-v="${k}">${esc(t('photo_remove'))}</button><div class="grow"></div><button class="btn sm" data-act="sheet-close">OK</button></div>`);
+}
+async function runAI() {
+  const p = PH.photos[PH.cur]; if (!p || !S.user) return;
+  PH.busy = true; PH.aiErr = false; render(true);
+  let res = null;
+  try {
+    const { data, error } = await sb.functions.invoke('kmt-ai', { body: { action: 'face', image: p.data, media_type: 'image/jpeg', lang: S.lang, areas: phAreas(), notes: RQ.notes || '', codes: S.treats.filter(x => x.active !== false).map(x => x.code) } });
+    if (!error && data && !data.error) res = data;
+  } catch (e) { console.warn(e); }
+  PH.busy = false;
+  if (!res) PH.aiErr = true;
+  else {
+    p.ai = res;
+    (res.areas || []).forEach(a => { if (AREAS.includes(a) && !PH.areas.includes(a)) PH.areas.push(a); });
+    (res.suggestions || []).forEach(s => { const x = S.treats.find(y => y.code === s.code); if (x && !PH.pick.includes(x.id)) PH.pick.push(x.id); });
+  }
+  render(true);
+}
+async function attachPhotos(row) {
+  const photos = [];
+  for (const [i, p] of (RQ.photos || []).entries()) {
+    const blob = await (await fetch(p.data)).blob();
+    const path = `${S.user.id}/${Date.now()}-${i}.jpg`;
+    const up = await sb.storage.from('kmt-photos').upload(path, blob, { contentType: 'image/jpeg', upsert: false });
+    if (up.error) throw up.error;
+    photos.push({ path, marks: p.marks || [], ai: p.ai || null });
+  }
+  row.photos = photos; row.areas = RQ.areas || [];
+}
+function rqPhotoCard() {
+  const ph = RQ.photos || [];
+  if (ph.length || (RQ.areas || []).length) return `<div class="card pad mb" style="box-shadow:none;background:var(--surf2)"><div class="row between"><span class="small b">${IC.camera} ${esc(t('photo_attached'))} (${ph.length})</span><a class="small b" style="color:var(--acc)" href="#/photo">✎</a></div>
+    <div class="row wrap" style="gap:6px;margin-top:8px">${ph.map(p => `<img class="phmini" src="${p.data}" alt="">`).join('')}${(RQ.areas || []).map(a => `<span class="tag">${esc(t('area_' + a))}</span>`).join('')}</div></div>`;
+  return `<a class="card pad mb row" href="#/photo" style="box-shadow:none;background:var(--accbg);border-color:#EAD3D9"><span style="color:var(--acc)">${IC.camera}</span><div class="grow"><div class="small b" style="color:var(--acc)">${esc(t('photo_cta'))}</div><div class="tiny muted">${esc(t('photo_tap'))}</div></div><span class="muted">›</span></a>`;
+}
+
+/* ---------- avaliações (paciente) ---------- */
+function reviewBox(r) {
+  if (!['procedure', 'recovery', 'done'].includes(r.stage)) return '';
+  const acc = S.quotes.find(q => q.request_id === r.id && q.status === 'accepted');
+  const cid = (acc && acc.clinic_id) || (r.clinic_ids || [])[0];
+  if (!cid) return '';
+  const mine = S.reviews.find(v => v.request_id === r.id && v.clinic_id === cid);
+  if (mine) return `<div class="card pad mt"><div class="row between"><div class="h3">${esc(t('reviews'))}</div>${mine.status === 'published' ? `<span class="tag ok">✓</span>` : `<span class="tag gold">${esc(t('review_pending'))}</span>`}</div><div class="mt">${reviewCard(mine)}</div></div>`;
+  const F = S.rvForm && S.rvForm.rid === r.id ? S.rvForm : (S.rvForm = { rid: r.id, cid, rating: 0, title: '', body: '' });
+  return `<div class="card pad mt" style="border-color:var(--gold)"><div class="h3">${esc(t('review_write'))} · ${esc((clinic(cid) || {}).name || '')}</div>
+    <div class="small muted" style="margin:4px 0 8px">${esc(t('review_need'))}</div>
+    <div id="rv-err" class="err-msg mb" hidden></div>
+    <div class="field"><span>${esc(t('review_rating'))}</span><div class="starpick">${[1, 2, 3, 4, 5].map(i => `<button class="${i <= F.rating ? 'on' : ''}" data-act="rv-star" data-v="${i}" aria-label="${i}">★</button>`).join('')}</div></div>
+    <label class="field mt"><span>${esc(t('review_title'))}</span><input class="in" data-rv="title" value="${esc(F.title)}" maxlength="120"></label>
+    <label class="field mt"><span>${esc(t('review_body'))}</span><textarea class="in" data-rv="body" maxlength="3000">${esc(F.body)}</textarea></label>
+    <button class="btn acc mt" data-act="rv-send" data-v="${r.id}">${esc(t('review_send'))}</button></div>`;
+}
+function tripExtras(r) {
+  const ph = r.photos || [];
+  return `${reviewBox(r)}${ph.length ? `<div class="card pad mt"><div class="h3 mb">${IC.camera} ${esc(t('photo_attached'))}</div><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px">${ph.map((p, i) => photoView(p, i, false)).join('')}</div>
+    <div class="tiny muted mt">${esc(t('photo_private'))}</div></div>` : ''}`;
+}
+function reviewsSection(cid) {
+  const rs = pubReviews().filter(v => v.clinic_id === cid); const rt = ratingOf(cid);
+  return `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('reviews'))}</h2>${rt ? `<span class="row" style="gap:6px">${stars(rt.avg, 15)}<b>${rt.avg.toFixed(1)}</b><span class="muted small">(${rt.n})</span></span>` : ''}</div>
+    ${rs.length ? `<div class="grid g2">${rs.slice(0, 12).map(v => reviewCard(v)).join('')}</div>` : `<div class="card pad small muted">${esc(t('reviews_none'))}</div>`}</section>`;
+}
+
+/* ---------- equipe: avaliações ---------- */
+function sReviews() {
+  const f = S.rvf; const list = S.reviews.filter(v => f === 'all' || v.status === f);
+  const cnt = s => S.reviews.filter(v => v.status === s).length;
+  return sTop('Avaliações', 'Reviews · só pacientes verificados') + `
+  <div class="info mb">Só quem fez procedimento pelo app consegue avaliar. Nada aparece no site antes de você publicar. Não edite o texto do paciente — se precisar, oculte e responda.</div>
+  <div class="seg mb">${[['pending', 'Aguardando'], ['published', 'Publicadas'], ['hidden', 'Ocultas'], ['all', 'Todas']].map(([k, l]) => `<button class="${f === k ? 'on' : ''}" data-act="rvf" data-v="${k}">${l}${k !== 'all' ? ` (${cnt(k)})` : ''}</button>`).join('')}</div>
+  ${list.length ? `<div class="grid g2">${list.map(v => { const r = S.reqs.find(x => x.id === v.request_id) || {}; return `<div class="col">${reviewCard(v, true)}
+     <div class="row wrap" style="gap:6px">${v.status !== 'published' ? `<button class="btn sm ok" data-act="rv-pub" data-v="${v.id}">Publicar</button>` : ''}${v.status !== 'hidden' ? `<button class="btn sm ghost" data-act="rv-hide" data-v="${v.id}">Ocultar</button>` : ''}<a class="btn sm ghost" href="#/admin/r/${r.id || ''}">${esc(r.code || 'Pedido')}</a></div>
+     <div class="row" style="gap:6px"><input class="in" id="rr-${v.id}" placeholder="Responder publicamente (opcional)" value="${esc(v.staff_reply || '')}" style="min-height:34px;font-size:13px"><button class="btn sm ghost" data-act="rv-reply" data-v="${v.id}">Salvar</button></div></div>`; }).join('')}</div>`
+    : `<div class="card empty"><div class="em">⭐</div>Nenhuma avaliação aqui.</div>`}`;
+}
+async function setReview(id, patch, kind) {
+  const { error } = await sb.from('kmt_reviews').update(patch).eq('id', id); if (error) return err(error);
+  const v = S.reviews.find(x => x.id === id); Object.assign(v, patch);
+  await logEvent(v.request_id, kind, { review: id, rating: v.rating }, false); toast('Avaliação atualizada'); render(true);
+}
+
+/* ---------- equipe: guia ---------- */
+function langFill(obj, keys) { return LANGS.filter(l => keys.some(k => obj && obj[l[0]] && obj[l[0]][k])).map(l => l[0]); }
+function artData(a) { const d = {}; LANGS.forEach(([l]) => { const o = {}; ART_KEYS.forEach(k => { if (a[k] && a[k][l]) o[k] = a[k][l]; }); if (Object.keys(o).length) d[l] = o; }); return d; }
+function sGuide() {
+  const arts = [...S.articles].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  return sTop('Guia', 'Guide · artigos e explicações dos procedimentos', `<a class="btn sm acc" href="#/admin/article/new">+ Novo artigo</a>`) + `
+  <div class="info mb">Escreva em inglês ou português e use <b>Traduzir com IA</b> para preencher os outros idiomas. Idioma vazio mostra o inglês ao paciente.</div>
+  <div class="h3 mb">Artigos</div>
+  <div class="tblw mb"><table class="tbl"><thead><tr><th>Título</th><th>Idiomas</th><th>Min.</th><th>Publicado</th></tr></thead><tbody>
+  ${arts.map(a => { const fl = langFill(artData(a), ART_KEYS); return `<tr class="click" data-href="#/admin/article/${a.id}"><td class="b">${esc(tnEn(a.title))}</td><td>${fl.length}/10 <span class="tiny muted">${fl.map(l => LANG_FLAG[l]).join(' ')}</span></td><td>${a.minutes || ''}</td><td>${a.published !== false ? '●' : '<span class="muted">○</span>'}</td></tr>`; }).join('')}
+  </tbody></table></div>
+  <div class="h3 mb">Explicação de cada tratamento</div>
+  <div class="tblw"><table class="tbl"><thead><tr><th>Tratamento</th><th>Categoria</th><th>Idiomas do guia</th></tr></thead><tbody>
+  ${S.treats.map(x => { const fl = langFill(x.guide || {}, GUIDE_KEYS); return `<tr class="click" data-href="#/admin/treat/${x.id}"><td class="b">${CAT_IC[x.category] || ''} ${esc(tnEn(x.name))}</td><td>${CAT_PT[x.category] || x.category}</td><td>${fl.length ? `${fl.length}/10 <span class="tiny muted">${fl.map(l => LANG_FLAG[l]).join(' ')}</span>` : '<span class="tag warn">vazio</span>'}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+}
+function edInit(kind, id, data) { if (!S.ed || S.ed.kind !== kind || S.ed.id !== id) S.ed = { kind, id, data: JSON.parse(JSON.stringify(data || {})), lang: 'en', busy: '' }; return S.ed; }
+function guideEditor(keys, labels, big) {
+  const E = S.ed; const cur = E.data[E.lang] || {};
+  const filled = langFill(E.data, keys);
+  return `<div class="card pad col"><div class="row wrap between"><div class="h3">Textos por idioma</div>
+      <button class="btn sm soft" data-act="ed-translate" ${E.busy ? 'disabled' : ''}>✦ ${E.busy ? esc(E.busy) : 'Traduzir com IA para os idiomas vazios'}</button></div>
+    <div class="row wrap" style="gap:5px">${LANGS.map(([l, n]) => `<button class="chip ${E.lang === l ? 'on' : ''}" style="min-height:28px;padding:3px 10px;font-size:11.5px" data-act="ed-lang" data-v="${l}">${filled.includes(l) ? '✓ ' : ''}${esc(n)}</button>`).join('')}</div>
+    ${keys.map(k => `<label class="field"><span>${esc(labels[k])}</span>${big.includes(k) ? `<textarea class="in" data-ed="${k}" rows="${k === 'body' ? 14 : 4}">${esc(cur[k] || '')}</textarea>` : `<input class="in" data-ed="${k}" value="${esc(cur[k] || '')}">`}</label>`).join('')}
+    <div class="tiny muted">Formatação: <code>## Título</code> · <code>- item de lista</code> · <code>**negrito**</code></div></div>`;
+}
+function sArticle(id) {
+  const isNew = id === 'new';
+  const a = isNew ? { slug: '', minutes: 3, tone: 1, sort: 100, published: true, title: {}, summary: {}, body: {} } : S.articles.find(x => x.id === id);
+  if (!a) return '<div class="empty">Artigo não encontrado.</div>';
+  edInit('article', id, artData(a));
+  return `<a class="row small muted mb" href="#/admin/guide">${IC.back} Guia</a>${sTop(isNew ? 'Novo artigo' : esc(tnEn(a.title)), 'Article')}
+  <div class="two"><div>${guideEditor(ART_KEYS, { title: 'Título', summary: 'Resumo (aparece no cartão)', body: 'Texto' }, ['summary', 'body'])}</div>
+    <div class="col"><div class="card pad col"><div class="h3">Publicação</div>
+      <label class="field"><span>Endereço (slug)</span><input class="in" id="art-slug" value="${esc(a.slug)}" placeholder="ex.: recovery-in-seoul"></label>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px"><label class="field"><span>Minutos</span><input class="in" id="art-min" inputmode="numeric" value="${esc(a.minutes || 3)}"></label><label class="field"><span>Cor (1–6)</span><input class="in" id="art-tone" inputmode="numeric" value="${esc(a.tone || 1)}"></label><label class="field"><span>Ordem</span><input class="in" id="art-sort" inputmode="numeric" value="${esc(a.sort || 100)}"></label></div>
+      <label class="check"><input type="checkbox" id="art-pub" ${a.published !== false ? 'checked' : ''}> Publicado no site</label></div>
+      <div id="art-err" class="err-msg" hidden></div>
+      <div class="row"><a class="btn ghost" href="#/admin/guide">Voltar</a>${!isNew ? `<a class="btn ghost" href="#/guide/${esc(a.slug)}" target="_blank">Ver no site</a>` : ''}<div class="grow"></div><button class="btn acc" data-act="art-save" data-v="${isNew ? '' : id}">Salvar artigo</button></div></div></div>`;
+}
+async function edTranslate() {
+  const E = S.ed; const src = E.data[E.lang] || {};
+  const keys = E.kind === 'article' ? ART_KEYS : GUIDE_KEYS;
+  const fields = {}; keys.forEach(k => { if (src[k]) fields[k] = src[k]; });
+  if (!Object.keys(fields).length) return toast('Escreva o texto neste idioma primeiro');
+  const targets = LANGS.map(l => l[0]).filter(l => l !== E.lang && !keys.some(k => E.data[l] && E.data[l][k]));
+  if (!targets.length) return toast('Todos os idiomas já estão preenchidos');
+  let ok = 0;
+  for (const [i, l] of targets.entries()) {
+    E.busy = `Traduzindo ${i + 1}/${targets.length}…`; render(true);
+    try {
+      const { data, error } = await sb.functions.invoke('kmt-ai', { body: { action: 'translate', source: E.lang, targets: [l], fields } });
+      if (error || !data || data.error) throw new Error((data && data.error) || (error && error.message) || 'erro');
+      const tr = (data.translations || {})[l]; if (tr) { E.data[l] = Object.assign(E.data[l] || {}, tr); ok++; }
+    } catch (e) { E.busy = ''; render(true); return toast('IA indisponível: instale a função kmt-ai no Supabase (' + (e.message || e) + ')'); }
+  }
+  E.busy = ''; render(true); toast(`${ok} idiomas traduzidos — confira e clique em Salvar`);
+}
+async function saveArticle(id) {
+  const E = S.ed; const e = $('#art-err'); const fail = m => { e.textContent = m; e.hidden = false; };
+  const slug = ($('#art-slug').value || '').trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '');
+  if (!slug) return fail('Falta o endereço (slug).');
+  if (!E.data.en || !E.data.en.title) return fail('Falta o título em inglês (é o idioma reserva).');
+  if (S.articles.some(a => a.slug === slug && a.id !== id)) return fail('Já existe um artigo com esse endereço.');
+  const row = { slug, minutes: num($('#art-min').value) || 3, tone: num($('#art-tone').value) || 1, sort: num($('#art-sort').value) ?? 100, published: $('#art-pub').checked, updated_at: new Date().toISOString(), title: {}, summary: {}, body: {} };
+  Object.entries(E.data).forEach(([l, o]) => ART_KEYS.forEach(k => { if (o[k]) row[k][l] = o[k]; }));
+  const res = id ? await sb.from('kmt_articles').update(row).eq('id', id) : await sb.from('kmt_articles').insert(row);
+  if (res.error) return fail(res.error.message);
+  S.ed = null; toast('Artigo salvo'); await refresh(true); go('#/admin/guide');
+}
+function staffPhotos(r) {
+  const ph = r.photos || []; if (!ph.length && !(r.areas || []).length) return '';
+  const ai = ph.map(p => p.ai).find(Boolean);
+  return `<div class="card pad"><div class="h3 mb">${IC.camera} Fotos e áreas marcadas pelo paciente</div>
+    ${(r.areas || []).length ? `<div class="row wrap mb" style="gap:5px">${r.areas.map(a => `<span class="tag acc">${esc(AREA_PT[a] || a)}</span>`).join('')}</div>` : ''}
+    ${ph.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">${ph.map((p, i) => photoView(p, i, false)).join('')}</div>` : ''}
+    ${ai ? `<div class="info mt"><b>Análise da IA (só sugestão):</b> ${esc(ai.summary || '')}${(ai.suggestions || []).length ? `<div style="margin-top:4px">${ai.suggestions.map(s => `• ${esc(tnEn((S.treats.find(x => x.code === s.code) || {}).name) || s.code)} — ${esc(s.why || '')}`).join('<br>')}</div>` : ''}${ai.minor_or_invalid ? '<div class="b" style="color:var(--bad);margin-top:4px">⚠ A IA indicou foto inválida ou possível menor de idade.</div>' : ''}</div>` : ''}
+    <div class="tiny muted mt">Fotos privadas: só a equipe e o paciente veem. Envie às clínicas somente as escolhidas pelo paciente.</div></div>`;
+}
+
+/* ---------- ações V2 ---------- */
+Object.assign(ACT, {
+  'ph-tap': (v, el, e) => {
+    const p = PH.photos[PH.cur]; if (!p) return; const b = el.getBoundingClientRect();
+    const x = Math.round((e.clientX - b.left) / b.width * 1000) / 10, y = Math.round((e.clientY - b.top) / b.height * 1000) / 10;
+    p.marks.push({ x, y, area: null }); render(true); areaSheet(p.marks.length - 1);
+  },
+  'ph-mark': (v) => areaSheet(+v),
+  'ph-area': (v) => { const [k, a] = v.split(':'); const p = PH.photos[PH.cur]; if (p && p.marks[+k]) p.marks[+k].area = a; const x = S.treats.find(y => y.code === (AREA_T[a] || [])[0]); if (x && !PH.pick.includes(x.id)) PH.pick.push(x.id); closeSheet(); render(true); },
+  'ph-unmark': (v) => { const p = PH.photos[PH.cur]; if (p) p.marks.splice(+v, 1); closeSheet(); render(true); },
+  'ph-areachip': (v) => { if (PH.areas.includes(v)) PH.areas = PH.areas.filter(a => a !== v); else { PH.areas.push(v); const x = S.treats.find(y => y.code === (AREA_T[v] || [])[0]); if (x && !PH.pick.includes(x.id)) PH.pick.push(x.id); } render(true); },
+  'ph-pick': (v) => { PH.pick = PH.pick.includes(v) ? PH.pick.filter(x => x !== v) : [...PH.pick, v]; render(true); },
+  'ph-sel': (v) => { PH.cur = +v; render(true); },
+  'ph-clear': () => { const p = PH.photos[PH.cur]; if (p) p.marks = []; render(true); },
+  'ph-del': () => { PH.photos.splice(PH.cur, 1); PH.cur = Math.max(0, PH.photos.length - 1); render(true); },
+  'ph-ai': () => runAI(),
+  'ph-use': () => { PH.pick.forEach(id => { if (!RQ.t.includes(id)) RQ.t.push(id); }); RQ.photos = PH.photos.map(p => ({ data: p.data, marks: p.marks, ai: p.ai })); RQ.areas = phAreas(); RQ.step = 1; saveDraft(); go('#/request'); },
+  fkind: (v) => { S.f.kind = v; render(true); },
+  'rv-star': (v) => { S.rvForm.rating = +v; render(true); },
+  'rv-send': async (v) => {
+    const F = S.rvForm; const e = $('#rv-err'); const fail = m => { e.textContent = m; e.hidden = false; };
+    if (!F.rating) return fail(t('err_rating'));
+    if ((F.body || '').trim().length < 5) return fail(t('err_review'));
+    const r = S.reqs.find(x => x.id === v); const p = S.profile || {};
+    const first = (r.full_name || p.full_name || '').trim().split(/\s+/)[0] || '—';
+    const row = { request_id: v, clinic_id: F.cid, patient_id: S.user.id, rating: F.rating, title: F.title.trim() || null, body: F.body.trim(), lang: S.lang, country: r.country, display_name: `${first} · ${country(r.country).f} ${r.country || ''}`.trim(), treatment_ids: r.treatment_ids || [], status: 'pending' };
+    const { data, error } = await sb.from('kmt_reviews').insert(row).select().single();
+    if (error) return fail(error.message);
+    S.reviews.push(data); S.rvForm = null; toast(t('review_thanks')); render(true);
+  },
+  rvf: (v) => { S.rvf = v; render(true); },
+  'rv-pub': (v) => setReview(v, { status: 'published', published_at: new Date().toISOString() }, 'review_published'),
+  'rv-hide': (v) => setReview(v, { status: 'hidden' }, 'review_hidden'),
+  'rv-reply': (v) => setReview(v, { staff_reply: ($('#rr-' + v).value || '').trim() || null }, 'review_reply'),
+  'ed-lang': (v) => { S.ed.lang = v; render(true); },
+  'ed-translate': () => edTranslate(),
+  'art-save': (v) => saveArticle(v || null),
+});
+Object.assign(EV_PT, { review_published: 'Avaliação publicada', review_hidden: 'Avaliação ocultada', review_reply: 'Avaliação respondida' });
+document.addEventListener('change', e => { if (e.target.matches('[data-ph-file]')) { loadPhotoFile(e.target.files[0]).catch(err); } });
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.rv && S.rvForm) S.rvForm[el.dataset.rv] = el.value;
+  if (el.dataset.ed && S.ed) { const l = S.ed.lang; S.ed.data[l] = S.ed.data[l] || {}; S.ed.data[l][el.dataset.ed] = el.value; }
+});
 
 /* =====================================================================
    INÍCIO
