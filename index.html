@@ -1,0 +1,1811 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>K-Medical Concierge</title>
+<meta name="description" content="Korea's vetted clinics with a personal coordinator in your language.">
+<meta name="theme-color" content="#FBF8F4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="K-Medical">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8F4;--surf:#FFFFFF;--surf2:#F6F1EA;--ink:#1F1A17;--ink2:#4A423C;--muted:#8A8079;--line:#ECE4DA;--line2:#E0D5C8;
+  --acc:#8A3B4F;--acc2:#A8566B;--accbg:#F7ECEE;--gold:#B08A55;--goldbg:#F6EFE3;--ok:#3E7C5A;--okbg:#E8F2EC;--warn:#B7791F;--warnbg:#FBF1DE;--bad:#B4443A;--badbg:#FBE9E7;
+  --r:14px;--r2:10px;--sh:0 1px 2px rgba(60,40,30,.05),0 8px 24px rgba(60,40,30,.06);
+  --sans:"Inter",var(--script,"Noto Sans"),system-ui,-apple-system,"Segoe UI",sans-serif;--serif:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input,select,textarea{font:inherit;color:inherit}
+img{max-width:100%}
+.serif{font-family:var(--serif)}
+.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:11px}.b{font-weight:600}.right{text-align:right}.nowrap{white-space:nowrap}
+.row{display:flex;gap:8px;align-items:center}.wrap{flex-wrap:wrap}.between{justify-content:space-between}.grow{flex:1;min-width:0}.col{display:flex;flex-direction:column;gap:8px}
+.mt{margin-top:12px}.mt2{margin-top:20px}.mb{margin-bottom:12px}
+
+/* ---------- topo e navegação (paciente) ---------- */
+.top{position:sticky;top:0;z-index:20;background:rgba(251,248,244,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line);padding:calc(env(safe-area-inset-top) + 8px) 16px 8px}
+.top-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.2px;white-space:nowrap}
+.logo .mk{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,var(--acc),#5E2433);display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.logo small{font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;margin-top:-3px}
+.tnav{display:none;gap:4px;margin-left:16px}
+.tnav a{padding:7px 12px;border-radius:99px;color:var(--ink2);font-weight:500;font-size:13.5px}
+.tnav a.on{background:var(--ink);color:#fff}
+.langsel{appearance:none;-webkit-appearance:none;border:1px solid var(--line2);background:var(--surf);border-radius:99px;padding:6px 26px 6px 11px;font-size:12.5px;max-width:132px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A8079' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.iconbtn{width:36px;height:36px;border-radius:99px;display:grid;place-items:center;border:1px solid var(--line2);background:var(--surf);position:relative;flex:none}
+.dot{position:absolute;top:-2px;right:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:var(--acc);color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;border:2px solid var(--bg)}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;color:var(--muted);padding:4px 0;position:relative;min-width:0}
+.bnav a span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.bnav a.on{color:var(--acc);font-weight:600}
+.bnav svg{width:22px;height:22px}
+.bnav .dot{top:0;right:calc(50% - 20px)}
+main{max-width:1120px;margin:0 auto;padding:16px 16px calc(92px + env(safe-area-inset-bottom))}
+@media(min-width:900px){.tnav{display:flex}.bnav{display:none}main{padding-bottom:48px}}
+
+/* ---------- elementos ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 18px;border-radius:99px;font-weight:600;font-size:14px;background:var(--ink);color:#fff;white-space:nowrap;transition:transform .08s,opacity .15s}
+.btn:active{transform:scale(.98)}
+.btn.acc{background:var(--acc)}.btn.ghost{background:var(--surf);color:var(--ink);border:1px solid var(--line2)}.btn.soft{background:var(--accbg);color:var(--acc)}
+.btn.sm{min-height:32px;padding:0 12px;font-size:12.5px}.btn.block{width:100%}.btn.danger{background:var(--badbg);color:var(--bad)}.btn.ok{background:var(--ok)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.pad{padding:16px}
+.h1{font-family:var(--serif);font-weight:700;font-size:30px;line-height:1.08;letter-spacing:-.2px;margin:0}
+.h2{font-family:var(--serif);font-weight:700;font-size:23px;line-height:1.15;margin:0}
+.h3{font-weight:600;font-size:15px;margin:0}
+.kick{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.sec{margin-top:28px}.sech{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:12px;gap:12px}
+.sech a{font-size:13px;color:var(--acc);font-weight:600;white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:99px;border:1px solid var(--line2);background:var(--surf);font-size:13px;font-weight:500;white-space:nowrap;min-height:34px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;margin:0 -16px;padding-left:16px;padding-right:16px}
+.chips::-webkit-scrollbar{display:none}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;background:var(--surf2);color:var(--ink2);white-space:nowrap}
+.tag.ok{background:var(--okbg);color:var(--ok)}.tag.acc{background:var(--accbg);color:var(--acc)}.tag.gold{background:var(--goldbg);color:#8C6A3A}.tag.warn{background:var(--warnbg);color:var(--warn)}.tag.bad{background:var(--badbg);color:var(--bad)}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.hs{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:2px 16px 6px}
+.hs::-webkit-scrollbar{display:none}.hs>*{scroll-snap-align:start}
+@media(min-width:700px){.hs{grid-auto-columns:calc(33.3% - 8px)}}
+
+/* hero */
+.hero{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(160deg,#FFFDF9 0%,#F7EDE6 55%,#F1E2DA 100%);border:1px solid var(--line);padding:26px 20px 22px}
+.hero .art{position:absolute;right:-30px;top:-10px;width:250px;height:250px;opacity:.95;pointer-events:none}
+.hero .hin{position:relative;max-width:560px}
+.hero p{color:var(--ink2);margin:10px 0 16px;font-size:14.5px;max-width:470px}
+.search{display:flex;align-items:center;gap:8px;background:var(--surf);border:1px solid var(--line2);border-radius:99px;padding:5px 5px 5px 15px;box-shadow:var(--sh);max-width:480px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:none;font-size:14.5px;padding:6px 0}
+.trust{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.trust div{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--ink2);font-weight:500}
+.trust i{width:24px;height:24px;border-radius:8px;background:var(--surf);border:1px solid var(--line);display:grid;place-items:center;font-style:normal;color:var(--gold);flex:none}
+@media(min-width:900px){.hero{padding:44px 40px 36px}.hero .art{width:430px;height:430px;right:10px;top:-40px}.h1{font-size:44px}.trust{grid-template-columns:repeat(4,auto);justify-content:start;gap:20px}}
+
+/* clínica */
+.cl{overflow:hidden;display:flex;flex-direction:column}
+.cover{height:118px;position:relative;display:flex;align-items:flex-end;padding:12px 14px;color:#fff;overflow:hidden}
+.cover .mono{position:absolute;right:-6px;top:-18px;font-family:var(--serif);font-size:110px;font-weight:700;opacity:.16;line-height:1}
+.cover .ds{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;opacity:.9;font-weight:600}
+.cover .vb{position:absolute;left:12px;top:12px}
+.tone1{background:linear-gradient(135deg,#7E3A4B,#B9697B)}.tone2{background:linear-gradient(135deg,#6B5B4B,#B39A7E)}.tone3{background:linear-gradient(135deg,#3F5C63,#7FA0A3)}.tone4{background:linear-gradient(135deg,#2E2A36,#6E5D7A)}.tone5{background:linear-gradient(135deg,#8A6A3A,#CBA874)}.tone6{background:linear-gradient(135deg,#4C5D49,#93A58A)}.tone0{background:linear-gradient(135deg,#5A4A55,#A08A98)}
+.cl .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cl .nm{font-weight:600;font-size:15px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--muted)}
+
+/* tratamento */
+.tr{display:flex;gap:12px;align-items:center;padding:12px 14px}
+.tr .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;font-size:20px;background:var(--surf2)}
+.price{font-weight:700;font-size:14.5px}
+.price small{font-weight:500;color:var(--muted);font-size:11.5px}
+.loc{font-size:12px;color:var(--muted)}
+
+/* listas, formulários */
+.field{display:flex;flex-direction:column;gap:5px}
+.field>span{font-size:12.5px;font-weight:600;color:var(--ink2)}
+.in,select.in,textarea.in{width:100%;border:1px solid var(--line2);background:var(--surf);border-radius:var(--r2);padding:10px 12px;font-size:15px;outline:0;min-height:42px}
+textarea.in{min-height:84px;resize:vertical}
+.in:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(138,59,79,.12)}
+.in.err{border-color:var(--bad);box-shadow:0 0 0 3px rgba(180,68,58,.12)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2);padding:8px 0;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--acc);flex:none;margin:0}
+.opt{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line2);border-radius:var(--r2);background:var(--surf);cursor:pointer;min-height:46px}
+.opt.on{border-color:var(--acc);background:var(--accbg)}
+.opt .bx{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line2);display:grid;place-items:center;flex:none;background:#fff}
+.opt.on .bx{background:var(--acc);border-color:var(--acc);color:#fff}
+.err-msg{color:var(--bad);font-size:12.5px;font-weight:500;background:var(--badbg);padding:9px 12px;border-radius:10px}
+.info{background:var(--goldbg);color:#6E5530;font-size:12.5px;padding:10px 12px;border-radius:10px}
+.steps{display:flex;gap:6px;margin:6px 0 16px}
+.steps div{flex:1;height:4px;border-radius:9px;background:var(--line)}
+.steps div.on{background:var(--acc)}
+.list>*+*{border-top:1px solid var(--line)}
+.li{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.empty{text-align:center;padding:36px 20px;color:var(--muted)}
+.empty .em{font-size:34px;margin-bottom:6px}
+
+/* jornada */
+.journey{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:4px 0}
+.journey::-webkit-scrollbar{display:none}
+.js{flex:1;min-width:66px;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;font-size:10.5px;text-align:center;color:var(--muted)}
+.js:before{content:"";position:absolute;top:10px;left:-50%;width:100%;height:2px;background:var(--line);z-index:0}
+.js:first-child:before{display:none}
+.js b{width:22px;height:22px;border-radius:99px;background:var(--surf);border:2px solid var(--line2);z-index:1;display:grid;place-items:center;font-size:11px;color:#fff}
+.js.done b{background:var(--acc);border-color:var(--acc)}.js.done:before,.js.cur:before{background:var(--acc)}
+.js.cur b{background:#fff;border-color:var(--acc);box-shadow:0 0 0 4px var(--accbg)}
+.js.cur{color:var(--ink);font-weight:600}
+
+/* chat */
+.chat{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow-y:auto;padding:12px;background:var(--surf2);border-radius:var(--r2)}
+.bub{max-width:82%;padding:8px 11px;border-radius:14px;font-size:13.5px;white-space:pre-wrap;word-wrap:break-word}
+.bub.me{align-self:flex-end;background:var(--acc);color:#fff;border-bottom-right-radius:4px}
+.bub.them{align-self:flex-start;background:var(--surf);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bub .tm{display:block;font-size:10px;opacity:.65;margin-top:3px}
+.composer{display:flex;gap:8px;margin-top:8px}
+.composer textarea{flex:1;min-height:42px;max-height:120px}
+
+/* orçamento */
+.q{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:var(--surf)}
+.q.best{border-color:var(--gold);box-shadow:0 0 0 3px var(--goldbg)}
+.qi{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:3px 0;color:var(--ink2)}
+.qt{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--line2);margin-top:8px;padding-top:8px}
+.qt .v{font-size:19px;font-weight:700}
+
+.tl{position:relative;padding-left:18px}
+.tl:before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl>div{position:relative;padding:4px 0 10px;font-size:13px}
+.tl>div:before{content:"";position:absolute;left:-17px;top:9px;width:10px;height:10px;border-radius:99px;background:var(--surf);border:2px solid var(--acc)}
+.tl>div.priv:before{border-color:var(--muted);border-style:dashed}
+
+#toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:99px;font-size:13px;font-weight:500;opacity:0;transition:.25s;z-index:99;pointer-events:none;max-width:calc(100vw - 32px);text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.foot{margin-top:36px;padding:18px 0 4px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.sheet-bg{position:fixed;inset:0;background:rgba(31,26,23,.35);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:20px}}
+
+/* ---------- PAINEL DA EQUIPE ---------- */
+body.staff{font-size:13px}
+.st{display:flex;min-height:100vh}
+.side{width:226px;flex:none;background:#1F1A17;color:#EDE6DE;padding:18px 12px;position:sticky;top:0;height:100vh;display:none;flex-direction:column;gap:2px;overflow-y:auto}
+.side .logo{color:#fff;padding:0 6px 14px}
+.side .grp{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#9C9088;margin:14px 8px 4px}
+.side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;color:#D9CFC5;font-size:13px}
+.side a small{display:block;font-size:10px;color:#8E837B;margin-top:-1px}
+.side a.on{background:rgba(255,255,255,.09);color:#fff}
+.side a .n{margin-left:auto;background:var(--acc);color:#fff;border-radius:99px;font-size:10px;padding:1px 7px;font-weight:700}
+.side svg{width:17px;height:17px;flex:none;opacity:.85}
+.smain{flex:1;min-width:0;padding:18px 16px calc(90px + env(safe-area-inset-bottom))}
+.stop{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.stop h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.2px}
+.stop h1 small{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.3px}
+@media(min-width:900px){.side{display:flex}.smain{padding:22px 26px 40px}.st .bnav{display:none}}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:900px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{padding:13px 14px}
+.kpi .l{font-size:11.5px;color:var(--muted);font-weight:500}
+.kpi .v{font-size:22px;font-weight:700;margin-top:2px;letter-spacing:-.4px}
+.kpi .s{font-size:11px;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:11px;letter-spacing:.3px;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surf2)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr.click{cursor:pointer}.tbl tr.click:hover td{background:#FDFBF8}
+.tblw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--line);background:var(--surf)}
+.bar{height:6px;border-radius:9px;background:var(--line);overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:9px}
+.hbar{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 0}
+.hbar .lb{width:112px;flex:none;color:var(--ink2)}
+.hbar .tk{flex:1;height:16px;background:var(--surf2);border-radius:5px;overflow:hidden}
+.hbar .tk i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:5px}
+.hbar .nv{width:34px;text-align:right;font-weight:600}
+.two{display:grid;gap:14px}
+@media(min-width:1000px){.two{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}}
+.fbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.fbar .in{min-height:34px;padding:6px 10px;font-size:13px;width:auto}
+.fbar .search-in{flex:1;min-width:160px}
+.mcard{display:none}
+@media(max-width:700px){.tblw.resp{display:none}.mcard{display:block}}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 10px;font-size:12.5px}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-weight:500;word-break:break-word}
+.irow{display:grid;grid-template-columns:1fr 120px 30px;gap:6px;margin-bottom:6px}
+.irow .in{min-height:36px;padding:7px 9px;font-size:13px}
+.pill-st{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
+.s-new{background:#FBE9E7;color:#B4443A}.s-consulting{background:#FBF1DE;color:#9A6516}.s-quoted{background:#F6EFE3;color:#8C6A3A}.s-booked{background:#E8F2EC;color:#3E7C5A}.s-travel{background:#E6EEF5;color:#3B6585}.s-in_korea{background:#EDE8F5;color:#5E4B8B}.s-procedure{background:#F7ECEE;color:#8A3B4F}.s-recovery{background:#EAF3F2;color:#3E7470}.s-done{background:#EEEAE5;color:#5A514A}.s-canceled{background:#F1F0EE;color:#9C958F;text-decoration:line-through}
+.seg{display:inline-flex;background:var(--surf2);border-radius:99px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{padding:5px 11px;border-radius:99px;font-size:12px;font-weight:500;color:var(--ink2)}
+.seg button.on{background:var(--surf);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.qr{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.qr button{font-size:11.5px;padding:4px 10px;border-radius:99px;background:var(--surf);border:1px solid var(--line2)}
+.mini{font-size:11.5px}
+</style>
+</head>
+<body>
+<div id="app"><div style="padding:40vh 0;text-align:center;color:#8A8079;font-family:Georgia,serif">K-Medical Concierge…</div></div>
+<div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+const I18N = {
+en:{
+nav_home:"Home",nav_clinics:"Clinics",nav_treat:"Treatments",nav_trips:"My trip",nav_me:"Profile",
+hero_kicker:"Seoul · Beauty · Medical",
+hero_title:"Korea's best clinics, with someone by your side",
+hero_sub:"Vetted clinics, transparent prices and a personal coordinator in your language — from the first question to aftercare at home.",
+search_ph:"Search: nose, botox, implant…",cta_quote:"Get free quotes",cta_browse:"Browse clinics",
+cat_all:"All",cat_plastic:"Plastic surgery",cat_derma:"Dermatology",cat_dental:"Dental",cat_checkup:"Check-up",cat_hair:"Hair",
+sec_verified:"Vetted clinics",sec_popular:"Popular treatments",sec_how:"How it works",see_all:"See all",
+how1_t:"Tell us what you want",how1_d:"Pick treatments and dates. It takes 2 minutes.",
+how2_t:"Compare quotes",how2_d:"Up to 3 vetted clinics answer with a full price, in KRW and in your currency.",
+how3_t:"We plan your trip",how3_d:"Booking, airport pick-up, hotel and a medical interpreter.",
+how4_t:"Aftercare at home",how4_d:"Your coordinator follows your recovery after you fly back.",
+trust1:"Every clinic personally vetted",trust2:"Coordinator in your language",trust3:"Clear prices, no hidden fees",trust4:"Free for patients",
+from:"from",u_case:"",u_session:"/ session",u_tooth:"/ tooth",u_area:"/ area",
+stay:"Stay in Seoul",recovery:"Recovery",days:"days",
+verified:"Vetted",under_review:"Under review",
+chk_license:"Licensed medical institution",chk_specialist:"Board-certified specialists",chk_intl:"Experienced with foreign patients",chk_er:"Anesthesiologist & emergency protocol",chk_aftercare:"Aftercare follow-up",chk_price:"Transparent price list",
+languages:"Languages",doctors:"Doctors",since:"Since",intl_year:"foreign patients / year",
+treatments_here:"Treatments",clinics_offering:"Clinics offering this",quote_this:"Request a quote",
+indicative:"Indicative prices. Your final quote comes from the clinic after consultation.",
+filter_lang:"Speaks my language",no_results:"Nothing found.",
+req_title:"Free quote request",step1:"What",step2:"When",step3:"You",
+req_what:"Which treatments?",req_clinics:"Preferred clinics (optional, up to 3)",req_any:"Not sure — recommend for me",req_notes:"Tell us more: goals, concerns, previous procedures",
+req_when:"When would you like to come?",date_from:"Arrival",date_to:"Departure",flexible:"My dates are flexible",companions:"Travelling with (people)",budget:"Budget in USD (optional)",
+services:"I also need",svc_hotel:"Hotel near the clinic",svc_pickup:"Airport pick-up",svc_interp:"Medical interpreter",
+req_you:"How can your coordinator reach you?",full_name:"Full name",country:"Country",messenger:"Messenger",messenger_id:"ID or number",birth_year:"Year of birth",
+consent_privacy:"I agree to the Privacy Policy.",consent_share:"My request and health information may be shared only with the clinics I choose, to prepare quotes.",
+next:"Next",back:"Back",submit:"Send request",
+req_sent_t:"Request sent!",req_sent_d:"Your coordinator will reply within 24 hours on {m} and here in the app.",
+err_pick:"Choose at least one treatment.",err_name:"Enter your full name.",err_country:"Choose your country.",err_contact:"Enter your messenger ID or number.",err_consent:"Please accept both consents.",err_dates:"Departure must be after arrival.",err_age:"You must be 18 or older.",
+login:"Sign in",signup:"Create account",email:"Email",password:"Password",pw_hint:"At least 8 characters",have_acc:"Already have an account? Sign in",no_acc:"New here? Create an account",logout:"Sign out",forgot:"Forgot password?",reset_sent:"We sent a reset link to your email.",
+login_need:"Sign in to send your request and chat with your coordinator.",
+err_login:"Wrong email or password.",err_email:"Enter a valid email.",err_pw:"Password must have at least 8 characters.",
+trips_empty:"No trip yet",trips_empty_d:"Request free quotes and your trip will appear here.",
+stage_new:"Received",stage_consulting:"Consultation",stage_quoted:"Quotes ready",stage_booked:"Booked",stage_travel:"Travel planning",stage_in_korea:"In Korea",stage_procedure:"Procedure",stage_recovery:"Recovery",stage_done:"Completed",stage_canceled:"Canceled",
+quotes:"Quotes",quote_total:"Total",valid_until:"Valid until",accept:"Accept",decline:"Decline",st_sent:"Open",st_accepted:"Accepted",st_declined:"Declined",st_expired:"Expired",st_withdrawn:"Closed",includes:"Includes",
+tap_confirm:"Tap again to confirm",no_quotes:"Your coordinator is preparing quotes with the clinics.",
+chat:"Chat with your coordinator",chat_ph:"Write a message…",send:"Send",chat_empty:"Say hello! Your coordinator usually replies within a few hours.",
+timeline:"Timeline",cancel_req:"Cancel request",cancel_reason:"Reason (optional)",canceled_ok:"Request canceled",
+ev_created:"Request sent",ev_stage:"Status: {s}",ev_quote_sent:"New quote received",ev_quote_accepted:"Quote accepted",ev_quote_declined:"Quote declined",ev_canceled:"Canceled",ev_assigned:"Coordinator assigned",ev_note:"Update",
+your_coord:"Your coordinator",coord_pending:"A coordinator will be assigned soon",
+profile:"Profile",language:"Language",currency:"Currency",save:"Save",saved:"Saved",staff_panel:"Team panel",
+offline:"Connection problem. Please try again.",
+legal_note:"We are a medical tourism facilitator, not a clinic. Treatment decisions are made by the doctor after consultation.",
+new_trip:"New request",details:"Details",your_trip:"Your trip",welcome:"Welcome",
+},
+ja:{
+nav_home:"ホーム",nav_clinics:"クリニック",nav_treat:"施術",nav_trips:"マイ旅程",nav_me:"プロフィール",
+hero_kicker:"ソウル · 美容 · 医療",
+hero_title:"韓国の一流クリニックを、ずっと寄り添うサポートで",
+hero_sub:"厳選クリニック、明確な料金、日本語で対応する専属コーディネーター。最初の相談から帰国後のアフターケアまで。",
+search_ph:"検索：鼻、ボトックス、インプラント…",cta_quote:"無料で見積もり",cta_browse:"クリニックを見る",
+cat_all:"すべて",cat_plastic:"美容整形",cat_derma:"皮膚科",cat_dental:"歯科",cat_checkup:"健康診断",cat_hair:"植毛",
+sec_verified:"厳選クリニック",sec_popular:"人気の施術",sec_how:"ご利用の流れ",see_all:"すべて見る",
+how1_t:"ご希望を入力",how1_d:"施術と日程を選ぶだけ。2分で完了します。",
+how2_t:"見積もりを比較",how2_d:"最大3つの厳選クリニックが、ウォンと円で総額をご提示します。",
+how3_t:"旅程をご手配",how3_d:"予約、空港送迎、ホテル、医療通訳まで。",
+how4_t:"帰国後もケア",how4_d:"帰国後の回復もコーディネーターが見守ります。",
+trust1:"全クリニックを直接審査",trust2:"日本語のコーディネーター",trust3:"明確な料金、追加費用なし",trust4:"患者様は無料",
+from:"〜",u_case:"",u_session:"/ 回",u_tooth:"/ 本",u_area:"/ 部位",
+stay:"ソウル滞在",recovery:"回復期間",days:"日",
+verified:"審査済み",under_review:"審査中",
+chk_license:"認可医療機関",chk_specialist:"専門医在籍",chk_intl:"外国人患者の実績",chk_er:"麻酔科医・緊急時対応",chk_aftercare:"アフターケア",chk_price:"料金表を公開",
+languages:"対応言語",doctors:"医師数",since:"開院",intl_year:"外国人患者 / 年",
+treatments_here:"施術",clinics_offering:"この施術ができるクリニック",quote_this:"見積もりを依頼",
+indicative:"料金は目安です。最終見積もりはカウンセリング後にクリニックから提示されます。",
+filter_lang:"日本語対応",no_results:"見つかりませんでした。",
+req_title:"無料見積もり依頼",step1:"施術",step2:"日程",step3:"お客様情報",
+req_what:"ご希望の施術は？",req_clinics:"希望クリニック（任意・最大3つ）",req_any:"おすすめしてほしい",req_notes:"ご希望、ご不安、過去の施術歴など",
+req_when:"いつ来韓されますか？",date_from:"到着日",date_to:"出発日",flexible:"日程は調整可能",companions:"同行者（人数）",budget:"ご予算（米ドル・任意）",
+services:"その他ご希望",svc_hotel:"クリニック近くのホテル",svc_pickup:"空港送迎",svc_interp:"医療通訳",
+req_you:"コーディネーターからのご連絡先",full_name:"氏名",country:"国",messenger:"メッセンジャー",messenger_id:"IDまたは番号",birth_year:"生まれ年",
+consent_privacy:"プライバシーポリシーに同意します。",consent_share:"見積もり作成のため、選択したクリニックにのみ依頼内容と健康情報を共有することに同意します。",
+next:"次へ",back:"戻る",submit:"送信する",
+req_sent_t:"送信しました！",req_sent_d:"24時間以内にコーディネーターが{m}とアプリでご連絡します。",
+err_pick:"施術を1つ以上選んでください。",err_name:"氏名を入力してください。",err_country:"国を選んでください。",err_contact:"メッセンジャーのIDまたは番号を入力してください。",err_consent:"2つの同意にチェックしてください。",err_dates:"出発日は到着日より後にしてください。",err_age:"18歳以上の方のみご利用いただけます。",
+login:"ログイン",signup:"新規登録",email:"メール",password:"パスワード",pw_hint:"8文字以上",have_acc:"アカウントをお持ちの方はログイン",no_acc:"初めての方は新規登録",logout:"ログアウト",forgot:"パスワードをお忘れですか？",reset_sent:"再設定リンクをメールで送りました。",
+login_need:"依頼の送信とチャットにはログインが必要です。",
+err_login:"メールまたはパスワードが違います。",err_email:"正しいメールアドレスを入力してください。",err_pw:"パスワードは8文字以上にしてください。",
+trips_empty:"まだ旅程はありません",trips_empty_d:"無料見積もりを依頼すると、ここに表示されます。",
+stage_new:"受付",stage_consulting:"カウンセリング",stage_quoted:"見積もり提示",stage_booked:"予約確定",stage_travel:"旅程準備",stage_in_korea:"韓国滞在中",stage_procedure:"施術",stage_recovery:"回復",stage_done:"完了",stage_canceled:"キャンセル",
+quotes:"見積もり",quote_total:"総額",valid_until:"有効期限",accept:"承諾",decline:"辞退",st_sent:"検討中",st_accepted:"承諾済み",st_declined:"辞退",st_expired:"期限切れ",st_withdrawn:"終了",includes:"含まれるもの",
+tap_confirm:"もう一度タップで確定",no_quotes:"コーディネーターがクリニックと見積もりを準備中です。",
+chat:"コーディネーターとチャット",chat_ph:"メッセージを入力…",send:"送信",chat_empty:"お気軽にどうぞ！通常数時間以内に返信します。",
+timeline:"履歴",cancel_req:"依頼をキャンセル",cancel_reason:"理由（任意）",canceled_ok:"キャンセルしました",
+ev_created:"依頼を送信",ev_stage:"ステータス：{s}",ev_quote_sent:"新しい見積もり",ev_quote_accepted:"見積もりを承諾",ev_quote_declined:"見積もりを辞退",ev_canceled:"キャンセル",ev_assigned:"担当コーディネーター決定",ev_note:"お知らせ",
+your_coord:"担当コーディネーター",coord_pending:"まもなく担当が決まります",
+profile:"プロフィール",language:"言語",currency:"通貨",save:"保存",saved:"保存しました",staff_panel:"スタッフ画面",
+offline:"接続エラーです。もう一度お試しください。",
+legal_note:"当社は医療観光の仲介事業者であり、医療機関ではありません。治療の判断はカウンセリング後に医師が行います。",
+new_trip:"新しい依頼",details:"詳細",your_trip:"あなたの旅程",welcome:"ようこそ",
+},
+zh:{
+nav_home:"首頁",nav_clinics:"診所",nav_treat:"療程",nav_trips:"我的行程",nav_me:"個人資料",
+hero_kicker:"首爾 · 美容 · 醫療",
+hero_title:"韓國頂尖診所，全程有人陪伴",
+hero_sub:"嚴選診所、透明價格，以及說中文的專屬顧問 — 從第一個問題到回國後的術後照護。",
+search_ph:"搜尋：鼻子、肉毒、植牙…",cta_quote:"免費索取報價",cta_browse:"瀏覽診所",
+cat_all:"全部",cat_plastic:"整形外科",cat_derma:"皮膚科",cat_dental:"牙科",cat_checkup:"健康檢查",cat_hair:"植髮",
+sec_verified:"嚴選診所",sec_popular:"熱門療程",sec_how:"服務流程",see_all:"查看全部",
+how1_t:"告訴我們您的需求",how1_d:"選擇療程與日期，只需2分鐘。",
+how2_t:"比較報價",how2_d:"最多3家嚴選診所提供完整報價，以韓元及您的貨幣顯示。",
+how3_t:"為您安排行程",how3_d:"預約、機場接送、飯店與醫療翻譯。",
+how4_t:"回國後持續照護",how4_d:"您回國後，顧問仍會追蹤您的恢復狀況。",
+trust1:"每家診所皆親自審核",trust2:"中文專屬顧問",trust3:"價格透明，無隱藏費用",trust4:"患者免費使用",
+from:"起",u_case:"",u_session:"/ 次",u_tooth:"/ 顆",u_area:"/ 部位",
+stay:"首爾停留",recovery:"恢復期",days:"天",
+verified:"已審核",under_review:"審核中",
+chk_license:"合法醫療機構",chk_specialist:"專科醫師",chk_intl:"外籍患者經驗豐富",chk_er:"麻醉科醫師與緊急應變",chk_aftercare:"術後追蹤",chk_price:"公開價目表",
+languages:"語言",doctors:"醫師",since:"成立",intl_year:"外籍患者 / 年",
+treatments_here:"療程",clinics_offering:"提供此療程的診所",quote_this:"索取報價",
+indicative:"價格僅供參考，最終報價由診所於諮詢後提供。",
+filter_lang:"會說中文",no_results:"查無結果。",
+req_title:"免費報價申請",step1:"療程",step2:"日期",step3:"您的資料",
+req_what:"想做哪些療程？",req_clinics:"偏好的診所（選填，最多3家）",req_any:"不確定 — 請幫我推薦",req_notes:"請告訴我們更多：期望、擔心的事、過去的療程",
+req_when:"預計何時來韓？",date_from:"抵達",date_to:"離開",flexible:"日期可彈性調整",companions:"同行人數",budget:"預算（美元，選填）",
+services:"我還需要",svc_hotel:"診所附近的飯店",svc_pickup:"機場接送",svc_interp:"醫療翻譯",
+req_you:"顧問該如何聯絡您？",full_name:"姓名",country:"國家",messenger:"通訊軟體",messenger_id:"ID或號碼",birth_year:"出生年份",
+consent_privacy:"我同意隱私權政策。",consent_share:"我同意僅將我的申請與健康資訊提供給我選擇的診所，以準備報價。",
+next:"下一步",back:"上一步",submit:"送出申請",
+req_sent_t:"已送出！",req_sent_d:"您的顧問將於24小時內透過{m}及本App回覆您。",
+err_pick:"請至少選擇一項療程。",err_name:"請輸入姓名。",err_country:"請選擇國家。",err_contact:"請輸入通訊軟體ID或號碼。",err_consent:"請勾選兩項同意。",err_dates:"離開日期需晚於抵達日期。",err_age:"須年滿18歲。",
+login:"登入",signup:"建立帳號",email:"電子郵件",password:"密碼",pw_hint:"至少8個字元",have_acc:"已有帳號？登入",no_acc:"第一次使用？建立帳號",logout:"登出",forgot:"忘記密碼？",reset_sent:"重設連結已寄到您的信箱。",
+login_need:"請登入以送出申請並與顧問聊天。",
+err_login:"電子郵件或密碼錯誤。",err_email:"請輸入有效的電子郵件。",err_pw:"密碼至少需8個字元。",
+trips_empty:"尚無行程",trips_empty_d:"索取免費報價後，您的行程會顯示在這裡。",
+stage_new:"已收到",stage_consulting:"諮詢中",stage_quoted:"報價已提供",stage_booked:"已預約",stage_travel:"行程規劃",stage_in_korea:"在韓國",stage_procedure:"療程",stage_recovery:"恢復期",stage_done:"已完成",stage_canceled:"已取消",
+quotes:"報價",quote_total:"總計",valid_until:"有效期限",accept:"接受",decline:"婉拒",st_sent:"待決定",st_accepted:"已接受",st_declined:"已婉拒",st_expired:"已過期",st_withdrawn:"已關閉",includes:"包含",
+tap_confirm:"再按一次確認",no_quotes:"顧問正在與診所準備報價。",
+chat:"與顧問聊天",chat_ph:"輸入訊息…",send:"傳送",chat_empty:"打聲招呼吧！顧問通常會在幾小時內回覆。",
+timeline:"時間軸",cancel_req:"取消申請",cancel_reason:"原因（選填）",canceled_ok:"已取消申請",
+ev_created:"已送出申請",ev_stage:"狀態：{s}",ev_quote_sent:"收到新報價",ev_quote_accepted:"已接受報價",ev_quote_declined:"已婉拒報價",ev_canceled:"已取消",ev_assigned:"已指派顧問",ev_note:"更新",
+your_coord:"您的顧問",coord_pending:"即將為您指派顧問",
+profile:"個人資料",language:"語言",currency:"貨幣",save:"儲存",saved:"已儲存",staff_panel:"團隊後台",
+offline:"連線問題，請再試一次。",
+legal_note:"我們是醫療觀光仲介，並非醫療機構。療程決定由醫師於諮詢後做出。",
+new_trip:"新申請",details:"詳細",your_trip:"您的行程",welcome:"歡迎",
+},
+th:{
+nav_home:"หน้าแรก",nav_clinics:"คลินิก",nav_treat:"ทรีตเมนต์",nav_trips:"ทริปของฉัน",nav_me:"โปรไฟล์",
+hero_kicker:"โซล · ความงาม · การแพทย์",
+hero_title:"คลินิกชั้นนำของเกาหลี พร้อมคนดูแลคุณตลอดทาง",
+hero_sub:"คลินิกคัดสรร ราคาโปร่งใส และผู้ประสานงานส่วนตัวที่พูดภาษาไทย ตั้งแต่คำถามแรกจนถึงการดูแลหลังกลับบ้าน",
+search_ph:"ค้นหา: จมูก โบท็อกซ์ รากฟันเทียม…",cta_quote:"ขอใบเสนอราคาฟรี",cta_browse:"ดูคลินิก",
+cat_all:"ทั้งหมด",cat_plastic:"ศัลยกรรม",cat_derma:"ผิวหนัง",cat_dental:"ทันตกรรม",cat_checkup:"ตรวจสุขภาพ",cat_hair:"ปลูกผม",
+sec_verified:"คลินิกคัดสรร",sec_popular:"ทรีตเมนต์ยอดนิยม",sec_how:"ขั้นตอนการใช้บริการ",see_all:"ดูทั้งหมด",
+how1_t:"บอกสิ่งที่คุณต้องการ",how1_d:"เลือกทรีตเมนต์และวันที่ ใช้เวลาเพียง 2 นาที",
+how2_t:"เปรียบเทียบราคา",how2_d:"คลินิกคัดสรรสูงสุด 3 แห่งเสนอราคาเต็ม เป็นวอนและสกุลเงินของคุณ",
+how3_t:"เราวางแผนทริปให้",how3_d:"จองคิว รับส่งสนามบิน โรงแรม และล่ามทางการแพทย์",
+how4_t:"ดูแลต่อเมื่อกลับบ้าน",how4_d:"ผู้ประสานงานติดตามการพักฟื้นหลังคุณกลับประเทศ",
+trust1:"ทุกคลินิกผ่านการตรวจสอบโดยตรง",trust2:"ผู้ประสานงานพูดภาษาไทย",trust3:"ราคาชัดเจน ไม่มีค่าใช้จ่ายแอบแฝง",trust4:"ฟรีสำหรับผู้ป่วย",
+from:"เริ่มต้น",u_case:"",u_session:"/ ครั้ง",u_tooth:"/ ซี่",u_area:"/ จุด",
+stay:"พักในโซล",recovery:"พักฟื้น",days:"วัน",
+verified:"ผ่านการตรวจสอบ",under_review:"กำลังตรวจสอบ",
+chk_license:"สถานพยาบาลที่ได้รับอนุญาต",chk_specialist:"แพทย์ผู้เชี่ยวชาญเฉพาะทาง",chk_intl:"มีประสบการณ์กับผู้ป่วยต่างชาติ",chk_er:"วิสัญญีแพทย์และแผนฉุกเฉิน",chk_aftercare:"ติดตามหลังการรักษา",chk_price:"ราคาเปิดเผยชัดเจน",
+languages:"ภาษา",doctors:"แพทย์",since:"ก่อตั้ง",intl_year:"ผู้ป่วยต่างชาติ / ปี",
+treatments_here:"ทรีตเมนต์",clinics_offering:"คลินิกที่ให้บริการนี้",quote_this:"ขอใบเสนอราคา",
+indicative:"ราคาโดยประมาณ ราคาสุดท้ายคลินิกจะแจ้งหลังการปรึกษา",
+filter_lang:"พูดภาษาไทยได้",no_results:"ไม่พบข้อมูล",
+req_title:"ขอใบเสนอราคาฟรี",step1:"ทรีตเมนต์",step2:"วันที่",step3:"ข้อมูลของคุณ",
+req_what:"สนใจทรีตเมนต์ใด",req_clinics:"คลินิกที่ต้องการ (ไม่บังคับ สูงสุด 3 แห่ง)",req_any:"ไม่แน่ใจ ช่วยแนะนำให้หน่อย",req_notes:"เล่าเพิ่มเติม: เป้าหมาย ความกังวล ประวัติการทำ",
+req_when:"อยากมาเกาหลีเมื่อไร",date_from:"วันมาถึง",date_to:"วันเดินทางกลับ",flexible:"วันที่ยืดหยุ่นได้",companions:"ผู้ร่วมเดินทาง (คน)",budget:"งบประมาณ (USD ไม่บังคับ)",
+services:"ต้องการเพิ่มเติม",svc_hotel:"โรงแรมใกล้คลินิก",svc_pickup:"รับส่งสนามบิน",svc_interp:"ล่ามทางการแพทย์",
+req_you:"ผู้ประสานงานจะติดต่อคุณทางไหน",full_name:"ชื่อ-นามสกุล",country:"ประเทศ",messenger:"แอปแชต",messenger_id:"ไอดีหรือเบอร์",birth_year:"ปีเกิด",
+consent_privacy:"ฉันยอมรับนโยบายความเป็นส่วนตัว",consent_share:"ฉันยินยอมให้ส่งคำขอและข้อมูลสุขภาพเฉพาะคลินิกที่ฉันเลือก เพื่อจัดทำใบเสนอราคา",
+next:"ถัดไป",back:"ย้อนกลับ",submit:"ส่งคำขอ",
+req_sent_t:"ส่งคำขอแล้ว!",req_sent_d:"ผู้ประสานงานจะตอบกลับภายใน 24 ชั่วโมงทาง {m} และในแอปนี้",
+err_pick:"กรุณาเลือกอย่างน้อยหนึ่งทรีตเมนต์",err_name:"กรุณากรอกชื่อ-นามสกุล",err_country:"กรุณาเลือกประเทศ",err_contact:"กรุณากรอกไอดีหรือเบอร์แอปแชต",err_consent:"กรุณายอมรับทั้งสองข้อ",err_dates:"วันเดินทางกลับต้องหลังวันมาถึง",err_age:"ต้องมีอายุ 18 ปีขึ้นไป",
+login:"เข้าสู่ระบบ",signup:"สร้างบัญชี",email:"อีเมล",password:"รหัสผ่าน",pw_hint:"อย่างน้อย 8 ตัวอักษร",have_acc:"มีบัญชีแล้ว? เข้าสู่ระบบ",no_acc:"ผู้ใช้ใหม่? สร้างบัญชี",logout:"ออกจากระบบ",forgot:"ลืมรหัสผ่าน?",reset_sent:"ส่งลิงก์รีเซ็ตไปที่อีเมลแล้ว",
+login_need:"เข้าสู่ระบบเพื่อส่งคำขอและแชตกับผู้ประสานงาน",
+err_login:"อีเมลหรือรหัสผ่านไม่ถูกต้อง",err_email:"กรุณากรอกอีเมลให้ถูกต้อง",err_pw:"รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร",
+trips_empty:"ยังไม่มีทริป",trips_empty_d:"ขอใบเสนอราคาฟรี แล้วทริปของคุณจะแสดงที่นี่",
+stage_new:"ได้รับแล้ว",stage_consulting:"กำลังปรึกษา",stage_quoted:"ใบเสนอราคาพร้อม",stage_booked:"จองแล้ว",stage_travel:"วางแผนเดินทาง",stage_in_korea:"อยู่ในเกาหลี",stage_procedure:"ทำทรีตเมนต์",stage_recovery:"พักฟื้น",stage_done:"เสร็จสิ้น",stage_canceled:"ยกเลิก",
+quotes:"ใบเสนอราคา",quote_total:"รวม",valid_until:"ใช้ได้ถึง",accept:"ยอมรับ",decline:"ปฏิเสธ",st_sent:"รอตัดสินใจ",st_accepted:"ยอมรับแล้ว",st_declined:"ปฏิเสธแล้ว",st_expired:"หมดอายุ",st_withdrawn:"ปิดแล้ว",includes:"รวมรายการ",
+tap_confirm:"แตะอีกครั้งเพื่อยืนยัน",no_quotes:"ผู้ประสานงานกำลังเตรียมใบเสนอราคากับคลินิก",
+chat:"แชตกับผู้ประสานงาน",chat_ph:"พิมพ์ข้อความ…",send:"ส่ง",chat_empty:"ทักทายได้เลย! ปกติผู้ประสานงานตอบภายในไม่กี่ชั่วโมง",
+timeline:"ไทม์ไลน์",cancel_req:"ยกเลิกคำขอ",cancel_reason:"เหตุผล (ไม่บังคับ)",canceled_ok:"ยกเลิกคำขอแล้ว",
+ev_created:"ส่งคำขอแล้ว",ev_stage:"สถานะ: {s}",ev_quote_sent:"ได้รับใบเสนอราคาใหม่",ev_quote_accepted:"ยอมรับใบเสนอราคา",ev_quote_declined:"ปฏิเสธใบเสนอราคา",ev_canceled:"ยกเลิก",ev_assigned:"มีผู้ประสานงานดูแลแล้ว",ev_note:"อัปเดต",
+your_coord:"ผู้ประสานงานของคุณ",coord_pending:"จะมีผู้ประสานงานดูแลเร็ว ๆ นี้",
+profile:"โปรไฟล์",language:"ภาษา",currency:"สกุลเงิน",save:"บันทึก",saved:"บันทึกแล้ว",staff_panel:"หน้าทีมงาน",
+offline:"การเชื่อมต่อมีปัญหา กรุณาลองอีกครั้ง",
+legal_note:"เราเป็นผู้ให้บริการประสานงานการท่องเที่ยวเชิงการแพทย์ ไม่ใช่คลินิก การตัดสินใจรักษาเป็นของแพทย์หลังการปรึกษา",
+new_trip:"คำขอใหม่",details:"รายละเอียด",your_trip:"ทริปของคุณ",welcome:"ยินดีต้อนรับ",
+},
+vi:{
+nav_home:"Trang chủ",nav_clinics:"Phòng khám",nav_treat:"Dịch vụ",nav_trips:"Chuyến đi",nav_me:"Hồ sơ",
+hero_kicker:"Seoul · Làm đẹp · Y tế",
+hero_title:"Phòng khám hàng đầu Hàn Quốc, luôn có người đồng hành",
+hero_sub:"Phòng khám được tuyển chọn, giá minh bạch và điều phối viên riêng nói tiếng Việt — từ câu hỏi đầu tiên đến chăm sóc sau khi về nước.",
+search_ph:"Tìm: mũi, botox, implant…",cta_quote:"Nhận báo giá miễn phí",cta_browse:"Xem phòng khám",
+cat_all:"Tất cả",cat_plastic:"Phẫu thuật thẩm mỹ",cat_derma:"Da liễu",cat_dental:"Nha khoa",cat_checkup:"Khám sức khỏe",cat_hair:"Cấy tóc",
+sec_verified:"Phòng khám tuyển chọn",sec_popular:"Dịch vụ phổ biến",sec_how:"Cách hoạt động",see_all:"Xem tất cả",
+how1_t:"Cho chúng tôi biết bạn muốn gì",how1_d:"Chọn dịch vụ và ngày. Chỉ mất 2 phút.",
+how2_t:"So sánh báo giá",how2_d:"Tối đa 3 phòng khám tuyển chọn báo giá trọn gói, bằng won và tiền của bạn.",
+how3_t:"Chúng tôi lo chuyến đi",how3_d:"Đặt lịch, đón sân bay, khách sạn và phiên dịch y tế.",
+how4_t:"Chăm sóc khi về nhà",how4_d:"Điều phối viên theo dõi quá trình hồi phục sau khi bạn về nước.",
+trust1:"Mọi phòng khám đều được thẩm định trực tiếp",trust2:"Điều phối viên nói tiếng Việt",trust3:"Giá rõ ràng, không phí ẩn",trust4:"Miễn phí cho bệnh nhân",
+from:"từ",u_case:"",u_session:"/ lần",u_tooth:"/ răng",u_area:"/ vùng",
+stay:"Ở lại Seoul",recovery:"Hồi phục",days:"ngày",
+verified:"Đã thẩm định",under_review:"Đang thẩm định",
+chk_license:"Cơ sở y tế được cấp phép",chk_specialist:"Bác sĩ chuyên khoa",chk_intl:"Nhiều kinh nghiệm với bệnh nhân nước ngoài",chk_er:"Bác sĩ gây mê & quy trình cấp cứu",chk_aftercare:"Theo dõi sau điều trị",chk_price:"Bảng giá minh bạch",
+languages:"Ngôn ngữ",doctors:"Bác sĩ",since:"Thành lập",intl_year:"bệnh nhân nước ngoài / năm",
+treatments_here:"Dịch vụ",clinics_offering:"Phòng khám có dịch vụ này",quote_this:"Yêu cầu báo giá",
+indicative:"Giá tham khảo. Báo giá cuối cùng do phòng khám đưa ra sau khi tư vấn.",
+filter_lang:"Nói tiếng Việt",no_results:"Không tìm thấy.",
+req_title:"Yêu cầu báo giá miễn phí",step1:"Dịch vụ",step2:"Thời gian",step3:"Thông tin",
+req_what:"Bạn quan tâm dịch vụ nào?",req_clinics:"Phòng khám mong muốn (không bắt buộc, tối đa 3)",req_any:"Chưa chắc — hãy gợi ý giúp tôi",req_notes:"Chia sẻ thêm: mong muốn, lo lắng, thủ thuật đã làm",
+req_when:"Bạn muốn sang khi nào?",date_from:"Ngày đến",date_to:"Ngày về",flexible:"Ngày có thể linh hoạt",companions:"Số người đi cùng",budget:"Ngân sách (USD, không bắt buộc)",
+services:"Tôi cũng cần",svc_hotel:"Khách sạn gần phòng khám",svc_pickup:"Đón sân bay",svc_interp:"Phiên dịch y tế",
+req_you:"Điều phối viên liên hệ bạn qua đâu?",full_name:"Họ và tên",country:"Quốc gia",messenger:"Ứng dụng nhắn tin",messenger_id:"ID hoặc số điện thoại",birth_year:"Năm sinh",
+consent_privacy:"Tôi đồng ý với Chính sách quyền riêng tư.",consent_share:"Tôi đồng ý chỉ chia sẻ yêu cầu và thông tin sức khỏe với các phòng khám tôi chọn để lập báo giá.",
+next:"Tiếp",back:"Quay lại",submit:"Gửi yêu cầu",
+req_sent_t:"Đã gửi!",req_sent_d:"Điều phối viên sẽ trả lời trong 24 giờ qua {m} và trong ứng dụng.",
+err_pick:"Hãy chọn ít nhất một dịch vụ.",err_name:"Hãy nhập họ tên.",err_country:"Hãy chọn quốc gia.",err_contact:"Hãy nhập ID hoặc số điện thoại.",err_consent:"Vui lòng đồng ý cả hai điều khoản.",err_dates:"Ngày về phải sau ngày đến.",err_age:"Bạn phải từ 18 tuổi trở lên.",
+login:"Đăng nhập",signup:"Tạo tài khoản",email:"Email",password:"Mật khẩu",pw_hint:"Ít nhất 8 ký tự",have_acc:"Đã có tài khoản? Đăng nhập",no_acc:"Lần đầu? Tạo tài khoản",logout:"Đăng xuất",forgot:"Quên mật khẩu?",reset_sent:"Đã gửi liên kết đặt lại mật khẩu vào email.",
+login_need:"Đăng nhập để gửi yêu cầu và trò chuyện với điều phối viên.",
+err_login:"Sai email hoặc mật khẩu.",err_email:"Hãy nhập email hợp lệ.",err_pw:"Mật khẩu cần ít nhất 8 ký tự.",
+trips_empty:"Chưa có chuyến đi",trips_empty_d:"Yêu cầu báo giá miễn phí và chuyến đi sẽ hiện ở đây.",
+stage_new:"Đã nhận",stage_consulting:"Đang tư vấn",stage_quoted:"Đã có báo giá",stage_booked:"Đã đặt lịch",stage_travel:"Chuẩn bị chuyến đi",stage_in_korea:"Đang ở Hàn Quốc",stage_procedure:"Điều trị",stage_recovery:"Hồi phục",stage_done:"Hoàn tất",stage_canceled:"Đã hủy",
+quotes:"Báo giá",quote_total:"Tổng",valid_until:"Hiệu lực đến",accept:"Đồng ý",decline:"Từ chối",st_sent:"Đang chờ",st_accepted:"Đã đồng ý",st_declined:"Đã từ chối",st_expired:"Hết hạn",st_withdrawn:"Đã đóng",includes:"Bao gồm",
+tap_confirm:"Chạm lần nữa để xác nhận",no_quotes:"Điều phối viên đang chuẩn bị báo giá cùng phòng khám.",
+chat:"Trò chuyện với điều phối viên",chat_ph:"Nhập tin nhắn…",send:"Gửi",chat_empty:"Hãy chào nhé! Điều phối viên thường trả lời trong vài giờ.",
+timeline:"Dòng thời gian",cancel_req:"Hủy yêu cầu",cancel_reason:"Lý do (không bắt buộc)",canceled_ok:"Đã hủy yêu cầu",
+ev_created:"Đã gửi yêu cầu",ev_stage:"Trạng thái: {s}",ev_quote_sent:"Có báo giá mới",ev_quote_accepted:"Đã đồng ý báo giá",ev_quote_declined:"Đã từ chối báo giá",ev_canceled:"Đã hủy",ev_assigned:"Đã có điều phối viên",ev_note:"Cập nhật",
+your_coord:"Điều phối viên của bạn",coord_pending:"Sẽ sớm có điều phối viên phụ trách",
+profile:"Hồ sơ",language:"Ngôn ngữ",currency:"Tiền tệ",save:"Lưu",saved:"Đã lưu",staff_panel:"Trang nhân viên",
+offline:"Lỗi kết nối. Vui lòng thử lại.",
+legal_note:"Chúng tôi là đơn vị điều phối du lịch y tế, không phải phòng khám. Quyết định điều trị do bác sĩ đưa ra sau khi tư vấn.",
+new_trip:"Yêu cầu mới",details:"Chi tiết",your_trip:"Chuyến đi của bạn",welcome:"Xin chào",
+},
+id:{
+nav_home:"Beranda",nav_clinics:"Klinik",nav_treat:"Perawatan",nav_trips:"Perjalanan",nav_me:"Profil",
+hero_kicker:"Seoul · Kecantikan · Medis",
+hero_title:"Klinik terbaik Korea, dengan pendamping di sisi Anda",
+hero_sub:"Klinik terkurasi, harga transparan, dan koordinator pribadi berbahasa Indonesia — dari pertanyaan pertama hingga perawatan setelah pulang.",
+search_ph:"Cari: hidung, botox, implan…",cta_quote:"Minta penawaran gratis",cta_browse:"Lihat klinik",
+cat_all:"Semua",cat_plastic:"Bedah plastik",cat_derma:"Dermatologi",cat_dental:"Gigi",cat_checkup:"Medical check-up",cat_hair:"Rambut",
+sec_verified:"Klinik terkurasi",sec_popular:"Perawatan populer",sec_how:"Cara kerja",see_all:"Lihat semua",
+how1_t:"Ceritakan keinginan Anda",how1_d:"Pilih perawatan dan tanggal. Hanya 2 menit.",
+how2_t:"Bandingkan penawaran",how2_d:"Hingga 3 klinik terkurasi memberi harga lengkap, dalam won dan mata uang Anda.",
+how3_t:"Kami atur perjalanan",how3_d:"Reservasi, jemput bandara, hotel, dan penerjemah medis.",
+how4_t:"Perawatan setelah pulang",how4_d:"Koordinator memantau pemulihan Anda setelah kembali.",
+trust1:"Setiap klinik diperiksa langsung",trust2:"Koordinator berbahasa Indonesia",trust3:"Harga jelas, tanpa biaya tersembunyi",trust4:"Gratis untuk pasien",
+from:"mulai",u_case:"",u_session:"/ sesi",u_tooth:"/ gigi",u_area:"/ area",
+stay:"Tinggal di Seoul",recovery:"Pemulihan",days:"hari",
+verified:"Terverifikasi",under_review:"Sedang ditinjau",
+chk_license:"Fasilitas medis berizin",chk_specialist:"Dokter spesialis bersertifikat",chk_intl:"Berpengalaman dengan pasien asing",chk_er:"Dokter anestesi & protokol darurat",chk_aftercare:"Tindak lanjut pasca-perawatan",chk_price:"Daftar harga transparan",
+languages:"Bahasa",doctors:"Dokter",since:"Berdiri",intl_year:"pasien asing / tahun",
+treatments_here:"Perawatan",clinics_offering:"Klinik yang menyediakan",quote_this:"Minta penawaran",
+indicative:"Harga perkiraan. Penawaran akhir diberikan klinik setelah konsultasi.",
+filter_lang:"Bisa bahasa Indonesia",no_results:"Tidak ditemukan.",
+req_title:"Permintaan penawaran gratis",step1:"Perawatan",step2:"Waktu",step3:"Data Anda",
+req_what:"Perawatan apa yang Anda inginkan?",req_clinics:"Klinik pilihan (opsional, maks. 3)",req_any:"Belum yakin — tolong rekomendasikan",req_notes:"Ceritakan lebih banyak: tujuan, kekhawatiran, riwayat perawatan",
+req_when:"Kapan Anda ingin datang?",date_from:"Tiba",date_to:"Pulang",flexible:"Tanggal saya fleksibel",companions:"Jumlah pendamping",budget:"Anggaran USD (opsional)",
+services:"Saya juga perlu",svc_hotel:"Hotel dekat klinik",svc_pickup:"Jemput bandara",svc_interp:"Penerjemah medis",
+req_you:"Bagaimana koordinator menghubungi Anda?",full_name:"Nama lengkap",country:"Negara",messenger:"Aplikasi chat",messenger_id:"ID atau nomor",birth_year:"Tahun lahir",
+consent_privacy:"Saya menyetujui Kebijakan Privasi.",consent_share:"Saya setuju permintaan dan informasi kesehatan saya hanya dibagikan ke klinik yang saya pilih untuk menyiapkan penawaran.",
+next:"Lanjut",back:"Kembali",submit:"Kirim permintaan",
+req_sent_t:"Permintaan terkirim!",req_sent_d:"Koordinator akan membalas dalam 24 jam melalui {m} dan di aplikasi ini.",
+err_pick:"Pilih minimal satu perawatan.",err_name:"Masukkan nama lengkap.",err_country:"Pilih negara Anda.",err_contact:"Masukkan ID atau nomor chat.",err_consent:"Mohon setujui kedua persetujuan.",err_dates:"Tanggal pulang harus setelah tanggal tiba.",err_age:"Anda harus berusia minimal 18 tahun.",
+login:"Masuk",signup:"Buat akun",email:"Email",password:"Kata sandi",pw_hint:"Minimal 8 karakter",have_acc:"Sudah punya akun? Masuk",no_acc:"Baru di sini? Buat akun",logout:"Keluar",forgot:"Lupa kata sandi?",reset_sent:"Tautan atur ulang sudah dikirim ke email Anda.",
+login_need:"Masuk untuk mengirim permintaan dan chat dengan koordinator.",
+err_login:"Email atau kata sandi salah.",err_email:"Masukkan email yang valid.",err_pw:"Kata sandi minimal 8 karakter.",
+trips_empty:"Belum ada perjalanan",trips_empty_d:"Minta penawaran gratis dan perjalanan Anda akan muncul di sini.",
+stage_new:"Diterima",stage_consulting:"Konsultasi",stage_quoted:"Penawaran siap",stage_booked:"Terjadwal",stage_travel:"Persiapan perjalanan",stage_in_korea:"Di Korea",stage_procedure:"Perawatan",stage_recovery:"Pemulihan",stage_done:"Selesai",stage_canceled:"Dibatalkan",
+quotes:"Penawaran",quote_total:"Total",valid_until:"Berlaku sampai",accept:"Terima",decline:"Tolak",st_sent:"Menunggu",st_accepted:"Diterima",st_declined:"Ditolak",st_expired:"Kedaluwarsa",st_withdrawn:"Ditutup",includes:"Termasuk",
+tap_confirm:"Ketuk lagi untuk konfirmasi",no_quotes:"Koordinator sedang menyiapkan penawaran dengan klinik.",
+chat:"Chat dengan koordinator",chat_ph:"Tulis pesan…",send:"Kirim",chat_empty:"Sapa kami! Koordinator biasanya membalas dalam beberapa jam.",
+timeline:"Riwayat",cancel_req:"Batalkan permintaan",cancel_reason:"Alasan (opsional)",canceled_ok:"Permintaan dibatalkan",
+ev_created:"Permintaan dikirim",ev_stage:"Status: {s}",ev_quote_sent:"Penawaran baru",ev_quote_accepted:"Penawaran diterima",ev_quote_declined:"Penawaran ditolak",ev_canceled:"Dibatalkan",ev_assigned:"Koordinator ditugaskan",ev_note:"Pembaruan",
+your_coord:"Koordinator Anda",coord_pending:"Koordinator akan segera ditugaskan",
+profile:"Profil",language:"Bahasa",currency:"Mata uang",save:"Simpan",saved:"Tersimpan",staff_panel:"Panel tim",
+offline:"Masalah koneksi. Silakan coba lagi.",
+legal_note:"Kami adalah fasilitator wisata medis, bukan klinik. Keputusan perawatan dibuat oleh dokter setelah konsultasi.",
+new_trip:"Permintaan baru",details:"Detail",your_trip:"Perjalanan Anda",welcome:"Selamat datang",
+},
+my:{
+nav_home:"ပင်မ",nav_clinics:"ဆေးခန်းများ",nav_treat:"ကုသမှုများ",nav_trips:"ကျွန်ုပ်၏ခရီး",nav_me:"ပရိုဖိုင်",
+hero_kicker:"ဆိုးလ် · အလှအပ · ဆေးဘက်",
+hero_title:"ကိုရီးယား၏ အကောင်းဆုံးဆေးခန်းများ၊ သင့်ဘေးတွင် အမြဲရှိနေမည်",
+hero_sub:"ရွေးချယ်စစ်ဆေးထားသော ဆေးခန်းများ၊ ပွင့်လင်းသော စျေးနှုန်းများနှင့် မြန်မာစကားပြောသော ကိုယ်ပိုင်ညှိနှိုင်းရေးမှူး — ပထမမေးခွန်းမှ အိမ်ပြန်ပြီးနောက် စောင့်ရှောက်မှုအထိ။",
+search_ph:"ရှာရန်: နှာခေါင်း၊ ဘိုတောက်စ်၊ သွားအတု…",cta_quote:"အခမဲ့ စျေးနှုန်းတောင်းရန်",cta_browse:"ဆေးခန်းများကြည့်ရန်",
+cat_all:"အားလုံး",cat_plastic:"အလှပြင်ခွဲစိတ်",cat_derma:"အရေပြား",cat_dental:"သွား",cat_checkup:"ကျန်းမာရေးစစ်ဆေး",cat_hair:"ဆံပင်",
+sec_verified:"စစ်ဆေးထားသော ဆေးခန်းများ",sec_popular:"လူကြိုက်များသော ကုသမှုများ",sec_how:"လုပ်ဆောင်ပုံ",see_all:"အားလုံးကြည့်ရန်",
+how1_t:"လိုချင်သည်ကို ပြောပါ",how1_d:"ကုသမှုနှင့် ရက်စွဲရွေးပါ။ ၂ မိနစ်သာ ကြာသည်။",
+how2_t:"စျေးနှုန်းများ နှိုင်းယှဉ်ပါ",how2_d:"စစ်ဆေးထားသော ဆေးခန်း ၃ ခုအထိ ဝမ်နှင့် သင့်ငွေကြေးဖြင့် စုစုပေါင်းစျေးနှုန်း ပေးပါမည်။",
+how3_t:"ခရီးကို စီစဉ်ပေးမည်",how3_d:"ချိန်းဆိုမှု၊ လေဆိပ်ကြိုဆို၊ ဟိုတယ်နှင့် ဆေးဘက်စကားပြန်။",
+how4_t:"အိမ်ပြန်ပြီးနောက် စောင့်ရှောက်မှု",how4_d:"ပြန်သွားပြီးနောက် သင့်ပြန်လည်နာလန်ထမှုကို ညှိနှိုင်းရေးမှူးက စောင့်ကြည့်ပါမည်။",
+trust1:"ဆေးခန်းတိုင်းကို ကိုယ်တိုင်စစ်ဆေးထားသည်",trust2:"မြန်မာစကားပြော ညှိနှိုင်းရေးမှူး",trust3:"စျေးနှုန်းရှင်းလင်း၊ လျှို့ဝှက်ကြေးမရှိ",trust4:"လူနာများအတွက် အခမဲ့",
+from:"မှစ၍",u_case:"",u_session:"/ ကြိမ်",u_tooth:"/ သွား",u_area:"/ နေရာ",
+stay:"ဆိုးလ်တွင် နေထိုင်ရက်",recovery:"ပြန်လည်နာလန်ထ",days:"ရက်",
+verified:"စစ်ဆေးပြီး",under_review:"စစ်ဆေးဆဲ",
+chk_license:"ခွင့်ပြုချက်ရ ဆေးဘက်ဆိုင်ရာ အဖွဲ့အစည်း",chk_specialist:"အထူးကု ဆရာဝန်များ",chk_intl:"နိုင်ငံခြားလူနာ အတွေ့အကြုံရှိ",chk_er:"မေ့ဆေးဆရာဝန်နှင့် အရေးပေါ်စနစ်",chk_aftercare:"ကုသပြီးနောက် စောင့်ကြည့်မှု",chk_price:"စျေးနှုန်းစာရင်း ပွင့်လင်း",
+languages:"ဘာသာစကား",doctors:"ဆရာဝန်",since:"တည်ထောင်",intl_year:"နိုင်ငံခြားလူနာ / နှစ်",
+treatments_here:"ကုသမှုများ",clinics_offering:"ဤကုသမှုရှိသော ဆေးခန်းများ",quote_this:"စျေးနှုန်းတောင်းရန်",
+indicative:"ခန့်မှန်းစျေးနှုန်းဖြစ်သည်။ နောက်ဆုံးစျေးနှုန်းကို တိုင်ပင်ပြီးနောက် ဆေးခန်းက ပေးပါမည်။",
+filter_lang:"မြန်မာစကား ပြောနိုင်",no_results:"ရှာမတွေ့ပါ။",
+req_title:"အခမဲ့ စျေးနှုန်းတောင်းခံ",step1:"ကုသမှု",step2:"ရက်စွဲ",step3:"သင့်အချက်အလက်",
+req_what:"မည်သည့်ကုသမှု လိုချင်ပါသလဲ?",req_clinics:"နှစ်သက်သော ဆေးခန်း (မဖြစ်မနေမဟုတ်၊ ၃ ခုအထိ)",req_any:"မသေချာပါ — အကြံပြုပေးပါ",req_notes:"ထပ်မံပြောပြပါ: ရည်မှန်းချက်၊ စိုးရိမ်ချက်၊ ယခင်ကုသမှု",
+req_when:"ဘယ်အချိန် လာလိုပါသလဲ?",date_from:"ရောက်ရှိရက်",date_to:"ပြန်ရက်",flexible:"ရက်စွဲ ပြောင်းလဲနိုင်သည်",companions:"လိုက်ပါမည့်သူ (ဦးရေ)",budget:"ဘတ်ဂျက် USD (မဖြစ်မနေမဟုတ်)",
+services:"ထပ်မံလိုအပ်သည်",svc_hotel:"ဆေးခန်းအနီး ဟိုတယ်",svc_pickup:"လေဆိပ်ကြိုဆို",svc_interp:"ဆေးဘက်စကားပြန်",
+req_you:"ညှိနှိုင်းရေးမှူးက မည်သို့ဆက်သွယ်ရမည်နည်း?",full_name:"အမည်အပြည့်အစုံ",country:"နိုင်ငံ",messenger:"မက်ဆင်ဂျာ",messenger_id:"ID သို့မဟုတ် ဖုန်းနံပါတ်",birth_year:"မွေးနှစ်",
+consent_privacy:"ကိုယ်ရေးအချက်အလက် မူဝါဒကို သဘောတူပါသည်။",consent_share:"စျေးနှုန်းပြင်ဆင်ရန် ကျွန်ုပ်ရွေးသော ဆေးခန်းများနှင့်သာ တောင်းဆိုချက်နှင့် ကျန်းမာရေးအချက်အလက် မျှဝေရန် သဘောတူပါသည်။",
+next:"ရှေ့သို့",back:"နောက်သို့",submit:"တောင်းဆိုချက် ပို့ရန်",
+req_sent_t:"ပို့ပြီးပါပြီ!",req_sent_d:"ညှိနှိုင်းရေးမှူးက ၂၄ နာရီအတွင်း {m} နှင့် ဤအက်ပ်တွင် ပြန်ကြားပါမည်။",
+err_pick:"ကုသမှု အနည်းဆုံး တစ်ခု ရွေးပါ။",err_name:"အမည်အပြည့်အစုံ ထည့်ပါ။",err_country:"နိုင်ငံ ရွေးပါ။",err_contact:"မက်ဆင်ဂျာ ID သို့မဟုတ် နံပါတ် ထည့်ပါ။",err_consent:"သဘောတူချက် နှစ်ခုလုံးကို အမှန်ခြစ်ပါ။",err_dates:"ပြန်ရက်သည် ရောက်ရှိရက်ထက် နောက်ကျရမည်။",err_age:"အသက် ၁၈ နှစ်နှင့်အထက် ဖြစ်ရမည်။",
+login:"ဝင်ရန်",signup:"အကောင့်ဖွင့်ရန်",email:"အီးမေးလ်",password:"စကားဝှက်",pw_hint:"အနည်းဆုံး စာလုံး ၈ လုံး",have_acc:"အကောင့်ရှိပြီးလား? ဝင်ရန်",no_acc:"အသစ်လား? အကောင့်ဖွင့်ရန်",logout:"ထွက်ရန်",forgot:"စကားဝှက် မေ့နေပါသလား?",reset_sent:"ပြန်လည်သတ်မှတ်ရန် လင့်ခ်ကို အီးမေးလ်သို့ ပို့ပြီးပါပြီ။",
+login_need:"တောင်းဆိုချက်ပို့ရန်နှင့် ညှိနှိုင်းရေးမှူးနှင့် စကားပြောရန် ဝင်ရောက်ပါ။",
+err_login:"အီးမေးလ် သို့မဟုတ် စကားဝှက် မှားနေသည်။",err_email:"မှန်ကန်သော အီးမေးလ် ထည့်ပါ။",err_pw:"စကားဝှက်သည် အနည်းဆုံး စာလုံး ၈ လုံး ရှိရမည်။",
+trips_empty:"ခရီး မရှိသေးပါ",trips_empty_d:"အခမဲ့ စျေးနှုန်းတောင်းပါက သင့်ခရီး ဤနေရာတွင် ပေါ်လာမည်။",
+stage_new:"လက်ခံရရှိ",stage_consulting:"တိုင်ပင်ဆွေးနွေးဆဲ",stage_quoted:"စျေးနှုန်း အဆင်သင့်",stage_booked:"ချိန်းဆိုပြီး",stage_travel:"ခရီးစီစဉ်ဆဲ",stage_in_korea:"ကိုရီးယားတွင်",stage_procedure:"ကုသမှု",stage_recovery:"ပြန်လည်နာလန်ထ",stage_done:"ပြီးဆုံး",stage_canceled:"ပယ်ဖျက်ပြီး",
+quotes:"စျေးနှုန်းများ",quote_total:"စုစုပေါင်း",valid_until:"သက်တမ်း",accept:"လက်ခံ",decline:"ငြင်းပယ်",st_sent:"စောင့်ဆိုင်းဆဲ",st_accepted:"လက်ခံပြီး",st_declined:"ငြင်းပယ်ပြီး",st_expired:"သက်တမ်းကုန်",st_withdrawn:"ပိတ်ပြီး",includes:"ပါဝင်သည်",
+tap_confirm:"အတည်ပြုရန် ထပ်နှိပ်ပါ",no_quotes:"ညှိနှိုင်းရေးမှူးက ဆေးခန်းများနှင့် စျေးနှုန်း ပြင်ဆင်နေသည်။",
+chat:"ညှိနှိုင်းရေးမှူးနှင့် စကားပြော",chat_ph:"စာရိုက်ပါ…",send:"ပို့",chat_empty:"နှုတ်ဆက်လိုက်ပါ! ညှိနှိုင်းရေးမှူးက ပုံမှန်အားဖြင့် နာရီအနည်းငယ်အတွင်း ပြန်ကြားပါသည်။",
+timeline:"မှတ်တမ်း",cancel_req:"တောင်းဆိုချက် ပယ်ဖျက်",cancel_reason:"အကြောင်းရင်း (မဖြစ်မနေမဟုတ်)",canceled_ok:"တောင်းဆိုချက် ပယ်ဖျက်ပြီး",
+ev_created:"တောင်းဆိုချက် ပို့ပြီး",ev_stage:"အခြေအနေ: {s}",ev_quote_sent:"စျေးနှုန်းအသစ် ရရှိ",ev_quote_accepted:"စျေးနှုန်း လက်ခံပြီး",ev_quote_declined:"စျေးနှုန်း ငြင်းပယ်ပြီး",ev_canceled:"ပယ်ဖျက်ပြီး",ev_assigned:"ညှိနှိုင်းရေးမှူး တာဝန်ပေးပြီး",ev_note:"အပ်ဒိတ်",
+your_coord:"သင့်ညှိနှိုင်းရေးမှူး",coord_pending:"မကြာမီ ညှိနှိုင်းရေးမှူး တာဝန်ပေးပါမည်",
+profile:"ပရိုဖိုင်",language:"ဘာသာစကား",currency:"ငွေကြေး",save:"သိမ်းရန်",saved:"သိမ်းပြီး",staff_panel:"ဝန်ထမ်းစာမျက်နှာ",
+offline:"ချိတ်ဆက်မှု ပြဿနာ။ ထပ်ကြိုးစားပါ။",
+legal_note:"ကျွန်ုပ်တို့သည် ဆေးဘက်ခရီးသွား ညှိနှိုင်းရေးဝန်ဆောင်မှုဖြစ်ပြီး ဆေးခန်းမဟုတ်ပါ။ ကုသမှုဆုံးဖြတ်ချက်ကို တိုင်ပင်ပြီးနောက် ဆရာဝန်က ချမှတ်ပါသည်။",
+new_trip:"တောင်းဆိုချက်အသစ်",details:"အသေးစိတ်",your_trip:"သင့်ခရီး",welcome:"ကြိုဆိုပါသည်",
+}
+};
+
+</script>
+<script>
+'use strict';
+/* =====================================================================
+   K-MEDICAL CONCIERGE (nome provisório) — app do paciente + painel da equipe
+   Um único arquivo. Banco: Supabase (tabelas kmt_*).
+   Para trocar o nome da marca: mude BRAND abaixo.
+   ===================================================================== */
+const SB_URL = 'https://agdqlnaedojcgivwluty.supabase.co';
+const SB_KEY = 'sb_publishable_PKGxxrfpduzI7xY1_DWQyQ_cnJA9isP';
+const BRAND = { name: 'K-Medical Concierge', short: 'K-Medical', mark: 'K', tag: 'Seoul' };
+
+const sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true, storageKey: 'kmt-auth' } });
+
+const LANGS = [['en','English'],['ja','日本語'],['zh','繁體中文'],['th','ไทย'],['vi','Tiếng Việt'],['id','Bahasa Indonesia'],['my','မြန်မာ']];
+const LOCALE = { en:'en-US', ja:'ja-JP', zh:'zh-TW', th:'th-TH', vi:'vi-VN', id:'id-ID', my:'my-MM' };
+const SCRIPT_FONT = { ja:'Noto Sans JP', zh:'Noto Sans TC', th:'Noto Sans Thai', my:'Noto Sans Myanmar' };
+const COUNTRIES = [
+  { c:'JP', n:'Japan · 日本', f:'🇯🇵', lang:'ja', cur:'JPY', msg:'LINE' },
+  { c:'TW', n:'Taiwan · 台灣', f:'🇹🇼', lang:'zh', cur:'TWD', msg:'LINE' },
+  { c:'TH', n:'Thailand · ประเทศไทย', f:'🇹🇭', lang:'th', cur:'THB', msg:'LINE' },
+  { c:'VN', n:'Vietnam · Việt Nam', f:'🇻🇳', lang:'vi', cur:'VND', msg:'Zalo' },
+  { c:'ID', n:'Indonesia', f:'🇮🇩', lang:'id', cur:'IDR', msg:'WhatsApp' },
+  { c:'MM', n:'Myanmar · မြန်မာ', f:'🇲🇲', lang:'my', cur:'MMK', msg:'Viber' },
+  { c:'HK', n:'Hong Kong · 香港', f:'🇭🇰', lang:'zh', cur:'USD', msg:'WhatsApp' },
+  { c:'SG', n:'Singapore', f:'🇸🇬', lang:'en', cur:'USD', msg:'WhatsApp' },
+  { c:'MY', n:'Malaysia', f:'🇲🇾', lang:'en', cur:'USD', msg:'WhatsApp' },
+  { c:'PH', n:'Philippines', f:'🇵🇭', lang:'en', cur:'USD', msg:'Viber' },
+  { c:'KH', n:'Cambodia', f:'🇰🇭', lang:'en', cur:'USD', msg:'Telegram' },
+  { c:'OT', n:'Other', f:'🌏', lang:'en', cur:'USD', msg:'WhatsApp' },
+];
+const MESSENGERS = ['LINE','Zalo','WhatsApp','Viber','Telegram','WeChat','KakaoTalk','Email'];
+const CUR = { USD:{s:'US$'}, JPY:{s:'¥'}, TWD:{s:'NT$'}, THB:{s:'฿'}, VND:{s:'₫',suf:1}, IDR:{s:'Rp '}, MMK:{s:' Ks',suf:1} };
+const CATS = ['plastic','derma','dental','checkup','hair'];
+const CAT_IC = { plastic:'✨', derma:'🌸', dental:'🦷', checkup:'🩺', hair:'💇' };
+const STAGES = ['new','consulting','quoted','booked','travel','in_korea','procedure','recovery','done'];
+/* palavras que o paciente digita na busca (além do nome) */
+const KW = { eyelid:'eye eyes eyelid ptosis 目 眼 ตา mắt mata', rhino:'nose nasal 鼻 จมูก mũi hidung', contour:'jaw face chin cheekbone vline 顎 輪郭 下巴 กราม hàm rahang', fatgraft:'fat face volume', lipo:'fat body belly arm thigh 脂肪 抽脂 ไขมัน mỡ lemak', lifting:'thread lift sagging', botox:'wrinkle jaw slim 皺 小顔 ริ้วรอย nhăn kerutan', filler:'lips nose chin volume 唇 ปาก môi bibir', ulthera:'lift sagging hifu', thermage:'lift tightening rf', booster:'glow skin hydration pdrn 肌 ผิว da kulit', laser:'spots melasma pigment acne シミ 斑 ฝ้า nám flek', implant:'tooth teeth 歯 牙 ฟัน răng gigi', veneer:'teeth smile 歯 牙 ฟัน răng gigi', whitening:'teeth white 歯 牙 ฟัน răng gigi', checkup:'health medical mri ct 健診 體檢 สุขภาพ sức khỏe kesehatan', hair:'baldness hair loss 髪 薄毛 頭髮 ผม tóc rambut' };
+const CHECKS = ['license','specialist','intl','er','aftercare','price'];
+const LANG_FLAG = { en:'EN', ja:'JA', zh:'ZH', th:'TH', vi:'VI', id:'ID', my:'MY' };
+
+/* --- textos do painel (equipe) em português --- */
+const STAGE_PT = { new:'Novo', consulting:'Em consulta', quoted:'Orçado', booked:'Reservado', travel:'Planejando viagem', in_korea:'Na Coreia', procedure:'Procedimento', recovery:'Recuperação', done:'Concluído', canceled:'Cancelado' };
+const CAT_PT = { plastic:'Cirurgia plástica', derma:'Dermatologia', dental:'Odontologia', checkup:'Check-up', hair:'Capilar' };
+const CHECK_PT = { license:'Licença médica', specialist:'Especialistas certificados', intl:'Experiência com estrangeiros', er:'Anestesista / emergência', aftercare:'Acompanhamento pós', price:'Tabela de preços clara' };
+const EV_PT = { created:'Pedido criado', stage:'Etapa alterada', assigned:'Coordenador definido', quote_sent:'Orçamento enviado', quote_accepted:'Orçamento aceito pelo paciente', quote_declined:'Orçamento recusado', quote_withdrawn:'Orçamento retirado', canceled:'Pedido cancelado', note:'Nota interna', clinic_saved:'Clínica salva', treatment_saved:'Tratamento salvo', role:'Papel alterado', rates:'Câmbio alterado' };
+const QUICK = [
+  ['Boas-vindas','Hello! I am your coordinator. Thank you for your request — I will check with the clinics and come back to you within 24 hours. Could you tell me a bit more about the result you would like?'],
+  ['Pedir fotos','To prepare an accurate quote, could you send clear photos (front and both sides, natural light, no filter)? They are shared only with the clinics you chose.'],
+  ['Orçamento enviado','Your quotes are ready in the app (My trip → Quotes). Prices include VAT. Let me know if you have any questions — I can also arrange a video consultation with the doctor.'],
+  ['Reserva confirmada','Your booking is confirmed! Next I will help you with hotel, airport pick-up and interpreter. Please send your flight details when you have them.'],
+  ['Pós (D+7)','How are you feeling today? Please send a photo of the area so the doctor can check your recovery. Any pain, swelling or fever — tell me right away.'],
+];
+
+/* =====================================================================
+   ESTADO
+   ===================================================================== */
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  del(k) { try { localStorage.removeItem(k); } catch (e) {} },
+};
+function detectLang() {
+  const n = (navigator.language || 'en').toLowerCase();
+  if (n.startsWith('ja')) return 'ja';
+  if (n.startsWith('zh')) return 'zh';
+  if (n.startsWith('th')) return 'th';
+  if (n.startsWith('vi')) return 'vi';
+  if (n.startsWith('id') || n.startsWith('ms')) return 'id';
+  if (n.startsWith('my')) return 'my';
+  return 'en';
+}
+const S = {
+  lang: LS.get('kmt-lang', null) || detectLang(),
+  cur: LS.get('kmt-cur', null),
+  user: null, profile: null,
+  clinics: [], treats: [], rates: {}, company: {},
+  reqs: [], quotes: [], qint: [], msgs: [], events: [], profiles: [], terms: [],
+  f: { cat: 'all', q: '', mylang: false, tcat: 'all' },
+  sf: { stage: 'open', q: '', country: '', coord: '' },
+  confirm: null, loaded: false, lastHash: '', authMode: 'signup', authErr: '', justSent: null,
+};
+if (!S.cur) S.cur = ({ ja:'JPY', zh:'TWD', th:'THB', vi:'VND', id:'IDR', my:'MMK' })[S.lang] || 'USD';
+let RQ = LS.get('kmt-draft', null) || newDraft();
+function newDraft() { return { step: 1, t: [], c: [], notes: '', from: '', to: '', flexible: true, companions: 0, budget: '', hotel: false, pickup: true, interp: true, name: '', country: '', msg: '', msgid: '', by: '', cp: false, cs: false, email: '', pw: '' }; }
+function saveDraft() { const d = { ...RQ }; delete d.pw; LS.set('kmt-draft', d); }
+
+/* =====================================================================
+   UTILITÁRIOS
+   ===================================================================== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+function t(k, v) { let s = (I18N[S.lang] && I18N[S.lang][k]) ?? I18N.en[k] ?? k; if (v) for (const x in v) s = s.replace('{' + x + '}', v[x]); return s; }
+const tn = o => !o ? '' : (typeof o === 'string' ? o : (o[S.lang] || o.en || Object.values(o)[0] || ''));
+const tnEn = o => !o ? '' : (typeof o === 'string' ? o : (o.en || ''));
+const fmtN = n => Math.round(Number(n) || 0).toLocaleString('en-US');
+const krw = n => '₩' + fmtN(n);
+function roundSmart(v) { const a = Math.abs(v); const step = a >= 1e7 ? 10000 : a >= 1e6 ? 1000 : a >= 1e5 ? 100 : a >= 1e4 ? 10 : 1; return Math.round(v / step) * step; }
+function local(k, cur = S.cur) { const r = Number(S.rates[cur]); if (!r || !k) return ''; const v = roundSmart(k / r); const c = CUR[cur] || { s: cur + ' ' }; return c.suf ? fmtN(v) + c.s : c.s + fmtN(v); }
+function priceHTML(tr) {
+  const u = t('u_' + (tr.unit || 'case'));
+  return `<div class="price"><small>${t('from')}</small> ${krw(tr.price_from_krw)} <small>${esc(u)}</small></div>` +
+    (S.cur !== 'KRW' && local(tr.price_from_krw) ? `<div class="loc">≈ ${local(tr.price_from_krw)}${tr.price_to_krw ? ' – ' + local(tr.price_to_krw) : ''}</div>` : '');
+}
+function dt(d, opt) { if (!d) return ''; const x = typeof d === 'string' && d.length === 10 ? new Date(d + 'T12:00:00') : new Date(d); return x.toLocaleDateString(LOCALE[S.lang] || 'en-US', opt || { day: 'numeric', month: 'short', year: 'numeric' }); }
+function dtt(d) { if (!d) return ''; return new Date(d).toLocaleString(LOCALE[S.lang] || 'en-US', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+function pt(d, withYear) { if (!d) return '—'; const x = typeof d === 'string' && d.length === 10 ? new Date(d + 'T12:00:00') : new Date(d); return x.toLocaleDateString('pt-BR', withYear ? { day: 'numeric', month: 'short', year: '2-digit' } : { day: 'numeric', month: 'short' }).replace('.', ''); }
+function ptt(d) { if (!d) return '—'; return new Date(d).toLocaleString('pt-BR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).replace('.', ''); }
+function ago(d) { const s = (Date.now() - new Date(d)) / 1000; if (s < 60) return 'agora'; if (s < 3600) return Math.floor(s / 60) + ' min'; if (s < 86400) return Math.floor(s / 3600) + ' h'; return Math.floor(s / 86400) + ' d'; }
+const today = () => new Date().toISOString().slice(0, 10);
+const addDays = (d, n) => { const x = new Date((d || today()) + 'T12:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
+const country = c => COUNTRIES.find(x => x.c === c) || { c: c || '', n: c || '—', f: '🌏', lang: 'en', cur: 'USD', msg: 'WhatsApp' };
+const clinic = id => S.clinics.find(c => c.id === id);
+const treat = id => S.treats.find(x => x.id === id);
+const isStaff = () => !!(S.profile && ['staff','admin'].includes(S.profile.role));
+const isAdmin = () => !!(S.profile && S.profile.role === 'admin');
+function toast(m) { const el = $('#toast'); el.textContent = m; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
+function go(h) { if (location.hash === h) render(); else location.hash = h; }
+function route() { const h = (location.hash || '#/home').slice(2); const [path, qs] = h.split('?'); const p = path.split('/').filter(Boolean); const q = Object.fromEntries(new URLSearchParams(qs || '')); return { p: p.length ? p : ['home'], q }; }
+function confirmTap(key, msg) { if (S.confirm === key && Date.now() - S.confirmAt < 5000) { S.confirm = null; return true; } S.confirm = key; S.confirmAt = Date.now(); toast(msg || t('tap_confirm')); return false; }
+function err(e) { console.error(e); toast((e && e.message) ? e.message : t('offline')); }
+function setFont() {
+  const f = SCRIPT_FONT[S.lang];
+  document.documentElement.lang = S.lang;
+  if (f && !document.getElementById('font-' + S.lang)) {
+    const l = document.createElement('link'); l.id = 'font-' + S.lang; l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=' + f.replace(/ /g, '+') + ':wght@400;500;600;700&display=swap';
+    document.head.appendChild(l);
+  }
+  document.documentElement.style.setProperty('--script', f ? `"${f}"` : '"Noto Sans"');
+}
+
+/* ícones */
+const IC = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>',
+  clinic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 21V7l8-4 8 4v14M9 21v-5h6v5M12 8v4M10 10h4"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>',
+  plane:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10.5 13.5 3 11l1.5-1.5 8 1L17 6c1-1 3-1.5 3.5-1S20 7.5 19 8.5l-4.5 4.5 1 8L14 22.5l-2.5-7.5L8 18.5V21l-1.5 1L5 19l-3-1.5L3 16h2.5z"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>',
+  tag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg>',
+  search:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  team:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5 6.5-5s5.5 1.5 6.5 5M16 4.5a3.5 3.5 0 0 1 0 7M18 15c2 .6 3.2 2.2 3.8 5"/></svg>',
+  back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>',
+  check:'<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>',
+};
+const HERO_ART = `<svg class="art" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+<defs><radialGradient id="hg1" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#F3D9CF"/><stop offset="1" stop-color="#F3D9CF" stop-opacity="0"/></radialGradient>
+<linearGradient id="hg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFDFB"/><stop offset="1" stop-color="#EFE2D6"/></linearGradient></defs>
+<circle cx="230" cy="170" r="170" fill="url(#hg1)"/>
+<circle cx="292" cy="92" r="34" fill="#F8E9DF" stroke="#E2C4B4" stroke-width="1"/>
+<path d="M150 330c-30-20-44-58-36-92 6-26 24-42 26-62 1-12-6-20-6-28 0-6 6-10 20-10h92c14 0 20 4 20 10 0 8-7 16-6 28 2 20 20 36 26 62 8 34-6 72-36 92z" fill="url(#hg2)" stroke="#D9C2AE" stroke-width="1.2"/>
+<path d="M152 152h104" stroke="#D9C2AE" stroke-width="1"/>
+<path d="M175 250c18-26 42-26 58 0" stroke="#B08A55" stroke-width="1.2" opacity=".55"/>
+<path d="M190 230c8-12 20-12 28 0" stroke="#B08A55" stroke-width="1.2" opacity=".55"/>
+<g stroke="#8A3B4F" stroke-width="1.1" opacity=".55"><path d="M318 330V214M311 214h14M314 214l4-34 4 34M318 180v-14"/><path d="M296 330c6-30 10-46 22-46s16 16 22 46"/></g>
+<path d="M60 330h300" stroke="#D9C2AE" stroke-width="1"/>
+<g fill="#C98A97" opacity=".55"><circle cx="96" cy="120" r="3"/><circle cx="110" cy="108" r="2"/><circle cx="84" cy="104" r="2.2"/></g>
+</svg>`;
+
+/* =====================================================================
+   DADOS
+   ===================================================================== */
+async function loadPublic() {
+  const [c, tr, s] = await Promise.all([
+    sb.from('kmt_clinics').select('*').order('name'),
+    sb.from('kmt_treatments').select('*').order('sort'),
+    sb.from('kmt_settings').select('*'),
+  ]);
+  if (c.error) throw c.error;
+  S.clinics = c.data || []; S.treats = tr.data || [];
+  for (const r of (s.data || [])) { if (r.key === 'rates') S.rates = r.value || {}; if (r.key === 'company') S.company = r.value || {}; }
+}
+async function loadPrivate() {
+  if (!S.user) { S.reqs = S.quotes = S.msgs = S.events = []; return; }
+  const all = (tb, o, asc) => sb.from(tb).select('*').order(o || 'created_at', { ascending: !!asc });
+  const [r, q, m, e] = await Promise.all([all('kmt_requests'), all('kmt_quotes'), all('kmt_messages', 'created_at', true), sb.from('kmt_events').select('*').order('id', { ascending: false }).limit(1500)]);
+  S.reqs = r.data || []; S.quotes = q.data || []; S.msgs = m.data || []; S.events = e.data || [];
+  if (isStaff()) {
+    const [p, tm, qi] = await Promise.all([all('kmt_profiles'), sb.from('kmt_clinic_terms').select('*'), sb.from('kmt_quote_internal').select('*')]);
+    S.profiles = p.data || []; S.terms = tm.data || []; S.qint = qi.data || [];
+  }
+}
+async function ensureProfile() {
+  const u = S.user; if (!u) { S.profile = null; return; }
+  let { data } = await sb.from('kmt_profiles').select('*').eq('id', u.id).maybeSingle();
+  if (!data) {
+    const ins = await sb.from('kmt_profiles').insert({ id: u.id, email: u.email, lang: S.lang, currency: S.cur }).select().single();
+    data = ins.data;
+  }
+  S.profile = data || { id: u.id, email: u.email, role: 'patient' };
+  if (data && data.lang && !LS.get('kmt-lang', null)) S.lang = data.lang;
+  if (data && data.currency && !LS.get('kmt-cur', null)) S.cur = data.currency;
+  sb.from('kmt_profiles').update({ last_seen: new Date().toISOString() }).eq('id', u.id).then(() => {}, () => {});
+}
+async function logEvent(request_id, kind, detail = {}, isPublic = true) {
+  return sb.from('kmt_events').insert({ request_id, actor_id: S.user.id, kind, detail, public: isPublic });
+}
+async function refresh(full) {
+  try { if (full) await loadPublic(); await loadPrivate(); } catch (e) { console.warn(e); }
+  const a = document.activeElement;
+  if (a && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) { updateChats(); return; }
+  render(true);
+}
+function unreadFor(rid) { return S.msgs.filter(m => m.request_id === rid && !m.read_at && (isStaff() ? !m.from_staff : m.from_staff)).length; }
+function unreadAll() { return S.msgs.filter(m => !m.read_at && (isStaff() ? !m.from_staff : m.from_staff) && (isStaff() || S.reqs.some(r => r.id === m.request_id))).length; }
+async function markRead(rid) {
+  const ids = S.msgs.filter(m => m.request_id === rid && !m.read_at && (isStaff() ? !m.from_staff : m.from_staff)).map(m => m.id);
+  if (!ids.length) return;
+  const now = new Date().toISOString();
+  S.msgs.forEach(m => { if (ids.includes(m.id)) m.read_at = now; });
+  await sb.from('kmt_messages').update({ read_at: now }).in('id', ids);
+}
+
+/* =====================================================================
+   RENDER — PACIENTE
+   ===================================================================== */
+const app = () => document.getElementById('app');
+function render(keepScroll) {
+  const r = route(); const h = location.hash;
+  const y = window.scrollY; const changed = h !== S.lastHash; S.lastHash = h;
+  setFont();
+  if (r.p[0] === 'admin') {
+    if (!S.loaded) return;
+    if (!isStaff()) { app().innerHTML = shellPatient(r, `<div class="empty"><div class="em">🔒</div><div class="b">Área da equipe</div><p>Entre com uma conta de equipe.</p><a class="btn" href="#/me">${t('login')}</a></div>`); return; }
+    document.body.classList.add('staff');
+    app().innerHTML = renderStaff(r);
+  } else {
+    document.body.classList.remove('staff');
+    app().innerHTML = shellPatient(r, pagePatient(r));
+  }
+  afterRender(r);
+  if (changed && !keepScroll) window.scrollTo(0, 0); else window.scrollTo(0, y);
+}
+function shellPatient(r, body) {
+  const on = p => (r.p[0] === p || (p === 'trips' && r.p[0] === 'trip') || (p === 'clinics' && r.p[0] === 'clinic') || (p === 'treatments' && r.p[0] === 'treatment')) ? 'on' : '';
+  const un = S.user && !isStaff() ? unreadAll() : 0;
+  const nav = [['home','home',t('nav_home')],['clinics','clinic',t('nav_clinics')],['treatments','spark',t('nav_treat')],['trips','plane',t('nav_trips')],['me','user',t('nav_me')]];
+  return `<header class="top"><div class="top-in">
+    <a class="logo" href="#/home"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>${esc(BRAND.tag)}</small></span></a>
+    <nav class="tnav">${nav.slice(0, 4).map(n => `<a class="${on(n[0])}" href="#/${n[0]}">${esc(n[2])}</a>`).join('')}</nav>
+    <div class="grow"></div>
+    <select class="langsel" data-ch="lang" aria-label="${esc(t('language'))}">${LANGS.map(l => `<option value="${l[0]}" ${l[0] === S.lang ? 'selected' : ''}>${l[1]}</option>`).join('')}</select>
+    ${isStaff() ? `<a class="iconbtn" href="#/admin" title="${esc(t('staff_panel'))}">${IC.chart.replace('<svg', '<svg width="17" height="17"')}</a>` : ''}
+    <a class="iconbtn" href="#/me" aria-label="${esc(t('nav_me'))}">${IC.user.replace('<svg', '<svg width="17" height="17"')}${un ? `<span class="dot">${un}</span>` : ''}</a>
+  </div></header>
+  <main>${body}</main>
+  <nav class="bnav">${nav.map(n => `<a class="${on(n[0])}" href="#/${n[0]}">${IC[n[1]]}<span>${esc(n[2])}</span>${n[0] === 'trips' && un ? `<i class="dot">${un}</i>` : ''}</a>`).join('')}</nav>`;
+}
+function pagePatient(r) {
+  switch (r.p[0]) {
+    case 'clinics': return pageClinics(r);
+    case 'clinic': return pageClinic(r.p[1]);
+    case 'treatments': return pageTreatments(r);
+    case 'treatment': return pageTreatment(r.p[1]);
+    case 'request': return pageRequest(r);
+    case 'trips': return pageTrips();
+    case 'trip': return pageTrip(r.p[1]);
+    case 'me': return pageMe();
+    default: return pageHome();
+  }
+}
+function footer() {
+  const c = S.company || {};
+  return `<div class="foot">${esc(t('legal_note'))}<div class="row wrap mt" style="gap:14px">
+    <span>© ${new Date().getFullYear()} ${esc(BRAND.name)}</span>
+    ${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}
+    ${c.whatsapp ? `<a href="https://wa.me/${esc(String(c.whatsapp).replace(/\D/g, ''))}">WhatsApp</a>` : ''}
+    ${c.line ? `<a href="https://line.me/ti/p/~${esc(c.line)}">LINE</a>` : ''}
+  </div></div>`;
+}
+function clinicCard(c) {
+  const sp = (c.specialties || []).map(s => t('cat_' + s)).join(' · ');
+  const minP = Math.min(...(c.treatment_ids || []).map(id => (treat(id) || {}).price_from_krw || Infinity));
+  return `<a class="card cl" href="#/clinic/${c.id}">
+    <div class="cover tone${(c.tone || 0) % 7}"><span class="mono">${esc((c.name || '?')[0])}</span>
+      <span class="vb">${c.verified ? `<span class="tag ok">${IC.check} ${esc(t('verified'))}</span>` : `<span class="tag">${esc(t('under_review'))}</span>`}</span>
+      <span class="ds">${esc(c.district || 'Seoul')}</span></div>
+    <div class="bd"><div class="nm">${esc(c.name)}</div><div class="small muted">${esc(sp)}</div>
+      <div class="meta">${(c.languages || []).map(l => `<span class="tag">${LANG_FLAG[l] || l}</span>`).join('')}</div>
+      ${isFinite(minP) ? `<div class="small" style="margin-top:auto"><span class="muted">${esc(t('from'))}</span> <b>${krw(minP)}</b>${local(minP) ? ` <span class="muted">≈ ${local(minP)}</span>` : ''}</div>` : ''}
+    </div></a>`;
+}
+function treatCard(x) {
+  return `<a class="card tr" href="#/treatment/${x.id}"><span class="ic">${CAT_IC[x.category] || '•'}</span>
+    <div class="grow"><div class="b">${esc(tn(x.name))}</div><div class="small muted">${esc(t('cat_' + x.category))}${x.stay_days ? ` · ${esc(t('stay'))} ${x.stay_days} ${esc(t('days'))}` : ''}</div></div>
+    <div class="right">${priceHTML(x)}</div></a>`;
+}
+function pageHome() {
+  const vc = S.clinics.filter(c => c.verified && c.active !== false).slice(0, 8);
+  const pop = S.treats.filter(x => x.popular && x.active !== false).slice(0, 8);
+  const myTrip = S.user && !isStaff() && S.reqs.find(r => r.stage !== 'canceled' && r.stage !== 'done');
+  return `
+  ${myTrip ? `<a class="card pad row mb" href="#/trip/${myTrip.id}" style="border-color:var(--acc)">
+      <span class="ic" style="font-size:22px">✈️</span><div class="grow"><div class="small muted">${esc(t('your_trip'))} · ${esc(myTrip.code || '')}</div>
+      <div class="b">${esc(t('stage_' + myTrip.stage))}</div></div>${unreadFor(myTrip.id) ? `<span class="tag acc">💬 ${unreadFor(myTrip.id)}</span>` : ''}<span class="muted">›</span></a>` : ''}
+  <section class="hero">${HERO_ART}<div class="hin">
+    <div class="kick">${esc(t('hero_kicker'))}</div>
+    <h1 class="h1" style="margin-top:8px">${esc(t('hero_title'))}</h1>
+    <p>${esc(t('hero_sub'))}</p>
+    <form class="search" data-sub="search"><span class="muted">${IC.search}</span><input name="q" placeholder="${esc(t('search_ph'))}" autocomplete="off"><button class="btn acc sm" type="submit">${IC.search}</button></form>
+    <div class="row wrap mt"><a class="btn acc" href="#/request">${esc(t('cta_quote'))}</a><a class="btn ghost" href="#/clinics">${esc(t('cta_browse'))}</a></div>
+    <div class="trust">${[['✓', 'trust1'], ['文', 'trust2'], ['₩', 'trust3'], ['♡', 'trust4']].map(x => `<div><i>${x[0]}</i>${esc(t(x[1]))}</div>`).join('')}</div>
+  </div></section>
+  <div class="chips mt2">${CATS.map(c => `<a class="chip" href="#/treatments?cat=${c}">${CAT_IC[c]} ${esc(t('cat_' + c))}</a>`).join('')}</div>
+  <section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_verified'))}</h2><a href="#/clinics">${esc(t('see_all'))} →</a></div>
+    <div class="hs">${vc.map(clinicCard).join('')}</div></section>
+  <section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_popular'))}</h2><a href="#/treatments">${esc(t('see_all'))} →</a></div>
+    <div class="grid g2">${pop.map(treatCard).join('')}</div>
+    <p class="tiny muted mt">${esc(t('indicative'))}</p></section>
+  <section class="sec"><h2 class="h2 mb">${esc(t('sec_how'))}</h2>
+    <div class="grid g3">${[1, 2, 3, 4].map(i => `<div class="card pad"><div class="serif" style="font-size:30px;color:var(--gold);line-height:1">0${i}</div><div class="h3 mt">${esc(t('how' + i + '_t'))}</div><div class="small muted" style="margin-top:4px">${esc(t('how' + i + '_d'))}</div></div>`).join('')}</div>
+    <div class="mt2" style="text-align:center"><a class="btn acc" href="#/request">${esc(t('cta_quote'))} →</a></div></section>
+  ${footer()}`;
+}
+function pageClinics(r) {
+  if (r.q.cat) S.f.cat = r.q.cat;
+  let list = S.clinics.filter(c => c.active !== false);
+  if (S.f.cat !== 'all') list = list.filter(c => (c.specialties || []).includes(S.f.cat));
+  if (S.f.mylang) list = list.filter(c => (c.languages || []).includes(S.lang));
+  list.sort((a, b) => (b.verified - a.verified) || (b.intl_patients || 0) - (a.intl_patients || 0));
+  return `<h1 class="h2">${esc(t('nav_clinics'))}</h1>
+  <div class="chips mt">${['all', ...CATS].map(c => `<button class="chip ${S.f.cat === c ? 'on' : ''}" data-act="fcat" data-v="${c}">${c === 'all' ? '' : CAT_IC[c] + ' '}${esc(t('cat_' + c))}</button>`).join('')}</div>
+  ${S.lang !== 'en' ? `<label class="check"><input type="checkbox" data-ch="mylang" ${S.f.mylang ? 'checked' : ''}> ${esc(t('filter_lang'))}</label>` : ''}
+  <div class="grid g3 mt">${list.map(clinicCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>${footer()}`;
+}
+function pageClinic(id) {
+  const c = clinic(id); if (!c) return `<div class="empty">${esc(t('no_results'))}</div>`;
+  const trs = (c.treatment_ids || []).map(treat).filter(x => x && x.active !== false);
+  const chk = c.checks || {};
+  return `<a class="row small muted mb" href="#/clinics">${IC.back} ${esc(t('nav_clinics'))}</a>
+  <div class="card cl"><div class="cover tone${(c.tone || 0) % 7}" style="height:150px"><span class="mono" style="font-size:150px">${esc(c.name[0])}</span>
+    <span class="vb">${c.verified ? `<span class="tag ok">${IC.check} ${esc(t('verified'))}</span>` : `<span class="tag">${esc(t('under_review'))}</span>`}</span>
+    <div><div class="ds">${esc(c.district || 'Seoul')} · Seoul</div><div class="serif" style="font-size:27px;font-weight:700;line-height:1.1">${esc(c.name)}</div></div></div>
+    <div class="bd">
+      <div class="meta">${c.founded ? `<span>${esc(t('since'))} ${c.founded}</span>` : ''}${c.doctors ? `<span>${esc(t('doctors'))}: ${c.doctors}</span>` : ''}${c.intl_patients ? `<span>${fmtN(c.intl_patients)} ${esc(t('intl_year'))}</span>` : ''}</div>
+      ${tn(c.about) ? `<p style="margin:6px 0 2px;color:var(--ink2)">${esc(tn(c.about))}</p>` : ''}
+      <div class="row wrap"><span class="small muted">${esc(t('languages'))}:</span>${(c.languages || []).map(l => `<span class="tag">${esc((LANGS.find(x => x[0] === l) || [l, l])[1])}</span>`).join('')}</div>
+    </div></div>
+  <div class="card pad mt"><div class="h3 mb">${esc(c.verified ? t('verified') : t('under_review'))}</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">${CHECKS.map(k => `<div class="row small" style="align-items:flex-start"><span style="color:${chk[k] ? 'var(--ok)' : 'var(--line2)'}">${chk[k] ? '●' : '○'}</span><span class="${chk[k] ? '' : 'muted'}">${esc(t('chk_' + k))}</span></div>`).join('')}</div></div>
+  <section class="sec"><div class="sech"><h2 class="h2">${esc(t('treatments_here'))}</h2></div>
+    <div class="grid g2">${trs.map(treatCard).join('')}</div><p class="tiny muted mt">${esc(t('indicative'))}</p></section>
+  <div class="mt2"><a class="btn acc block" href="#/request?c=${c.id}">${esc(t('quote_this'))}</a></div>${footer()}`;
+}
+function pageTreatments(r) {
+  if (r.q.cat) S.f.tcat = r.q.cat;
+  if (r.q.q != null) S.f.q = r.q.q;
+  const q = (S.f.q || '').trim().toLowerCase();
+  let list = S.treats.filter(x => x.active !== false);
+  if (S.f.tcat !== 'all') list = list.filter(x => x.category === S.f.tcat);
+  if (q) list = list.filter(x => (Object.values(x.name || {}).join(' ') + ' ' + (x.code || '') + ' ' + (KW[x.code] || '') + ' ' + t('cat_' + x.category)).toLowerCase().includes(q));
+  return `<h1 class="h2">${esc(t('nav_treat'))}</h1>
+  <form class="search mt" data-sub="search" style="max-width:none"><span class="muted">${IC.search}</span><input name="q" value="${esc(S.f.q)}" placeholder="${esc(t('search_ph'))}" autocomplete="off"></form>
+  <div class="chips mt">${['all', ...CATS].map(c => `<button class="chip ${S.f.tcat === c ? 'on' : ''}" data-act="ftcat" data-v="${c}">${c === 'all' ? '' : CAT_IC[c] + ' '}${esc(t('cat_' + c))}</button>`).join('')}</div>
+  <div class="grid g2 mt">${list.map(treatCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>
+  <p class="tiny muted mt">${esc(t('indicative'))}</p>${footer()}`;
+}
+function pageTreatment(id) {
+  const x = treat(id); if (!x) return `<div class="empty">${esc(t('no_results'))}</div>`;
+  const cls = S.clinics.filter(c => c.active !== false && (c.treatment_ids || []).includes(id)).sort((a, b) => b.verified - a.verified);
+  return `<a class="row small muted mb" href="#/treatments">${IC.back} ${esc(t('nav_treat'))}</a>
+  <div class="card pad"><div class="row"><span class="tr" style="padding:0"><span class="ic" style="width:54px;height:54px;font-size:26px">${CAT_IC[x.category]}</span></span>
+    <div class="grow"><div class="kick">${esc(t('cat_' + x.category))}</div><h1 class="h2">${esc(tn(x.name))}</h1></div></div>
+    <div class="grid mt" style="grid-template-columns:repeat(3,1fr);gap:8px">
+      <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('from'))}</div><div class="b">${krw(x.price_from_krw)}</div><div class="tiny muted">${local(x.price_from_krw) ? '≈ ' + local(x.price_from_krw) : ''}</div></div>
+      <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('stay'))}</div><div class="b">${x.stay_days || '—'} ${esc(t('days'))}</div></div>
+      <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('recovery'))}</div><div class="b">${x.recovery_days ?? '—'} ${esc(t('days'))}</div></div>
+    </div><p class="tiny muted mt">${esc(t('indicative'))}</p>
+    <a class="btn acc block mt" href="#/request?t=${x.id}">${esc(t('quote_this'))}</a></div>
+  <section class="sec"><h2 class="h2 mb">${esc(t('clinics_offering'))}</h2><div class="grid g3">${cls.map(clinicCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div></section>${footer()}`;
+}
+
+/* ---------- pedido de orçamento (3 passos) ---------- */
+function prefillDraft(r) {
+  if (r.q.t && !RQ.t.includes(r.q.t)) { RQ.t.push(r.q.t); RQ.step = 1; }
+  if (r.q.c && !RQ.c.includes(r.q.c) && RQ.c.length < 3) { RQ.c.push(r.q.c); const cl = clinic(r.q.c); if (cl && !RQ.t.length && cl.treatment_ids.length === 1) RQ.t.push(cl.treatment_ids[0]); RQ.step = 1; }
+  const p = S.profile || {};
+  if (!RQ.name && p.full_name) RQ.name = p.full_name;
+  if (!RQ.country && p.country) RQ.country = p.country;
+  if (!RQ.msg) RQ.msg = p.messenger || '';
+  if (!RQ.msgid && p.messenger_id) RQ.msgid = p.messenger_id;
+  if (!RQ.by && p.birth_year) RQ.by = p.birth_year;
+  if (r.q.t || r.q.c) history.replaceState(null, '', '#/request');
+  saveDraft();
+}
+function opt(on, label, act, v, sub) { return `<div class="opt ${on ? 'on' : ''}" data-act="${act}" data-v="${esc(v)}" role="checkbox" aria-checked="${on}"><span class="bx">${on ? IC.check : ''}</span><div class="grow"><div>${label}</div>${sub ? `<div class="tiny muted">${sub}</div>` : ''}</div></div>`; }
+function pageRequest(r) {
+  prefillDraft(r);
+  const st = RQ.step;
+  let body = '';
+  if (st === 1) {
+    const sel = RQ.t;
+    const byCat = CATS.map(c => {
+      const items = S.treats.filter(x => x.category === c && x.active !== false);
+      if (!items.length) return '';
+      return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid" style="gap:6px">${items.map(x => opt(sel.includes(x.id), esc(tn(x.name)), 'rq-t', x.id, `${t('from')} ${krw(x.price_from_krw)}${local(x.price_from_krw) ? ' · ≈ ' + local(x.price_from_krw) : ''}`)).join('')}</div>`;
+    }).join('');
+    const rel = S.clinics.filter(c => c.active !== false && (!sel.length || sel.some(id => (c.treatment_ids || []).includes(id)))).sort((a, b) => b.verified - a.verified);
+    body = `<div class="h3">${esc(t('req_what'))}</div>${byCat}
+      <div class="h3 mt2">${esc(t('req_clinics'))}</div>
+      <div class="grid mt" style="gap:6px">${opt(!RQ.c.length, esc(t('req_any')), 'rq-c', '')}${rel.map(c => opt(RQ.c.includes(c.id), esc(c.name), 'rq-c', c.id, esc((c.district || '') + (c.verified ? ' · ✓ ' + t('verified') : '')))).join('')}</div>
+      <label class="field mt2"><span>${esc(t('req_notes'))}</span><textarea class="in" data-bind="notes" maxlength="2000">${esc(RQ.notes)}</textarea></label>`;
+  } else if (st === 2) {
+    body = `<div class="h3">${esc(t('req_when'))}</div>
+      <div class="grid mt" style="grid-template-columns:1fr 1fr;gap:10px">
+        <label class="field"><span>${esc(t('date_from'))}</span><input class="in" type="date" data-bind="from" min="${today()}" value="${esc(RQ.from)}"></label>
+        <label class="field"><span>${esc(t('date_to'))}</span><input class="in" type="date" data-bind="to" min="${esc(RQ.from || today())}" value="${esc(RQ.to)}"></label></div>
+      <div class="small muted" id="datehint" style="margin-top:4px">${dateHint()}</div>
+      <label class="check"><input type="checkbox" data-bind="flexible" ${RQ.flexible ? 'checked' : ''}> ${esc(t('flexible'))}</label>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+        <label class="field"><span>${esc(t('companions'))}</span><select class="in" data-bind="companions">${[0, 1, 2, 3, 4, 5].map(n => `<option ${+RQ.companions === n ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('budget'))}</span><input class="in" type="number" inputmode="numeric" min="0" step="100" data-bind="budget" value="${esc(RQ.budget)}" placeholder="3000"></label></div>
+      <div class="h3 mt2">${esc(t('services'))}</div>
+      <div class="grid mt" style="gap:6px">${opt(RQ.interp, esc(t('svc_interp')), 'rq-b', 'interp')}${opt(RQ.pickup, esc(t('svc_pickup')), 'rq-b', 'pickup')}${opt(RQ.hotel, esc(t('svc_hotel')), 'rq-b', 'hotel')}</div>`;
+  } else {
+    const cc = country(RQ.country);
+    body = `<div class="h3">${esc(t('req_you'))}</div>
+      <label class="field mt"><span>${esc(t('full_name'))}</span><input class="in" data-bind="name" id="f-name" value="${esc(RQ.name)}" autocomplete="name"></label>
+      <div class="grid mt" style="grid-template-columns:1fr 1fr;gap:10px">
+        <label class="field"><span>${esc(t('country'))}</span><select class="in" data-bind="country" id="f-country"><option value="">—</option>${COUNTRIES.map(c => `<option value="${c.c}" ${RQ.country === c.c ? 'selected' : ''}>${c.f} ${esc(c.n)}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('birth_year'))}</span><input class="in" type="number" inputmode="numeric" data-bind="by" id="f-by" min="1930" max="${new Date().getFullYear()}" value="${esc(RQ.by)}" placeholder="1995"></label></div>
+      <div class="grid mt" style="grid-template-columns:.9fr 1.1fr;gap:10px">
+        <label class="field"><span>${esc(t('messenger'))}</span><select class="in" data-bind="msg" id="f-msg">${MESSENGERS.map(m => `<option ${(RQ.msg || cc.msg) === m ? 'selected' : ''}>${m}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('messenger_id'))}</span><input class="in" data-bind="msgid" id="f-msgid" value="${esc(RQ.msgid)}" placeholder="${(RQ.msg || cc.msg) === 'LINE' ? 'line_id' : '+00 000 000'}"></label></div>
+      <label class="check mt"><input type="checkbox" data-bind="cp" ${RQ.cp ? 'checked' : ''}> ${esc(t('consent_privacy'))}</label>
+      <label class="check"><input type="checkbox" data-bind="cs" ${RQ.cs ? 'checked' : ''}> ${esc(t('consent_share'))}</label>
+      ${!S.user ? `<div class="card pad mt" style="box-shadow:none;background:var(--surf2)"><div class="small b mb">${esc(t('login_need'))}</div>${authFields('rq')}</div>` : ''}`;
+  }
+  const lbl = [t('step1'), t('step2'), t('step3')];
+  return `<a class="row small muted mb" href="#/home">${IC.back} ${esc(t('nav_home'))}</a>
+  <div class="card pad" style="max-width:640px;margin:0 auto">
+    <div class="kick">${esc(t('req_title'))}</div>
+    <div class="row between mt"><h1 class="h2">${st}. ${esc(lbl[st - 1])}</h1><span class="small muted">${st}/3</span></div>
+    <div class="steps">${[1, 2, 3].map(i => `<div class="${i <= st ? 'on' : ''}"></div>`).join('')}</div>
+    <div id="rq-err" hidden class="err-msg mb"></div>
+    ${body}
+    <div class="row mt2">${st > 1 ? `<button class="btn ghost" data-act="rq-back">${esc(t('back'))}</button>` : ''}<div class="grow"></div>
+      ${st < 3 ? `<button class="btn acc" data-act="rq-next">${esc(t('next'))} →</button>` : `<button class="btn acc" data-act="rq-submit" id="rq-submit">${esc(t('submit'))}</button>`}</div>
+  </div>
+  <p class="tiny muted mt" style="text-align:center">${esc(t('legal_note'))}</p>`;
+}
+function dateHint() {
+  if (!RQ.from) return '';
+  const a = dt(RQ.from, { weekday: 'short', day: 'numeric', month: 'long' });
+  if (!RQ.to) return '→ ' + a;
+  const n = Math.round((new Date(RQ.to) - new Date(RQ.from)) / 864e5);
+  return `→ ${a} – ${dt(RQ.to, { weekday: 'short', day: 'numeric', month: 'long' })} · ${n} ${t('days')}`;
+}
+function rqError(msg, focusId) {
+  const el = $('#rq-err'); if (el) { el.textContent = msg; el.hidden = false; }
+  $$('.in.err').forEach(x => x.classList.remove('err'));
+  if (focusId) { const f = document.getElementById(focusId); if (f) { f.classList.add('err'); f.focus(); } }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+function validStep(st) {
+  if (st === 1 && !RQ.t.length) return rqError(t('err_pick'));
+  if (st === 2 && RQ.from && RQ.to && RQ.to < RQ.from) return rqError(t('err_dates'));
+  if (st === 3) {
+    if (!RQ.name.trim()) return rqError(t('err_name'), 'f-name');
+    if (!RQ.country) return rqError(t('err_country'), 'f-country');
+    if (RQ.by && new Date().getFullYear() - Number(RQ.by) < 18) return rqError(t('err_age'), 'f-by');
+    if (!RQ.msgid.trim()) return rqError(t('err_contact'), 'f-msgid');
+    if (!RQ.cp || !RQ.cs) return rqError(t('err_consent'));
+    if (!S.user) {
+      if (!/^\S+@\S+\.\S+$/.test(RQ.email || '')) return rqError(t('err_email'), 'a-email');
+      if ((RQ.pw || '').length < 8) return rqError(t('err_pw'), 'a-pw');
+    }
+  }
+  return true;
+}
+async function submitRequest() {
+  if (!validStep(3)) return;
+  const btn = $('#rq-submit'); if (btn) btn.disabled = true;
+  try {
+    if (!S.user) {
+      const ok = await doAuth(RQ.email, RQ.pw, S.authMode);
+      if (!ok) { if (btn) btn.disabled = false; return rqError(S.authErr || t('err_login'), 'a-email'); }
+    }
+    const cc = country(RQ.country);
+    const msg = RQ.msg || cc.msg;
+    await sb.from('kmt_profiles').update({ full_name: RQ.name.trim(), country: RQ.country, messenger: msg, messenger_id: RQ.msgid.trim(), birth_year: RQ.by ? Number(RQ.by) : null, lang: S.lang, currency: S.cur }).eq('id', S.user.id);
+    const now = new Date().toISOString();
+    const row = {
+      patient_id: S.user.id, full_name: RQ.name.trim(), country: RQ.country, lang: S.lang, messenger: msg, messenger_id: RQ.msgid.trim(),
+      birth_year: RQ.by ? Number(RQ.by) : null, treatment_ids: RQ.t, clinic_ids: RQ.c, notes: RQ.notes.trim() || null,
+      date_from: RQ.from || null, date_to: RQ.to || null, flexible: !!RQ.flexible, companions: Number(RQ.companions) || 0,
+      budget_usd: RQ.budget ? Number(RQ.budget) : null, need_hotel: !!RQ.hotel, need_pickup: !!RQ.pickup, need_interpreter: !!RQ.interp,
+      consent_privacy_at: now, consent_share_at: now, stage: 'new',
+    };
+    const { data, error } = await sb.from('kmt_requests').insert(row).select().single();
+    if (error) throw error;
+    RQ = newDraft(); LS.del('kmt-draft');
+    S.justSent = data.id;
+    await ensureProfile(); await loadPrivate();
+    go('#/trip/' + data.id);
+  } catch (e) { if (btn) btn.disabled = false; err(e); }
+}
+
+/* ---------- login ---------- */
+function authFields(ctx) {
+  const signup = S.authMode === 'signup';
+  const ev = ctx === 'rq' ? 'data-bind' : 'data-ab';
+  return `<div class="col">
+    <label class="field"><span>${esc(t('email'))}</span><input class="in" type="email" id="a-email" ${ev}="email" autocomplete="email" inputmode="email" value="${esc(ctx === 'rq' ? RQ.email : (S.ab && S.ab.email) || '')}"></label>
+    <label class="field"><span>${esc(t('password'))}</span><input class="in" type="password" id="a-pw" ${ev}="pw" autocomplete="${signup ? 'new-password' : 'current-password'}" placeholder="${esc(t('pw_hint'))}"></label>
+    <div class="row between wrap small"><button class="b" style="color:var(--acc)" data-act="auth-mode">${esc(signup ? t('have_acc') : t('no_acc'))}</button>${!signup ? `<button class="muted" data-act="forgot" data-ctx="${ctx}">${esc(t('forgot'))}</button>` : ''}</div>
+  </div>`;
+}
+async function doAuth(email, pw, mode) {
+  S.authErr = '';
+  email = (email || '').trim().toLowerCase();
+  let res = mode === 'signup' ? await sb.auth.signUp({ email, password: pw }) : await sb.auth.signInWithPassword({ email, password: pw });
+  if (res.error && mode === 'signup' && /registered|exists/i.test(res.error.message)) res = await sb.auth.signInWithPassword({ email, password: pw });
+  if (res.error) { S.authErr = mode === 'signup' && !/password|credential/i.test(res.error.message) ? res.error.message : t('err_login'); return false; }
+  if (!res.data.session) { S.authErr = 'Check your email to confirm the account.'; return false; }
+  S.user = res.data.session.user;
+  await ensureProfile();
+  return true;
+}
+
+/* ---------- minhas viagens ---------- */
+function pageTrips() {
+  if (!S.user) return pageMe();
+  const list = S.reqs;
+  if (!list.length) return `<div class="empty"><div class="em">✈️</div><div class="h2">${esc(t('trips_empty'))}</div><p>${esc(t('trips_empty_d'))}</p><a class="btn acc" href="#/request">${esc(t('cta_quote'))}</a></div>`;
+  return `<div class="row between"><h1 class="h2">${esc(t('nav_trips'))}</h1><a class="btn sm soft" href="#/request">+ ${esc(t('new_trip'))}</a></div>
+  <div class="col mt">${list.map(r => {
+    const names = (r.treatment_ids || []).map(id => tn((treat(id) || {}).name)).filter(Boolean).join(', ');
+    const qn = S.quotes.filter(q => q.request_id === r.id && q.status === 'sent').length;
+    const un = unreadFor(r.id);
+    return `<a class="card pad" href="#/trip/${r.id}"><div class="row between"><span class="small muted">${esc(r.code || '')}</span><span class="pill-st s-${r.stage}">${esc(t('stage_' + r.stage))}</span></div>
+      <div class="b mt" style="margin-top:6px">${esc(names || '—')}</div>
+      <div class="row wrap small muted" style="margin-top:4px">${r.date_from ? `<span>📅 ${dt(r.date_from)}${r.date_to ? ' – ' + dt(r.date_to) : ''}</span>` : ''}${qn ? `<span class="tag gold">${qn} ${esc(t('quotes'))}</span>` : ''}${un ? `<span class="tag acc">💬 ${un}</span>` : ''}</div></a>`;
+  }).join('')}</div>`;
+}
+function journeyHTML(stage) {
+  if (stage === 'canceled') return `<div class="tag bad">${esc(t('stage_canceled'))}</div>`;
+  const i = STAGES.indexOf(stage);
+  return `<div class="journey">${STAGES.map((s, k) => `<div class="js ${k < i ? 'done' : k === i ? 'cur' : ''}"><b>${k < i ? IC.check : ''}</b><span>${esc(t('stage_' + s))}</span></div>`).join('')}</div>`;
+}
+function chatHTML(rid, staffView) {
+  const ms = S.msgs.filter(m => m.request_id === rid);
+  if (!ms.length) return `<div class="empty small" style="padding:20px">${staffView ? 'Nenhuma mensagem ainda. Use uma resposta rápida abaixo.' : esc(t('chat_empty'))}</div>`;
+  return ms.map(m => {
+    const mine = staffView ? m.from_staff : !m.from_staff;
+    return `<div class="bub ${mine ? 'me' : 'them'}">${esc(m.body)}<span class="tm">${staffView ? ptt(m.created_at) : dtt(m.created_at)}${mine && m.read_at ? ' · ✓✓' : ''}</span></div>`;
+  }).join('');
+}
+function updateChats() { $$('[data-chat]').forEach(box => { const atEnd = box.scrollHeight - box.scrollTop - box.clientHeight < 40; box.innerHTML = chatHTML(box.dataset.chat, box.dataset.staff === '1'); if (atEnd) box.scrollTop = box.scrollHeight; }); }
+function evText(e) {
+  const d = e.detail || {};
+  switch (e.kind) {
+    case 'created': return t('ev_created');
+    case 'stage': return t('ev_stage', { s: t('stage_' + d.to) });
+    case 'quote_sent': return t('ev_quote_sent') + (d.clinic && clinic(d.clinic) ? ' · ' + clinic(d.clinic).name : '');
+    case 'quote_accepted': return t('ev_quote_accepted');
+    case 'quote_declined': return t('ev_quote_declined');
+    case 'canceled': return t('ev_canceled');
+    case 'assigned': return t('ev_assigned') + (d.name ? ' · ' + d.name : '');
+    default: return t('ev_note');
+  }
+}
+function quoteCard(q, staffView) {
+  const c = clinic(q.clinic_id) || { name: '—' };
+  const expired = q.status === 'sent' && q.valid_until && q.valid_until < today();
+  const st = expired ? 'expired' : q.status;
+  const tagc = { sent: 'gold', accepted: 'ok', declined: 'bad', expired: 'warn', withdrawn: '' }[st] || '';
+  const qi = staffView ? S.qint.find(x => x.quote_id === q.id) : null;
+  return `<div class="q ${st === 'accepted' ? 'best' : ''}">
+    <div class="row between"><div><div class="b">${esc(c.name)}</div><div class="tiny muted">${esc(c.district || '')}</div></div>
+      <span class="tag ${tagc}">${staffView ? ({ sent: 'Aberto', accepted: 'Aceito', declined: 'Recusado', expired: 'Vencido', withdrawn: 'Retirado' }[st]) : esc(t('st_' + st))}</span></div>
+    <div class="mt" style="margin-top:8px">${(q.items || []).map(i => `<div class="qi"><span>${esc(i.label)}</span><span class="nowrap">${krw(i.krw)}</span></div>`).join('')}</div>
+    <div class="qt"><span class="small muted">${esc(staffView ? 'Total' : t('quote_total'))}</span><span class="right"><span class="v">${krw(q.total_krw)}</span>${!staffView && local(q.total_krw) ? `<div class="small muted">≈ ${local(q.total_krw)}</div>` : staffView && local(q.total_krw, 'USD') ? `<div class="small muted">≈ ${local(q.total_krw, 'USD')}</div>` : ''}</span></div>
+    ${q.includes ? `<div class="small muted mt" style="margin-top:6px"><b>${esc(staffView ? 'Inclui' : t('includes'))}:</b> ${esc(q.includes)}</div>` : ''}
+    ${q.valid_until ? `<div class="tiny muted" style="margin-top:4px">${esc(staffView ? 'Válido até' : t('valid_until'))} ${staffView ? pt(q.valid_until, 1) : dt(q.valid_until)}</div>` : ''}
+    ${qi ? `<div class="tiny" style="margin-top:6px;color:var(--gold)">Comissão ${qi.commission_pct}% · ${krw(qi.commission_krw)} <span class="muted">(só equipe)</span></div>` : ''}
+    ${!staffView && st === 'sent' ? `<div class="row mt"><button class="btn acc sm grow" data-act="q-accept" data-v="${q.id}">${esc(t('accept'))}</button><button class="btn ghost sm" data-act="q-decline" data-v="${q.id}">${esc(t('decline'))}</button></div>` : ''}
+    ${staffView && st === 'sent' ? `<div class="row mt"><button class="btn ghost sm" data-act="sq-withdraw" data-v="${q.id}">Retirar</button></div>` : ''}
+  </div>`;
+}
+function pageTrip(id) {
+  if (!S.user) return pageMe();
+  const r = S.reqs.find(x => x.id === id);
+  if (!r) return `<div class="empty">${esc(t('no_results'))}</div>`;
+  const qs = S.quotes.filter(q => q.request_id === id && q.status !== 'withdrawn');
+  const evs = S.events.filter(e => e.request_id === id && e.public !== false);
+  const names = (r.treatment_ids || []).map(x => tn((treat(x) || {}).name)).filter(Boolean);
+  const sent = S.justSent === id; if (sent) S.justSent = null;
+  return `<a class="row small muted mb" href="#/trips">${IC.back} ${esc(t('nav_trips'))}</a>
+  ${sent ? `<div class="card pad mb" style="background:var(--okbg);border-color:#CFE3D6"><div class="b" style="color:var(--ok)">✓ ${esc(t('req_sent_t'))}</div><div class="small" style="color:var(--ok)">${esc(t('req_sent_d', { m: r.messenger || 'chat' }))}</div></div>` : ''}
+  <div class="card pad"><div class="row between"><span class="small muted">${esc(r.code || '')}</span><span class="pill-st s-${r.stage}">${esc(t('stage_' + r.stage))}</span></div>
+    <h1 class="h2" style="margin-top:6px">${esc(names.join(', ') || t('your_trip'))}</h1>
+    <div class="row wrap small muted" style="margin-top:4px">${r.date_from ? `<span>📅 ${dt(r.date_from)}${r.date_to ? ' – ' + dt(r.date_to) : ''}</span>` : ''}${(r.clinic_ids || []).map(c => clinic(c)).filter(Boolean).map(c => `<span>🏥 ${esc(c.name)}</span>`).join('')}</div>
+    <div class="mt">${journeyHTML(r.stage)}</div>
+    <div class="row mt" style="background:var(--surf2);border-radius:10px;padding:10px"><span style="font-size:20px">👤</span><div class="grow"><div class="tiny muted">${esc(t('your_coord'))}</div><div class="small b">${esc(r.coordinator_name || t('coord_pending'))}</div></div></div>
+  </div>
+  <div class="two mt">
+    <div>
+      <div class="card pad"><div class="h3 mb">${esc(t('quotes'))}</div>
+        ${qs.length ? `<div class="col">${qs.map(q => quoteCard(q)).join('')}</div>` : `<div class="small muted">${esc(t('no_quotes'))}</div>`}</div>
+      <div class="card pad mt"><div class="h3 mb">${esc(t('chat'))}</div>
+        <div class="chat" data-chat="${id}" id="chatbox">${chatHTML(id)}</div>
+        ${r.stage !== 'canceled' ? `<form class="composer" data-sub="chat" data-v="${id}"><textarea class="in" name="body" rows="1" placeholder="${esc(t('chat_ph'))}" maxlength="3000"></textarea><button class="btn acc" type="submit">${esc(t('send'))}</button></form>` : ''}</div>
+    </div>
+    <div>
+      <div class="card pad"><div class="h3 mb">${esc(t('timeline'))}</div>
+        <div class="tl">${evs.map(e => `<div><div>${esc(evText(e))}</div><div class="tiny muted">${dtt(e.created_at)}</div></div>`).join('') || '<div class="muted small">—</div>'}</div></div>
+      <div class="card pad mt"><div class="h3 mb">${esc(t('details'))}</div>
+        <dl class="kv"><dt>${esc(t('full_name'))}</dt><dd>${esc(r.full_name || '')}</dd><dt>${esc(t('messenger'))}</dt><dd>${esc((r.messenger || '') + ' · ' + (r.messenger_id || ''))}</dd>
+        <dt>${esc(t('companions'))}</dt><dd>${r.companions || 0}</dd>${r.budget_usd ? `<dt>${esc(t('budget'))}</dt><dd>US$ ${fmtN(r.budget_usd)}</dd>` : ''}
+        <dt>${esc(t('services'))}</dt><dd>${[r.need_interpreter && t('svc_interp'), r.need_pickup && t('svc_pickup'), r.need_hotel && t('svc_hotel')].filter(Boolean).map(esc).join(', ') || '—'}</dd>
+        ${r.notes ? `<dt>📝</dt><dd style="white-space:pre-wrap">${esc(r.notes)}</dd>` : ''}</dl>
+        ${!['canceled', 'done', 'procedure', 'recovery'].includes(r.stage) ? `<button class="btn danger sm mt" data-act="cancel-req" data-v="${id}">${esc(t('cancel_req'))}</button>` : ''}</div>
+    </div>
+  </div>`;
+}
+
+/* ---------- perfil ---------- */
+function pageMe() {
+  if (!S.user) {
+    const signup = S.authMode === 'signup';
+    return `<div class="card pad" style="max-width:440px;margin:20px auto">
+      <div class="logo" style="justify-content:center;margin-bottom:6px"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}</span></div>
+      <h1 class="h2" style="text-align:center">${esc(signup ? t('signup') : t('login'))}</h1>
+      <p class="small muted" style="text-align:center">${esc(t('login_need'))}</p>
+      ${S.authErr ? `<div class="err-msg mb">${esc(S.authErr)}</div>` : ''}
+      <form data-sub="login">${authFields('me')}<button class="btn acc block mt" type="submit">${esc(signup ? t('signup') : t('login'))}</button></form></div>`;
+  }
+  const p = S.profile || {};
+  return `<h1 class="h2">${esc(t('profile'))}</h1>
+  <div class="card pad mt" style="max-width:560px"><div class="small muted">${esc(S.user.email)}${isStaff() ? ` · <span class="tag acc">${esc(p.role)}</span>` : ''}</div>
+    <form data-sub="profile" class="col mt">
+      <label class="field"><span>${esc(t('full_name'))}</span><input class="in" name="full_name" value="${esc(p.full_name || '')}"></label>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+        <label class="field"><span>${esc(t('country'))}</span><select class="in" name="country"><option value="">—</option>${COUNTRIES.map(c => `<option value="${c.c}" ${p.country === c.c ? 'selected' : ''}>${c.f} ${esc(c.n)}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('birth_year'))}</span><input class="in" type="number" name="birth_year" value="${esc(p.birth_year || '')}"></label></div>
+      <div class="grid" style="grid-template-columns:.9fr 1.1fr;gap:10px">
+        <label class="field"><span>${esc(t('messenger'))}</span><select class="in" name="messenger">${MESSENGERS.map(m => `<option ${p.messenger === m ? 'selected' : ''}>${m}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('messenger_id'))}</span><input class="in" name="messenger_id" value="${esc(p.messenger_id || '')}"></label></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+        <label class="field"><span>${esc(t('language'))}</span><select class="in" name="lang">${LANGS.map(l => `<option value="${l[0]}" ${S.lang === l[0] ? 'selected' : ''}>${l[1]}</option>`).join('')}</select></label>
+        <label class="field"><span>${esc(t('currency'))}</span><select class="in" name="currency">${Object.keys(CUR).map(c => `<option ${S.cur === c ? 'selected' : ''}>${c}</option>`).join('')}</select></label></div>
+      <button class="btn acc" type="submit">${esc(t('save'))}</button></form></div>
+  <div class="row wrap mt">${isStaff() ? `<a class="btn" href="#/admin">${IC.chart.replace('<svg', '<svg width="16" height="16"')} ${esc(t('staff_panel'))}</a>` : ''}<button class="btn ghost" data-act="logout">${esc(t('logout'))}</button></div>
+  ${footer()}`;
+}
+
+/* =====================================================================
+   PAINEL DA EQUIPE (português)
+   ===================================================================== */
+function staffNav(r) {
+  const a = r.p[1] || 'dash';
+  const newN = S.reqs.filter(x => x.stage === 'new').length;
+  const un = unreadAll();
+  const items = [
+    ['Operação', [['dash', 'chart', 'Painel', 'Dashboard'], ['reqs', 'list', 'Pedidos', 'Requests', newN + un], ['clinics', 'clinic', 'Clínicas', 'Clinics'], ['treats', 'tag', 'Tratamentos', 'Treatments']]],
+    ['Gestão', [['history', 'clock', 'Histórico', 'Audit log'], ['config', 'gear', 'Equipe e câmbio', 'Team & rates']]],
+  ];
+  const isOn = k => (a === k || (k === 'reqs' && a === 'r') || (k === 'clinics' && a === 'clinic') || (k === 'treats' && a === 'treat')) ? 'on' : '';
+  const side = `<aside class="side"><a class="logo" href="#/admin"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>Equipe</small></span></a>
+    ${items.map(g => `<div class="grp">${g[0]}</div>${g[1].map(i => `<a class="${isOn(i[0])}" href="#/admin/${i[0]}">${IC[i[1]]}<span>${i[2]}<small>${i[3]}</small></span>${i[4] ? `<span class="n">${i[4]}</span>` : ''}</a>`).join('')}`).join('')}
+    <div class="grow"></div><a href="#/home">${IC.home}<span>Ver site do paciente<small>Patient view</small></span></a>
+    <div class="tiny" style="color:#8E837B;padding:8px 10px">${esc(S.user.email)}</div></aside>`;
+  const bn = `<nav class="bnav">${[['dash', 'chart', 'Painel'], ['reqs', 'list', 'Pedidos'], ['clinics', 'clinic', 'Clínicas'], ['treats', 'tag', 'Tratam.'], ['config', 'gear', 'Mais']].map(i => `<a class="${isOn(i[0])}" href="#/admin/${i[0]}">${IC[i[1]]}<span>${i[2]}</span>${i[0] === 'reqs' && (newN + un) ? `<i class="dot">${newN + un}</i>` : ''}</a>`).join('')}</nav>`;
+  return [side, bn];
+}
+function renderStaff(r) {
+  const [side, bn] = staffNav(r);
+  let page;
+  switch (r.p[1] || 'dash') {
+    case 'reqs': page = sReqs(); break;
+    case 'r': page = sReq(r.p[2]); break;
+    case 'clinics': page = sClinics(); break;
+    case 'clinic': page = sClinic(r.p[2]); break;
+    case 'treats': page = sTreats(); break;
+    case 'treat': page = sTreat(r.p[2]); break;
+    case 'history': page = sHistory(); break;
+    case 'config': page = sConfig(); break;
+    default: page = sDash();
+  }
+  return `<div class="st">${side}<div class="smain">${page}</div>${bn}</div>`;
+}
+const stagePill = s => `<span class="pill-st s-${s}">${STAGE_PT[s] || s}</span>`;
+const stageBar = s => { if (s === 'canceled') return '<div class="bar"><i style="width:0"></i></div>'; const i = STAGES.indexOf(s); return `<div class="bar" title="${STAGE_PT[s]}"><i style="width:${Math.round((i + 1) / STAGES.length * 100)}%"></i></div>`; };
+const pname = id => { const p = S.profiles.find(x => x.id === id); return p ? (p.full_name || (p.email || '').split('@')[0]) : ''; };
+const commissionOf = rid => S.quotes.filter(q => q.request_id === rid && q.status === 'accepted').reduce((s, q) => s + Number((S.qint.find(i => i.quote_id === q.id) || {}).commission_krw || 0), 0);
+function sTop(title, en, extra) { return `<div class="stop"><h1>${title}<small>${en}</small></h1><div class="grow"></div>${extra || ''}</div>`; }
+
+function sDash() {
+  const R = S.reqs; const mon = new Date().toISOString().slice(0, 7);
+  const open = R.filter(r => !['done', 'canceled'].includes(r.stage));
+  const newR = R.filter(r => r.stage === 'new');
+  const booked = R.filter(r => ['booked', 'travel', 'in_korea', 'procedure', 'recovery', 'done'].includes(r.stage));
+  const accMonth = S.quotes.filter(q => q.status === 'accepted' && (q.decided_at || '').slice(0, 7) === mon);
+  const commMonth = accMonth.reduce((s, q) => s + Number((S.qint.find(i => i.quote_id === q.id) || {}).commission_krw || 0), 0);
+  const commOpen = S.quotes.filter(q => q.status === 'accepted').reduce((s, q) => s + Number((S.qint.find(i => i.quote_id === q.id) || {}).commission_krw || 0), 0);
+  const conv = R.length ? Math.round(booked.length / R.length * 100) : 0;
+  const byStage = STAGES.map(s => [s, R.filter(r => r.stage === s).length]);
+  const maxS = Math.max(1, ...byStage.map(x => x[1]));
+  const byC = {}; R.forEach(r => byC[r.country || 'OT'] = (byC[r.country || 'OT'] || 0) + 1);
+  const cArr = Object.entries(byC).sort((a, b) => b[1] - a[1]); const maxC = Math.max(1, ...cArr.map(x => x[1]));
+  const waiting = R.filter(r => { const ms = S.msgs.filter(m => m.request_id === r.id); const last = ms[ms.length - 1]; return last && !last.from_staff && r.stage !== 'canceled'; });
+  const noCoord = open.filter(r => !r.coordinator_id);
+  const soon = R.filter(r => r.date_from && r.date_from >= today() && r.date_from <= addDays(today(), 21) && r.stage !== 'canceled').sort((a, b) => a.date_from.localeCompare(b.date_from));
+  const empty = !R.length;
+  return sTop('Painel', 'Dashboard', `<a class="btn sm ghost" href="#/home">Ver site</a>`) + `
+  ${empty ? `<div class="card pad mb" style="border-color:var(--gold);background:var(--goldbg)"><div class="b">Primeiros passos</div>
+     <div class="small mt" style="margin-top:6px">1. Confira as <a class="b" href="#/admin/clinics" style="color:var(--acc)">clínicas</a> (as de demonstração têm a etiqueta DEMO) e cadastre as reais. 2. Ajuste preços em <a class="b" href="#/admin/treats" style="color:var(--acc)">tratamentos</a>. 3. Abra o <a class="b" href="#/home" style="color:var(--acc)">site do paciente</a> no celular e faça um pedido de teste.</div></div>` : ''}
+  <div class="kpis">
+    <a class="card kpi" href="#/admin/reqs"><div class="l">Pedidos novos</div><div class="v" style="color:${newR.length ? 'var(--bad)' : 'inherit'}">${newR.length}</div><div class="s">${noCoord.length} sem coordenador</div></a>
+    <div class="card kpi"><div class="l">Em andamento</div><div class="v">${open.length}</div><div class="s">${waiting.length} aguardando resposta</div></div>
+    <div class="card kpi"><div class="l">Conversão (reservados)</div><div class="v">${conv}%</div><div class="s">${booked.length} de ${R.length} pedidos</div></div>
+    <div class="card kpi"><div class="l">Comissão do mês</div><div class="v">${krw(commMonth)}</div><div class="s">≈ ${local(commMonth, 'USD') || 'US$ 0'} · total ${krw(commOpen)}</div></div>
+  </div>
+  <div class="two mt">
+    <div class="col">
+      <div class="card pad"><div class="row between mb"><div class="h3">Funil por etapa</div><span class="tiny muted">${R.filter(r => r.stage === 'canceled').length} cancelados</span></div>
+        ${byStage.map(([s, n]) => `<a class="hbar" href="#/admin/reqs" data-act="sf-stage" data-v="${s}"><span class="lb">${STAGE_PT[s]}</span><span class="tk"><i style="width:${n / maxS * 100}%"></i></span><span class="nv">${n}</span></a>`).join('')}</div>
+      <div class="card pad"><div class="h3 mb">Aguardando resposta da equipe</div>
+        ${waiting.length ? `<div class="list">${waiting.slice(0, 8).map(r => { const ms = S.msgs.filter(m => m.request_id === r.id); const last = ms[ms.length - 1]; return `<a class="li" style="padding:9px 0" href="#/admin/r/${r.id}"><span>${country(r.country).f}</span><div class="grow"><div class="b small">${esc(r.full_name || '')} <span class="muted tiny">${esc(r.code || '')}</span></div><div class="tiny muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(last.body)}</div></div><span class="tiny muted">${ago(last.created_at)}</span></a>`; }).join('')}</div>` : '<div class="small muted">Tudo respondido ✓</div>'}</div>
+    </div>
+    <div class="col">
+      <div class="card pad"><div class="h3 mb">Por país</div>${cArr.length ? cArr.map(([c, n]) => `<div class="hbar"><span class="lb">${country(c).f} ${esc(country(c).n.split(' · ')[0])}</span><span class="tk"><i style="width:${n / maxC * 100}%"></i></span><span class="nv">${n}</span></div>`).join('') : '<div class="small muted">—</div>'}</div>
+      <div class="card pad"><div class="h3 mb">Chegadas nas próximas 3 semanas</div>${soon.length ? `<div class="list">${soon.slice(0, 8).map(r => `<a class="li" style="padding:8px 0" href="#/admin/r/${r.id}"><span class="b small" style="width:52px">${pt(r.date_from)}</span><span>${country(r.country).f}</span><div class="grow small">${esc(r.full_name || '')}</div>${stagePill(r.stage)}</a>`).join('')}</div>` : '<div class="small muted">Nenhuma chegada marcada.</div>'}</div>
+      <div class="card pad"><div class="h3 mb">Atividade recente</div><div class="tl">${S.events.slice(0, 8).map(e => `<div class="${e.public === false ? 'priv' : ''}"><div class="small">${esc(EV_PT[e.kind] || e.kind)}${e.request_id ? ` · <a class="b" href="#/admin/r/${e.request_id}">${esc((S.reqs.find(r => r.id === e.request_id) || {}).code || '')}</a>` : ''}</div><div class="tiny muted">${ptt(e.created_at)}</div></div>`).join('') || '<div class="small muted">—</div>'}</div></div>
+    </div>
+  </div>`;
+}
+function filteredReqs() {
+  const f = S.sf; const q = f.q.trim().toLowerCase();
+  return S.reqs.filter(r => {
+    if (f.stage === 'open' && ['done', 'canceled'].includes(r.stage)) return false;
+    if (f.stage && !['open', 'all'].includes(f.stage) && r.stage !== f.stage) return false;
+    if (f.country && r.country !== f.country) return false;
+    if (f.coord === 'me' && r.coordinator_id !== S.user.id) return false;
+    if (f.coord === 'none' && r.coordinator_id) return false;
+    if (q && !`${r.code} ${r.full_name} ${r.messenger_id} ${r.notes || ''}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+function sReqs() {
+  const list = filteredReqs(); const f = S.sf;
+  const countries = [...new Set(S.reqs.map(r => r.country).filter(Boolean))];
+  const tnames = r => (r.treatment_ids || []).map(id => tnEn((treat(id) || {}).name)).filter(Boolean).join(', ');
+  return sTop('Pedidos', 'Requests · patient journey', `<button class="btn sm ghost" data-act="csv-reqs">Exportar CSV</button>`) + `
+  <div class="fbar"><input class="in search-in" placeholder="Buscar nome, código, contato…" data-sf="q" value="${esc(f.q)}">
+    <select class="in" data-sf="stage"><option value="open" ${f.stage === 'open' ? 'selected' : ''}>Em aberto</option><option value="all" ${f.stage === 'all' ? 'selected' : ''}>Todos</option>${[...STAGES, 'canceled'].map(s => `<option value="${s}" ${f.stage === s ? 'selected' : ''}>${STAGE_PT[s]}</option>`).join('')}</select>
+    <select class="in" data-sf="country"><option value="">Todos os países</option>${countries.map(c => `<option value="${c}" ${f.country === c ? 'selected' : ''}>${country(c).f} ${c}</option>`).join('')}</select>
+    <select class="in" data-sf="coord"><option value="">Todos coordenadores</option><option value="me" ${f.coord === 'me' ? 'selected' : ''}>Minha carteira</option><option value="none" ${f.coord === 'none' ? 'selected' : ''}>Sem coordenador</option></select>
+    <span class="small muted">${list.length} de ${S.reqs.length}</span></div>
+  ${list.length ? `<div class="tblw resp"><table class="tbl"><thead><tr><th>Código</th><th>Paciente</th><th>Tratamentos</th><th>Datas</th><th>Etapa</th><th style="width:90px">Progresso</th><th>Coordenador</th><th>Atualizado</th><th></th></tr></thead><tbody>
+    ${list.map(r => { const un = unreadFor(r.id); return `<tr class="click" data-href="#/admin/r/${r.id}"><td class="nowrap b">${esc(r.code || '')}</td><td class="nowrap">${country(r.country).f} ${esc(r.full_name || '')}<div class="tiny muted">${esc(r.messenger || '')} · ${esc(r.messenger_id || '')}</div></td><td style="max-width:220px">${esc(tnames(r))}</td><td class="nowrap">${r.date_from ? pt(r.date_from) + (r.date_to ? ' – ' + pt(r.date_to) : '') : '<span class="muted">—</span>'}</td><td>${stagePill(r.stage)}</td><td>${stageBar(r.stage)}</td><td class="nowrap">${esc(r.coordinator_name || '—')}</td><td class="nowrap muted">${ago(r.updated_at || r.created_at)}</td><td>${un ? `<span class="tag acc">💬 ${un}</span>` : ''}</td></tr>`; }).join('')}
+  </tbody></table></div>
+  <div class="mcard col">${list.map(r => { const un = unreadFor(r.id); return `<a class="card pad" style="padding:12px" href="#/admin/r/${r.id}"><div class="row between"><span class="b">${country(r.country).f} ${esc(r.full_name || '')}</span>${stagePill(r.stage)}</div><div class="small muted" style="margin-top:3px">${esc(r.code || '')} · ${esc(tnames(r))}</div><div class="row between" style="margin-top:6px">${stageBar(r.stage)}<span class="tiny muted">${r.date_from ? '📅 ' + pt(r.date_from) : ''} ${un ? `<span class="tag acc">💬 ${un}</span>` : ''}</span></div></a>`; }).join('')}</div>`
+  : `<div class="card empty"><div class="em">🗂️</div>Nenhum pedido com esses filtros.<div class="mt"><button class="btn sm ghost" data-act="sf-reset">Limpar filtros</button></div></div>`}`;
+}
+function contactLink(r) {
+  const id = (r.messenger_id || '').trim(); const d = id.replace(/\D/g, '');
+  switch (r.messenger) {
+    case 'WhatsApp': return d ? `https://wa.me/${d}` : '';
+    case 'LINE': return `https://line.me/ti/p/~${encodeURIComponent(id)}`;
+    case 'Zalo': return d ? `https://zalo.me/${d}` : '';
+    case 'Telegram': return `https://t.me/${encodeURIComponent(id.replace(/^@/, ''))}`;
+    case 'Viber': return d ? `viber://chat?number=%2B${d}` : '';
+    case 'Email': return `mailto:${id}`;
+    default: return '';
+  }
+}
+function sReq(id) {
+  const r = S.reqs.find(x => x.id === id);
+  if (!r) return `<div class="empty">Pedido não encontrado.</div>`;
+  const qs = S.quotes.filter(q => q.request_id === id);
+  const evs = S.events.filter(e => e.request_id === id);
+  const staff = S.profiles.filter(p => ['staff', 'admin'].includes(p.role));
+  const age = r.birth_year ? new Date().getFullYear() - r.birth_year : null;
+  const link = contactLink(r);
+  const SQ = S.sq && S.sq.rid === id ? S.sq : null;
+  const i = STAGES.indexOf(r.stage); const nextS = i >= 0 && i < STAGES.length - 1 ? STAGES[i + 1] : null;
+  const pref = (r.clinic_ids || []).map(clinic).filter(Boolean);
+  const offering = S.clinics.filter(c => (r.treatment_ids || []).some(t2 => (c.treatment_ids || []).includes(t2)));
+  return `<a class="row small muted mb" href="#/admin/reqs">${IC.back} Pedidos</a>
+  <div class="card pad"><div class="row wrap between"><div><div class="tiny muted">${esc(r.code || '')} · criado ${ptt(r.created_at)}</div>
+      <div class="row" style="margin-top:2px"><span style="font-size:22px">${country(r.country).f}</span><h2 style="margin:0;font-size:20px">${esc(r.full_name || '')}</h2>${stagePill(r.stage)}</div></div>
+    <div class="row wrap">${link ? `<a class="btn sm ok" href="${esc(link)}" target="_blank" rel="noopener">Abrir ${esc(r.messenger)}</a>` : ''}<button class="btn sm ghost" data-act="copy" data-v="${esc(r.messenger_id || '')}">Copiar contato</button></div></div>
+    <div class="mt" style="background:var(--surf2);border-radius:12px;padding:10px">${journeyPT(r.stage)}</div>
+    <div class="row wrap mt">
+      <select class="in" style="width:auto;min-height:34px;font-size:13px" data-ch="s-stage" data-v="${id}">${[...STAGES, 'canceled'].map(s => `<option value="${s}" ${r.stage === s ? 'selected' : ''}>${STAGE_PT[s]}</option>`).join('')}</select>
+      ${nextS && r.stage !== 'canceled' ? `<button class="btn sm acc" data-act="s-next" data-v="${id}">Avançar → ${STAGE_PT[nextS]}</button>` : ''}
+      <div class="grow"></div>
+      <select class="in" style="width:auto;min-height:34px;font-size:13px" data-ch="s-coord" data-v="${id}"><option value="">Coordenador: —</option>${staff.map(p => `<option value="${p.id}" ${r.coordinator_id === p.id ? 'selected' : ''}>${esc(p.full_name || p.email)}</option>`).join('')}</select>
+      ${r.coordinator_id !== S.user.id ? `<button class="btn sm ghost" data-act="s-mine" data-v="${id}">Assumir</button>` : ''}
+    </div></div>
+  <div class="two mt">
+    <div class="col">
+      <div class="card pad"><div class="row between mb"><div class="h3">Orçamentos</div>${!SQ ? `<button class="btn sm acc" data-act="sq-new" data-v="${id}">+ Novo orçamento</button>` : ''}</div>
+        ${SQ ? quoteForm(SQ, r, pref, offering) : ''}
+        ${qs.length ? `<div class="col">${qs.map(q => quoteCard(q, true)).join('')}</div>` : (!SQ ? '<div class="small muted">Nenhum orçamento ainda.</div>' : '')}
+        ${commissionOf(id) ? `<div class="small mt" style="color:var(--ok)">Comissão confirmada: <b>${krw(commissionOf(id))}</b></div>` : ''}</div>
+      <div class="card pad"><div class="h3 mb">Conversa com o paciente <span class="tiny muted">(${esc(LANGS.find(l => l[0] === r.lang)?.[1] || r.lang || '')})</span></div>
+        <div class="chat" data-chat="${id}" data-staff="1" id="chatbox">${chatHTML(id, true)}</div>
+        <div class="qr">${QUICK.map((q, k) => `<button data-act="quick" data-v="${k}">${q[0]}</button>`).join('')}</div>
+        <form class="composer" data-sub="schat" data-v="${id}"><textarea class="in" name="body" id="schat" rows="2" placeholder="Mensagem para o paciente…" maxlength="3000"></textarea><button class="btn acc" type="submit">Enviar</button></form></div>
+    </div>
+    <div class="col">
+      <div class="card pad"><div class="h3 mb">Dados do pedido</div>
+        <dl class="kv">
+          <dt>Tratamentos</dt><dd>${(r.treatment_ids || []).map(x => esc(tnEn((treat(x) || {}).name))).join('<br>') || '—'}</dd>
+          <dt>Clínicas preferidas</dt><dd>${pref.map(c => esc(c.name)).join('<br>') || '<span class="muted">Quer recomendação</span>'}</dd>
+          <dt>Datas</dt><dd>${r.date_from ? pt(r.date_from, 1) + ' – ' + pt(r.date_to, 1) : '—'} ${r.flexible ? '<span class="tag">flexível</span>' : ''}</dd>
+          <dt>Idade</dt><dd>${age != null ? age + ' anos' + (age < 18 ? ' <span class="tag bad">menor</span>' : '') : '—'}</dd>
+          <dt>Acompanhantes</dt><dd>${r.companions || 0}</dd>
+          <dt>Orçamento</dt><dd>${r.budget_usd ? 'US$ ' + fmtN(r.budget_usd) + ' <span class="muted">≈ ' + krw(r.budget_usd * (S.rates.USD || 1380)) + '</span>' : '—'}</dd>
+          <dt>Serviços</dt><dd>${[r.need_interpreter && 'Intérprete', r.need_pickup && 'Transfer', r.need_hotel && 'Hotel'].filter(Boolean).join(', ') || '—'}</dd>
+          <dt>Contato</dt><dd>${esc(r.messenger || '')} · ${esc(r.messenger_id || '')}</dd>
+          <dt>Idioma</dt><dd>${esc(LANGS.find(l => l[0] === r.lang)?.[1] || '—')}</dd>
+          <dt>Consentimentos</dt><dd class="small">${r.consent_privacy_at ? '✓ privacidade' : '✗'} · ${r.consent_share_at ? '✓ compartilhar com clínicas' : '✗'}<div class="tiny muted">${ptt(r.consent_share_at)}</div></dd>
+          ${r.notes ? `<dt>Observações</dt><dd style="white-space:pre-wrap">${esc(r.notes)}</dd>` : ''}
+          ${r.cancel_reason ? `<dt>Motivo cancel.</dt><dd>${esc(r.cancel_reason)}</dd>` : ''}
+        </dl></div>
+      <div class="card pad"><div class="h3 mb">Linha do tempo <span class="tiny muted">(não editável)</span></div>
+        <form class="row mb" data-sub="note" data-v="${id}"><input class="in" name="note" placeholder="Nota interna (paciente não vê)" style="min-height:34px;font-size:13px"><button class="btn sm ghost" type="submit">Adicionar</button></form>
+        <div class="tl">${evs.map(e => `<div class="${e.public === false ? 'priv' : ''}"><div class="small"><b>${esc(EV_PT[e.kind] || e.kind)}</b>${evDetailPT(e)}</div><div class="tiny muted">${ptt(e.created_at)} · ${esc(pname(e.actor_id) || (e.actor_id === r.patient_id ? 'paciente' : ''))}${e.public === false ? ' · interno' : ''}</div></div>`).join('')}</div></div>
+    </div>
+  </div>`;
+}
+function journeyPT(stage) {
+  if (stage === 'canceled') return '<span class="tag bad">Cancelado</span>';
+  const i = STAGES.indexOf(stage);
+  return `<div class="journey">${STAGES.map((s, k) => `<div class="js ${k < i ? 'done' : k === i ? 'cur' : ''}"><b>${k < i ? IC.check : ''}</b><span>${STAGE_PT[s]}</span></div>`).join('')}</div>`;
+}
+function evDetailPT(e) {
+  const d = e.detail || {};
+  if (e.kind === 'stage') return ` · ${STAGE_PT[d.from] || d.from || ''} → ${STAGE_PT[d.to] || d.to}`;
+  if (e.kind === 'assigned') return ` · ${esc(d.name || '')}`;
+  if (e.kind === 'quote_sent' || e.kind === 'quote_accepted') return ` · ${esc((clinic(d.clinic) || {}).name || '')} ${d.total_krw ? krw(d.total_krw) : ''}`;
+  if (e.kind === 'note') return `<div style="white-space:pre-wrap">${esc(d.text || '')}</div>`;
+  if (e.kind === 'canceled') return d.reason ? ` · ${esc(d.reason)}` : '';
+  return '';
+}
+function quoteForm(SQ, r, pref, offering) {
+  const list = [...pref, ...offering.filter(c => !pref.includes(c)), ...S.clinics.filter(c => !pref.includes(c) && !offering.includes(c))];
+  const total = SQ.items.reduce((s, i) => s + (Number(i.krw) || 0), 0);
+  const pct = Number(SQ.pct) || 0;
+  return `<div class="card pad mb" style="box-shadow:none;background:var(--surf2)">
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+      <label class="field"><span>Clínica</span><select class="in" data-sq="clinic_id">${list.map(c => `<option value="${c.id}" ${SQ.clinic_id === c.id ? 'selected' : ''}>${esc(c.name)}${pref.includes(c) ? ' ★' : ''}</option>`).join('')}</select></label>
+      <label class="field"><span>Válido até</span><input class="in" type="date" data-sq="valid" value="${esc(SQ.valid)}"></label></div>
+    <div class="small b mt" style="margin-bottom:6px">Itens (valor em KRW, com IVA)</div>
+    ${SQ.items.map((it, k) => `<div class="irow"><input class="in" data-sqi="${k}" data-f="label" value="${esc(it.label)}" placeholder="Ex.: Rinoplastia + anestesia"><input class="in" data-sqi="${k}" data-f="krw" inputmode="numeric" value="${it.krw ? fmtN(it.krw) : ''}" placeholder="0"><button class="btn sm ghost" style="padding:0" data-act="sq-del" data-v="${k}" title="Remover">×</button></div>`).join('')}
+    <button class="btn sm ghost" data-act="sq-add">+ Item</button>
+    <label class="field mt"><span>O que está incluso (o paciente vê)</span><input class="in" data-sq="includes" value="${esc(SQ.includes)}" placeholder="Consulta, exames pré-op, medicação, 1ª revisão"></label>
+    <div class="row wrap mt between"><div><div class="tiny muted">Total</div><div class="b" style="font-size:18px" id="sq-total">${krw(total)}</div><div class="tiny muted" id="sq-loc">${sqLoc(total)}</div></div>
+      <label class="field" style="width:110px"><span>Comissão %</span><input class="in" data-sq="pct" inputmode="decimal" value="${esc(SQ.pct)}"></label>
+      <div><div class="tiny muted">Comissão (só equipe)</div><div class="b" style="color:var(--gold)" id="sq-comm">${krw(total * pct / 100)}</div></div></div>
+    <div class="row mt"><button class="btn sm ghost" data-act="sq-cancel">Cancelar</button><div class="grow"></div><button class="btn sm acc" data-act="sq-save" id="sq-save">Enviar ao paciente</button></div>
+    <div id="sq-err" class="err-msg mt" hidden></div></div>`;
+}
+
+function sClinics() {
+  const terms = id => S.terms.find(x => x.clinic_id === id) || {};
+  return sTop('Clínicas', 'Clinics · curadoria', `<button class="btn sm ghost" data-act="imp-open">Importar (colar)</button><a class="btn sm acc" href="#/admin/clinic/new">+ Nova clínica</a>`) + `
+  ${S.imp ? importBox() : ''}
+  <div class="tblw"><table class="tbl"><thead><tr><th>Clínica</th><th>Bairro</th><th>Especialidades</th><th>Idiomas</th><th>Selo</th><th>Comissão</th><th>Pedidos</th><th>Ativa</th></tr></thead><tbody>
+  ${S.clinics.map(c => { const n = S.reqs.filter(r => (r.clinic_ids || []).includes(c.id)).length + S.quotes.filter(q => q.clinic_id === c.id).length; return `<tr class="click" data-href="#/admin/clinic/${c.id}"><td class="b nowrap">${esc(c.name)} ${c.is_demo ? '<span class="tag warn">DEMO</span>' : ''}</td><td>${esc(c.district || '')}</td><td>${(c.specialties || []).map(s => CAT_PT[s]).join(', ')}</td><td>${(c.languages || []).map(l => LANG_FLAG[l]).join(' ')}</td><td>${c.verified ? '<span class="tag ok">✓ Aprovada</span>' : '<span class="tag">Em análise</span>'}</td><td>${terms(c.id).commission_pct != null ? terms(c.id).commission_pct + '%' : '—'}</td><td>${n}</td><td>${c.active !== false ? '●' : '<span class="muted">○</span>'}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+}
+function importBox() {
+  const I = S.imp; const rows = parsePaste(I.text);
+  const ok = rows.filter(r => !r.err && !r.dup).length;
+  return `<div class="card pad mb"><div class="h3">Importar clínicas colando da planilha</div>
+    <div class="small muted" style="margin:4px 0 8px">Uma por linha, separada por TAB ou ponto e vírgula: <b>Nome; Bairro; especialidades; idiomas; comissão %</b>. Ex.: <code>Hanbit Clinic; Gangnam; plastic,derma; en,ja; 20</code></div>
+    <textarea class="in" data-imp="1" rows="4" placeholder="Cole aqui…">${esc(I.text)}</textarea>
+    ${rows.length ? `<div class="small mt"><b>${ok}</b> prontas · ${rows.filter(r => r.dup).length} já cadastradas · ${rows.filter(r => r.err).length} com erro</div>
+      <div class="tblw mt"><table class="tbl"><tbody>${rows.map(r => `<tr><td>${esc(r.name)}</td><td>${esc(r.district)}</td><td>${r.spec.join(', ')}</td><td>${r.langs.join(' ')}</td><td>${r.pct}%</td><td>${r.err ? `<span class="tag bad">${esc(r.err)}</span>` : r.dup ? '<span class="tag">duplicada</span>' : '<span class="tag ok">ok</span>'}</td></tr>`).join('')}</tbody></table></div>` : ''}
+    <div class="row mt"><button class="btn sm ghost" data-act="imp-close">Fechar</button><div class="grow"></div><button class="btn sm acc" data-act="imp-run" ${ok ? '' : 'disabled'}>Cadastrar ${ok}</button></div></div>`;
+}
+function parsePaste(text) {
+  const names = new Set(S.clinics.map(c => c.name.trim().toLowerCase()));
+  return (text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
+    const p = l.split(/\t|;/).map(x => x.trim());
+    const spec = (p[2] || '').toLowerCase().split(/[,\s/]+/).filter(x => CATS.includes(x));
+    const langs = (p[3] || '').toLowerCase().split(/[,\s/]+/).filter(x => LANG_FLAG[x]);
+    const r = { name: p[0] || '', district: p[1] || '', spec, langs, pct: Number((p[4] || '20').replace(',', '.').replace('%', '')) || 20 };
+    if (!r.name) r.err = 'sem nome'; else if (!spec.length) r.err = 'especialidade? (plastic, derma, dental, checkup, hair)';
+    r.dup = names.has(r.name.toLowerCase());
+    return r;
+  });
+}
+function chipBox(name, opts, sel, labelFn) { return `<div class="row wrap" style="gap:6px">${opts.map(o => `<label class="chip ${sel.includes(o) ? 'on' : ''}" style="min-height:30px;padding:4px 11px;font-size:12px"><input type="checkbox" hidden name="${name}" value="${esc(o)}" ${sel.includes(o) ? 'checked' : ''}>${esc(labelFn(o))}</label>`).join('')}</div>`; }
+function sClinic(id) {
+  const isNew = id === 'new';
+  const c = isNew ? { name: '', district: 'Gangnam', specialties: [], languages: ['en'], checks: {}, about: {}, treatment_ids: [], verified: false, active: true, tone: Math.floor(Math.random() * 6) + 1 } : clinic(id);
+  if (!c) return '<div class="empty">Clínica não encontrada.</div>';
+  const tm = S.terms.find(x => x.clinic_id === id) || { commission_pct: 20 };
+  const quotes = S.quotes.filter(q => q.clinic_id === id);
+  const acc = quotes.filter(q => q.status === 'accepted');
+  return `<a class="row small muted mb" href="#/admin/clinics">${IC.back} Clínicas</a>
+  ${sTop(isNew ? 'Nova clínica' : esc(c.name), isNew ? 'New clinic' : (c.is_demo ? 'DEMO · fictícia' : 'Clinic'))}
+  ${!isNew ? `<div class="kpis mb"><div class="card kpi"><div class="l">Orçamentos</div><div class="v">${quotes.length}</div></div><div class="card kpi"><div class="l">Aceitos</div><div class="v">${acc.length}</div></div><div class="card kpi"><div class="l">Faturado (aceitos)</div><div class="v" style="font-size:17px">${krw(acc.reduce((s, q) => s + Number(q.total_krw), 0))}</div></div><div class="card kpi"><div class="l">Comissão</div><div class="v" style="font-size:17px">${krw(acc.reduce((s, q) => s + Number((S.qint.find(i => i.quote_id === q.id) || {}).commission_krw || 0), 0))}</div></div></div>` : ''}
+  <form data-sub="clinic" data-v="${isNew ? '' : id}" class="two">
+    <div class="col">
+      <div class="card pad col"><div class="h3">Dados públicos <span class="tiny muted">(o paciente vê)</span></div>
+        <div class="grid" style="grid-template-columns:2fr 1fr;gap:8px"><label class="field"><span>Nome *</span><input class="in" name="name" value="${esc(c.name)}"></label><label class="field"><span>Bairro</span><input class="in" name="district" list="districts" value="${esc(c.district || '')}"></label></div>
+        <datalist id="districts">${['Gangnam', 'Sinsa', 'Apgujeong', 'Cheongdam', 'Myeongdong', 'Hongdae', 'Jamsil', 'Seocho', 'Yeouido'].map(d => `<option>${d}</option>`).join('')}</datalist>
+        <div class="field"><span>Especialidades *</span>${chipBox('specialties', CATS, c.specialties || [], s => CAT_PT[s])}</div>
+        <div class="field"><span>Idiomas atendidos</span>${chipBox('languages', Object.keys(LANG_FLAG), c.languages || [], l => (LANGS.find(x => x[0] === l) || [l, l])[1])}</div>
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px"><label class="field"><span>Fundação</span><input class="in" name="founded" inputmode="numeric" value="${esc(c.founded || '')}"></label><label class="field"><span>Médicos</span><input class="in" name="doctors" inputmode="numeric" value="${esc(c.doctors || '')}"></label><label class="field"><span>Estrang./ano</span><input class="in" name="intl_patients" inputmode="numeric" value="${esc(c.intl_patients || '')}"></label></div>
+        <label class="field"><span>Descrição (inglês)</span><textarea class="in" name="about_en" rows="3">${esc((c.about || {}).en || '')}</textarea></label>
+        <details><summary class="small b" style="cursor:pointer">Descrição em outros idiomas (opcional — sem tradução, mostra o inglês)</summary>
+          ${LANGS.filter(l => l[0] !== 'en').map(l => `<label class="field mt"><span>${l[1]}</span><textarea class="in" name="about_${l[0]}" rows="2">${esc((c.about || {})[l[0]] || '')}</textarea></label>`).join('')}</details>
+        <div class="field"><span>Tratamentos oferecidos</span>${chipBox('treatment_ids', S.treats.map(x => x.id), c.treatment_ids || [], x => (CAT_IC[(treat(x) || {}).category] || '') + ' ' + tnEn((treat(x) || {}).name))}</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card pad col"><div class="h3">Curadoria (selo "Vetted")</div>
+        ${CHECKS.map(k => `<label class="check" style="padding:3px 0"><input type="checkbox" name="chk_${k}" ${(c.checks || {})[k] ? 'checked' : ''}> ${CHECK_PT[k]}</label>`).join('')}
+        <label class="check" style="border-top:1px solid var(--line);padding-top:10px"><input type="checkbox" name="verified" ${c.verified ? 'checked' : ''}> <b>Aprovada (mostra selo ao paciente)</b></label>
+        <label class="check" style="padding:3px 0"><input type="checkbox" name="active" ${c.active !== false ? 'checked' : ''}> Ativa no site</label></div>
+      <div class="card pad col"><div class="h3">Comercial <span class="tiny muted">(só equipe)</span></div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px"><label class="field"><span>Comissão %</span><input class="in" name="commission_pct" inputmode="decimal" value="${esc(tm.commission_pct ?? '')}"></label><label class="field"><span>Contrato até</span><input class="in" type="date" name="contract_until" value="${esc(tm.contract_until || '')}"></label></div>
+        <label class="field"><span>Contato na clínica</span><input class="in" name="contact_name" value="${esc(tm.contact_name || '')}"></label>
+        <label class="field"><span>Telefone / Kakao</span><input class="in" name="contact_phone" value="${esc(tm.contact_phone || '')}"></label>
+        <label class="field"><span>Notas internas</span><textarea class="in" name="notes" rows="2">${esc(tm.notes || '')}</textarea></label></div>
+      <div class="row"><a class="btn ghost" href="#/admin/clinics">Voltar</a><div class="grow"></div><button class="btn acc" type="submit">Salvar clínica</button></div>
+      <div id="cf-err" class="err-msg" hidden></div>
+    </div>
+  </form>`;
+}
+function sTreats() {
+  return sTop('Tratamentos', 'Treatments · preços indicativos', `<a class="btn sm acc" href="#/admin/treat/new">+ Novo tratamento</a>`) + `
+  <div class="tblw"><table class="tbl"><thead><tr><th>Tratamento</th><th>Categoria</th><th class="right">De (KRW)</th><th class="right">Até (KRW)</th><th>Unid.</th><th>Estadia</th><th>Recup.</th><th>Clínicas</th><th>Traduções</th><th>Popular</th></tr></thead><tbody>
+  ${S.treats.map(x => { const nl = Object.keys(x.name || {}).filter(k => x.name[k]).length; return `<tr class="click" data-href="#/admin/treat/${x.id}"><td class="b">${CAT_IC[x.category]} ${esc(tnEn(x.name))} ${x.active === false ? '<span class="tag">inativo</span>' : ''}</td><td>${CAT_PT[x.category]}</td><td class="right">${fmtN(x.price_from_krw)}</td><td class="right">${fmtN(x.price_to_krw)}</td><td>${esc(x.unit)}</td><td>${x.stay_days ?? ''}d</td><td>${x.recovery_days ?? ''}d</td><td>${S.clinics.filter(c => (c.treatment_ids || []).includes(x.id)).length}</td><td>${nl}/7</td><td>${x.popular ? '★' : ''}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+}
+function sTreat(id) {
+  const isNew = id === 'new';
+  const x = isNew ? { code: '', category: 'derma', name: {}, unit: 'case', price_from_krw: '', price_to_krw: '', stay_days: 1, recovery_days: 0, popular: false, active: true, sort: 100 } : treat(id);
+  if (!x) return '<div class="empty">Não encontrado.</div>';
+  return `<a class="row small muted mb" href="#/admin/treats">${IC.back} Tratamentos</a>${sTop(isNew ? 'Novo tratamento' : esc(tnEn(x.name)), 'Treatment')}
+  <form data-sub="treat" data-v="${isNew ? '' : id}" class="two">
+    <div class="card pad col"><div class="h3">Nome em cada idioma</div>
+      ${LANGS.map(l => `<label class="field"><span>${l[1]}${l[0] === 'en' ? ' *' : ''}</span><input class="in" name="n_${l[0]}" value="${esc((x.name || {})[l[0]] || '')}"></label>`).join('')}
+      <div class="tiny muted">Se faltar um idioma, o app mostra o inglês.</div></div>
+    <div class="col"><div class="card pad col"><div class="h3">Preço e estadia</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+        <label class="field"><span>Categoria</span><select class="in" name="category">${CATS.map(c => `<option value="${c}" ${x.category === c ? 'selected' : ''}>${CAT_PT[c]}</option>`).join('')}</select></label>
+        <label class="field"><span>Código</span><input class="in" name="code" value="${esc(x.code || '')}" placeholder="ex.: rhino"></label>
+        <label class="field"><span>Preço de (KRW) *</span><input class="in" name="price_from_krw" inputmode="numeric" value="${esc(x.price_from_krw ? fmtN(x.price_from_krw) : '')}"></label>
+        <label class="field"><span>Preço até (KRW)</span><input class="in" name="price_to_krw" inputmode="numeric" value="${esc(x.price_to_krw ? fmtN(x.price_to_krw) : '')}"></label>
+        <label class="field"><span>Unidade</span><select class="in" name="unit">${[['case', 'por caso'], ['session', 'por sessão'], ['tooth', 'por dente'], ['area', 'por área']].map(u => `<option value="${u[0]}" ${x.unit === u[0] ? 'selected' : ''}>${u[1]}</option>`).join('')}</select></label>
+        <label class="field"><span>Ordem</span><input class="in" name="sort" inputmode="numeric" value="${esc(x.sort ?? 100)}"></label>
+        <label class="field"><span>Dias em Seul</span><input class="in" name="stay_days" inputmode="numeric" value="${esc(x.stay_days ?? '')}"></label>
+        <label class="field"><span>Dias de recuperação</span><input class="in" name="recovery_days" inputmode="numeric" value="${esc(x.recovery_days ?? '')}"></label></div>
+      <div class="small muted" id="tf-loc"></div>
+      <label class="check"><input type="checkbox" name="popular" ${x.popular ? 'checked' : ''}> Destacar como popular</label>
+      <label class="check"><input type="checkbox" name="active" ${x.active !== false ? 'checked' : ''}> Ativo no site</label></div>
+      <div class="row"><a class="btn ghost" href="#/admin/treats">Voltar</a><div class="grow"></div><button class="btn acc" type="submit">Salvar</button></div>
+      <div id="tf-err" class="err-msg" hidden></div></div>
+  </form>`;
+}
+function sHistory() {
+  const f = S.hf || (S.hf = { kind: '' });
+  const list = S.events.filter(e => !f.kind || e.kind === f.kind);
+  return sTop('Histórico', 'Audit log · somente inclusão', `<button class="btn sm ghost" data-act="csv-ev">Exportar CSV</button>`) + `
+  <div class="info mb">Nada aqui pode ser editado ou apagado (nem por admin) — é a prova de quem fez o quê e quando, inclusive os consentimentos dos pacientes.</div>
+  <div class="fbar"><select class="in" data-hf="kind"><option value="">Todos os tipos</option>${Object.keys(EV_PT).map(k => `<option value="${k}" ${f.kind === k ? 'selected' : ''}>${EV_PT[k]}</option>`).join('')}</select><span class="small muted">${list.length} eventos</span></div>
+  <div class="tblw"><table class="tbl"><thead><tr><th>Quando</th><th>Evento</th><th>Pedido</th><th>Quem</th><th>Detalhe</th><th>Paciente vê</th></tr></thead><tbody>
+  ${list.slice(0, 400).map(e => { const r = S.reqs.find(x => x.id === e.request_id); return `<tr ${r ? `class="click" data-href="#/admin/r/${r.id}"` : ''}><td class="nowrap">${ptt(e.created_at)}</td><td class="nowrap b">${esc(EV_PT[e.kind] || e.kind)}</td><td class="nowrap">${esc(r ? r.code : '')}</td><td class="nowrap">${esc(pname(e.actor_id) || (r && e.actor_id === r.patient_id ? (r.full_name || 'paciente') : ''))}</td><td>${evDetailPT(e)}</td><td>${e.public === false ? '—' : '✓'}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+}
+function sConfig() {
+  const staff = S.profiles.filter(p => ['staff', 'admin'].includes(p.role));
+  const c = S.company || {};
+  return sTop('Equipe e câmbio', 'Team, exchange rates, company') + `
+  <div class="two">
+    <div class="col">
+      <div class="card pad"><div class="h3 mb">Equipe (${staff.length})</div>
+        <div class="list">${staff.map(p => `<div class="li" style="padding:9px 0"><div class="grow"><div class="b small">${esc(p.full_name || p.email)}</div><div class="tiny muted">${esc(p.email || '')} · último acesso ${p.last_seen ? ago(p.last_seen) : '—'}</div></div>
+          ${isAdmin() && p.id !== S.user.id ? `<select class="in" style="width:auto;min-height:30px;font-size:12px" data-ch="role" data-v="${p.id}"><option value="staff" ${p.role === 'staff' ? 'selected' : ''}>Equipe</option><option value="admin" ${p.role === 'admin' ? 'selected' : ''}>Admin</option><option value="patient">Remover acesso</option></select>` : `<span class="tag acc">${p.role === 'admin' ? 'Admin' : 'Equipe'}</span>`}</div>`).join('')}</div>
+        ${isAdmin() ? `<form class="row mt" data-sub="promote"><input class="in" name="email" type="email" placeholder="e-mail da pessoa (ela cria a conta no app antes)" style="min-height:36px;font-size:13px"><button class="btn sm acc" type="submit">Dar acesso</button></form><div class="tiny muted" style="margin-top:4px">A pessoa cria a conta em "Perfil" no app; depois você dá o acesso aqui. Ninguém consegue se promover sozinho.</div>` : ''}</div>
+      <div class="card pad"><div class="h3 mb">Contato da empresa <span class="tiny muted">(aparece no rodapé do site)</span></div>
+        <form data-sub="company" class="col"><label class="field"><span>E-mail</span><input class="in" name="email" value="${esc(c.email || '')}"></label><div class="grid" style="grid-template-columns:1fr 1fr;gap:8px"><label class="field"><span>WhatsApp</span><input class="in" name="whatsapp" value="${esc(c.whatsapp || '')}" placeholder="+82 10 0000 0000"></label><label class="field"><span>LINE ID</span><input class="in" name="line" value="${esc(c.line || '')}"></label></div><button class="btn sm acc" type="submit">Salvar contato</button></form></div>
+    </div>
+    <div class="col">
+      <div class="card pad"><div class="h3">Câmbio</div><div class="small muted mb">Quantos <b>won (₩)</b> vale 1 unidade de cada moeda. Usado para mostrar o preço aproximado ao paciente.</div>
+        <form data-sub="rates" class="col">${Object.keys(CUR).map(k => `<div class="row"><span class="b" style="width:52px">${k}</span><span class="small muted" style="width:60px">1 ${CUR[k].s.trim()} =</span><input class="in" name="${k}" inputmode="decimal" value="${esc(S.rates[k] ?? '')}" style="min-height:34px"><span class="small muted">₩</span></div>`).join('')}
+        <div class="small muted">Ex.: ₩1.000.000 → ${Object.keys(CUR).map(k => local(1e6, k)).filter(Boolean).join(' · ')}</div>
+        <button class="btn sm acc" type="submit">Salvar câmbio</button></form></div>
+      <div class="card pad"><div class="h3 mb">Backup</div><div class="small muted mb">Baixa tudo o que você vê (pedidos, orçamentos, mensagens, clínicas) num arquivo.</div><button class="btn sm ghost" data-act="backup">Baixar backup (JSON)</button></div>
+      <div class="row"><button class="btn ghost sm" data-act="logout">Sair desta conta</button></div>
+    </div>
+  </div>`;
+}
+
+/* =====================================================================
+   EVENTOS (cliques, campos, formulários)
+   ===================================================================== */
+function afterRender(r) {
+  const cb = $('#chatbox'); if (cb) cb.scrollTop = cb.scrollHeight;
+  const rid = r.p[0] === 'trip' ? r.p[1] : (r.p[0] === 'admin' && r.p[1] === 'r' ? r.p[2] : null);
+  if (rid && unreadFor(rid)) markRead(rid).then(() => { const d = $$('.dot'); d.forEach(x => x.remove()); });
+}
+const ACT = {
+  fcat: (v) => { S.f.cat = v; history.replaceState(null, '', '#/clinics'); render(true); },
+  ftcat: (v) => { S.f.tcat = v; history.replaceState(null, '', '#/treatments'); render(true); },
+  'rq-t': (v) => { RQ.t = RQ.t.includes(v) ? RQ.t.filter(x => x !== v) : [...RQ.t, v]; saveDraft(); render(true); },
+  'rq-c': (v) => { if (!v) RQ.c = []; else if (RQ.c.includes(v)) RQ.c = RQ.c.filter(x => x !== v); else if (RQ.c.length < 3) RQ.c = [...RQ.c, v]; else toast('Max 3'); saveDraft(); render(true); },
+  'rq-b': (v) => { RQ[v] = !RQ[v]; saveDraft(); render(true); },
+  'rq-next': () => { if (validStep(RQ.step)) { RQ.step++; saveDraft(); render(); window.scrollTo(0, 0); } },
+  'rq-back': () => { RQ.step = Math.max(1, RQ.step - 1); saveDraft(); render(); window.scrollTo(0, 0); },
+  'rq-submit': () => submitRequest(),
+  'auth-mode': () => { S.authMode = S.authMode === 'signup' ? 'login' : 'signup'; S.authErr = ''; render(true); },
+  forgot: async (v, el) => { const email = (el.dataset.ctx === 'rq' ? RQ.email : (S.ab || {}).email) || ($('#a-email') || {}).value; if (!/^\S+@\S+\.\S+$/.test(email || '')) { toast(t('err_email')); $('#a-email') && $('#a-email').focus(); return; } await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: location.origin + location.pathname }); toast(t('reset_sent')); },
+  logout: async () => { await sb.auth.signOut(); S.user = null; S.profile = null; await loadPrivate(); go('#/home'); },
+  'q-accept': async (v) => { if (!confirmTap('acc' + v)) return; const { error } = await sb.rpc('kmt_accept_quote', { p_quote: v }); if (error) return err(error); toast('✓ ' + t('st_accepted')); await refresh(); },
+  'q-decline': async (v) => { if (!confirmTap('dec' + v)) return; const { error } = await sb.rpc('kmt_decline_quote', { p_quote: v }); if (error) return err(error); await refresh(); },
+  'cancel-req': (v) => openSheet(`<div class="h2">${esc(t('cancel_req'))}</div><label class="field mt"><span>${esc(t('cancel_reason'))}</span><textarea class="in" id="cx-reason"></textarea></label><div class="row mt"><button class="btn ghost" data-act="sheet-close">${esc(t('back'))}</button><div class="grow"></div><button class="btn danger" data-act="cancel-go" data-v="${v}">${esc(t('cancel_req'))}</button></div>`),
+  'cancel-go': async (v) => { const reason = ($('#cx-reason') || {}).value || null; const { error } = await sb.rpc('kmt_cancel_request', { p_request: v, p_reason: reason }); closeSheet(); if (error) return err(error); toast(t('canceled_ok')); await refresh(); },
+  'sheet-close': () => closeSheet(),
+  /* equipe */
+  'sf-stage': (v) => { S.sf.stage = v; },
+  'sf-reset': () => { S.sf = { stage: 'open', q: '', country: '', coord: '' }; render(true); },
+  's-next': async (v) => { const r = S.reqs.find(x => x.id === v); const i = STAGES.indexOf(r.stage); await setStage(v, STAGES[i + 1]); },
+  's-mine': async (v) => { await setCoord(v, S.user.id); },
+  copy: (v) => { navigator.clipboard && navigator.clipboard.writeText(v).then(() => toast('Copiado: ' + v), () => toast(v)); },
+  quick: (v) => { const ta = $('#schat'); if (ta) { ta.value = QUICK[v][1]; ta.focus(); } },
+  'sq-new': (v) => { const r = S.reqs.find(x => x.id === v); const pref = (r.clinic_ids || [])[0] || (S.clinics.find(c => (r.treatment_ids || []).some(t2 => (c.treatment_ids || []).includes(t2))) || S.clinics[0] || {}).id; const tm = S.terms.find(x => x.clinic_id === pref) || {}; S.sq = { rid: v, clinic_id: pref, items: (r.treatment_ids || []).map(id => ({ label: tnEn((treat(id) || {}).name), krw: (treat(id) || {}).price_from_krw || 0 })), includes: 'Consultation, pre-op tests, medication, follow-up visit', valid: addDays(today(), 14), pct: tm.commission_pct ?? 20 }; if (!S.sq.items.length) S.sq.items = [{ label: '', krw: 0 }]; render(true); },
+  'sq-add': () => { S.sq.items.push({ label: '', krw: 0 }); render(true); },
+  'sq-del': (v) => { S.sq.items.splice(+v, 1); if (!S.sq.items.length) S.sq.items.push({ label: '', krw: 0 }); render(true); },
+  'sq-cancel': () => { S.sq = null; render(true); },
+  'sq-save': () => saveQuote(),
+  'sq-withdraw': async (v) => { if (!confirmTap('wd' + v, 'Toque de novo para retirar o orçamento')) return; const q = S.quotes.find(x => x.id === v); await sb.from('kmt_quotes').update({ status: 'withdrawn', decided_at: new Date().toISOString() }).eq('id', v); await logEvent(q.request_id, 'quote_withdrawn', { quote: v }, false); await refresh(); },
+  'imp-open': () => { S.imp = { text: '' }; render(true); },
+  'imp-close': () => { S.imp = null; render(true); },
+  'imp-run': () => runImport(),
+  'csv-reqs': () => csv('pedidos.csv', [['codigo', 'paciente', 'pais', 'idioma', 'contato', 'tratamentos', 'chegada', 'saida', 'etapa', 'coordenador', 'criado', 'comissao_krw']].concat(filteredReqs().map(r => [r.code, r.full_name, r.country, r.lang, (r.messenger || '') + ' ' + (r.messenger_id || ''), (r.treatment_ids || []).map(id => tnEn((treat(id) || {}).name)).join(' + '), r.date_from, r.date_to, STAGE_PT[r.stage], r.coordinator_name, r.created_at, commissionOf(r.id)]))),
+  'csv-ev': () => csv('historico.csv', [['quando', 'evento', 'pedido', 'quem', 'detalhe', 'publico']].concat(S.events.map(e => [e.created_at, EV_PT[e.kind] || e.kind, (S.reqs.find(r => r.id === e.request_id) || {}).code, pname(e.actor_id), JSON.stringify(e.detail || {}), e.public !== false]))),
+  backup: () => { const b = new Blob([JSON.stringify({ at: new Date().toISOString(), clinics: S.clinics, treatments: S.treats, terms: S.terms, requests: S.reqs, quotes: S.quotes, quote_internal: S.qint, messages: S.msgs, events: S.events, settings: { rates: S.rates, company: S.company } }, null, 1)], { type: 'application/json' }); dl(b, 'backup-kmt-' + today() + '.json'); },
+};
+function dl(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+function csv(name, rows) { const s = rows.map(r => r.map(v => { v = v == null ? '' : String(v); return /[",;\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }).join(',')).join('\n'); dl(new Blob(['﻿' + s], { type: 'text/csv' }), name); }
+function openSheet(html) { closeSheet(); const d = document.createElement('div'); d.className = 'sheet-bg'; d.id = 'sheet'; d.innerHTML = `<div class="sheet">${html}</div>`; d.addEventListener('click', e => { if (e.target === d) closeSheet(); }); document.body.appendChild(d); }
+function closeSheet() { const s = $('#sheet'); if (s) s.remove(); }
+async function setStage(id, to) {
+  const r = S.reqs.find(x => x.id === id); if (!r || r.stage === to) return;
+  const patch = { stage: to }; if (to === 'canceled') patch.canceled_at = new Date().toISOString();
+  const { error } = await sb.from('kmt_requests').update(patch).eq('id', id);
+  if (error) return err(error);
+  await logEvent(id, to === 'canceled' ? 'canceled' : 'stage', { from: r.stage, to, by: 'staff' });
+  toast('Etapa: ' + STAGE_PT[to]); await refresh();
+}
+async function setCoord(id, uid) {
+  const name = uid ? (pname(uid) || '') : null;
+  const { error } = await sb.from('kmt_requests').update({ coordinator_id: uid || null, coordinator_name: name }).eq('id', id);
+  if (error) return err(error);
+  await logEvent(id, 'assigned', { name: name || '—' });
+  const r = S.reqs.find(x => x.id === id);
+  if (uid && r && r.stage === 'new') { await sb.from('kmt_requests').update({ stage: 'consulting' }).eq('id', id); await logEvent(id, 'stage', { from: 'new', to: 'consulting', by: 'staff' }); }
+  toast('Coordenador: ' + (name || '—')); await refresh();
+}
+async function saveQuote() {
+  const SQ = S.sq; const e = $('#sq-err');
+  const items = SQ.items.filter(i => i.label.trim() || Number(i.krw)).map(i => ({ label: i.label.trim(), krw: Number(i.krw) || 0 }));
+  const fail = m => { e.textContent = m; e.hidden = false; };
+  if (!SQ.clinic_id) return fail('Escolha a clínica.');
+  if (!items.length) return fail('Adicione pelo menos um item com valor.');
+  if (items.some(i => !i.label)) return fail('Um item está sem descrição.');
+  if (items.some(i => !i.krw)) return fail('Um item está sem valor em KRW.');
+  const total = items.reduce((s, i) => s + i.krw, 0); const pct = Number(String(SQ.pct).replace(',', '.')) || 0;
+  $('#sq-save').disabled = true;
+  try {
+    const { data: q, error } = await sb.from('kmt_quotes').insert({ request_id: SQ.rid, clinic_id: SQ.clinic_id, items, total_krw: total, includes: SQ.includes || null, valid_until: SQ.valid || null }).select().single();
+    if (error) throw error;
+    await sb.from('kmt_quote_internal').insert({ quote_id: q.id, commission_pct: pct, commission_krw: Math.round(total * pct / 100) });
+    await logEvent(SQ.rid, 'quote_sent', { quote: q.id, clinic: SQ.clinic_id, total_krw: total });
+    const r = S.reqs.find(x => x.id === SQ.rid);
+    if (['new', 'consulting'].includes(r.stage)) { await sb.from('kmt_requests').update({ stage: 'quoted' }).eq('id', SQ.rid); await logEvent(SQ.rid, 'stage', { from: r.stage, to: 'quoted', by: 'staff' }); }
+    S.sq = null; toast('Orçamento enviado ao paciente'); await refresh();
+  } catch (x) { $('#sq-save').disabled = false; fail(x.message || 'Erro ao salvar'); }
+}
+async function runImport() {
+  const rows = parsePaste(S.imp.text).filter(r => !r.err && !r.dup);
+  for (const r of rows) {
+    const { data, error } = await sb.from('kmt_clinics').insert({ name: r.name, district: r.district, specialties: r.spec, languages: r.langs.length ? r.langs : ['en'], treatment_ids: S.treats.filter(x => r.spec.includes(x.category)).map(x => x.id), tone: Math.floor(Math.random() * 6) + 1, verified: false }).select().single();
+    if (error) return err(error);
+    await sb.from('kmt_clinic_terms').insert({ clinic_id: data.id, commission_pct: r.pct });
+  }
+  toast(rows.length + ' clínicas cadastradas'); S.imp = null; await refresh(true);
+}
+const num = v => { const n = Number(String(v || '').replace(/[^\d.]/g, '')); return isFinite(n) && String(v || '').trim() !== '' ? n : null; };
+
+document.addEventListener('click', e => {
+  const tr = e.target.closest('tr[data-href]'); if (tr && !e.target.closest('a,button,select,input')) { go(tr.dataset.href); return; }
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = ACT[el.dataset.act]; if (!fn) return;
+  if (el.tagName === 'BUTTON' || el.classList.contains('opt')) e.preventDefault();
+  fn(el.dataset.v, el, e);
+});
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.bind) {
+    const k = el.dataset.bind; RQ[k] = el.type === 'checkbox' ? el.checked : el.value;
+    if (k === 'from' || k === 'to') { const h = $('#datehint'); if (h) h.textContent = dateHint(); if (k === 'from') { const to = $('[data-bind=to]'); if (to) to.min = el.value; } }
+    if (k !== 'pw') saveDraft();
+    if (k === 'country' && el.value) { const cc = country(el.value); if (!LS.get('kmt-cur', null)) S.cur = cc.cur; if (!RQ.msgid) { RQ.msg = cc.msg; const m = $('#f-msg'); if (m) m.value = cc.msg; } }
+    if (k === 'msg') RQ.msg = el.value;
+    el.classList.remove('err');
+  }
+  if (el.dataset.ab) { S.ab = S.ab || {}; S.ab[el.dataset.ab] = el.value; }
+  if (el.dataset.sf) { S.sf[el.dataset.sf] = el.value; if (el.tagName !== 'INPUT') render(true); else { clearTimeout(ACT._sft); ACT._sft = setTimeout(() => { render(true); const s = $('[data-sf=q]'); if (s) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); } }, 250); } }
+  if (el.dataset.hf) { S.hf[el.dataset.hf] = el.value; render(true); }
+  if (el.dataset.imp) { S.imp.text = el.value; clearTimeout(ACT._it); ACT._it = setTimeout(() => { render(true); const ta = $('[data-imp]'); if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } }, 500); }
+  if (el.dataset.sq) { S.sq[el.dataset.sq] = el.value; if (el.dataset.sq === 'clinic_id') { const tm = S.terms.find(x => x.clinic_id === el.value); if (tm && tm.commission_pct != null) { S.sq.pct = tm.commission_pct; render(true); return; } } updSQ(); }
+  if (el.dataset.sqi != null) { const it = S.sq.items[+el.dataset.sqi]; if (el.dataset.f === 'krw') { it.krw = num(el.value) || 0; } else it.label = el.value; updSQ(); }
+  if (el.form && el.form.dataset.sub === 'treat' && /price_/.test(el.name)) { const n = num(el.value); const lo = $('#tf-loc'); if (lo) lo.textContent = n ? `₩${fmtN(n)} ≈ ${['USD', 'JPY', 'THB', 'VND'].map(k => local(n, k)).filter(Boolean).join(' · ')}` : ''; }
+});
+function updSQ() { const tot = S.sq.items.reduce((s, i) => s + (Number(i.krw) || 0), 0); const pct = Number(String(S.sq.pct).replace(',', '.')) || 0; const a = $('#sq-total'), b = $('#sq-comm'), c = $('#sq-loc'); if (a) a.textContent = krw(tot); if (b) b.textContent = krw(tot * pct / 100); if (c) c.textContent = sqLoc(tot); }
+function sqLoc(tot) { const r = S.reqs.find(x => x.id === (S.sq || {}).rid); const cur = r ? country(r.country).cur : 'USD'; return '≈ ' + [...new Set(['USD', cur])].map(k => local(tot, k)).filter(Boolean).join(' · '); }
+document.addEventListener('change', async e => {
+  const el = e.target;
+  if (el.closest('label.chip') && el.type === 'checkbox') el.closest('label.chip').classList.toggle('on', el.checked);
+  const k = el.dataset.ch; if (!k) return;
+  if (k === 'lang') { S.lang = el.value; LS.set('kmt-lang', S.lang); const cc = ({ ja: 'JPY', zh: 'TWD', th: 'THB', vi: 'VND', id: 'IDR', my: 'MMK', en: 'USD' })[S.lang]; if (!LS.get('kmt-cur', null)) S.cur = cc; if (S.user) sb.from('kmt_profiles').update({ lang: S.lang }).eq('id', S.user.id).then(() => {}, () => {}); render(true); }
+  if (k === 'mylang') { S.f.mylang = el.checked; render(true); }
+  if (k === 's-stage') await setStage(el.dataset.v, el.value);
+  if (k === 's-coord') await setCoord(el.dataset.v, el.value);
+  if (k === 'role') { const { error } = await sb.from('kmt_profiles').update({ role: el.value }).eq('id', el.dataset.v); if (error) return err(error); await logEvent(null, 'role', { user: el.dataset.v, role: el.value }, false); toast('Acesso atualizado'); await refresh(); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey && e.target.matches('.composer textarea') && window.innerWidth > 700) { e.preventDefault(); e.target.form.requestSubmit(); }
+});
+document.addEventListener('submit', async e => {
+  const f = e.target; const k = f.dataset.sub; if (!k) return; e.preventDefault();
+  const fd = new FormData(f); const g = n => (fd.get(n) || '').toString().trim();
+  try {
+    if (k === 'search') { S.f.q = g('q'); S.f.tcat = 'all'; go('#/treatments?q=' + encodeURIComponent(S.f.q)); }
+    if (k === 'login') {
+      const email = ($('#a-email') || {}).value || '', pw = ($('#a-pw') || {}).value || '';
+      if (!/^\S+@\S+\.\S+$/.test(email)) { S.authErr = t('err_email'); render(true); $('#a-email') && $('#a-email').focus(); return; }
+      if (pw.length < 8) { S.authErr = t('err_pw'); S.ab = { email }; render(true); $('#a-pw') && $('#a-pw').focus(); return; }
+      const btn = f.querySelector('[type=submit]'); btn.disabled = true;
+      const ok = await doAuth(email, pw, S.authMode);
+      if (!ok) { S.ab = { email }; render(true); return; }
+      await loadPrivate(); S.authErr = '';
+      go(isStaff() ? '#/admin' : (S.reqs.length ? '#/trips' : '#/home'));
+    }
+    if (k === 'profile') {
+      const patch = { full_name: g('full_name') || null, country: g('country') || null, birth_year: num(g('birth_year')), messenger: g('messenger'), messenger_id: g('messenger_id') || null, lang: g('lang'), currency: g('currency') };
+      const { error } = await sb.from('kmt_profiles').update(patch).eq('id', S.user.id); if (error) throw error;
+      Object.assign(S.profile, patch); S.lang = patch.lang; S.cur = patch.currency; LS.set('kmt-lang', S.lang); LS.set('kmt-cur', S.cur);
+      toast(t('saved')); render(true);
+    }
+    if (k === 'chat' || k === 'schat') {
+      const body = g('body'); if (!body) return;
+      const rid = f.dataset.v; const staffMsg = k === 'schat';
+      const ta = f.querySelector('textarea'); ta.value = '';
+      const tmp = { id: 'tmp' + Date.now(), request_id: rid, from_staff: staffMsg, body, created_at: new Date().toISOString(), sender_id: S.user.id };
+      S.msgs.push(tmp); updateChats();
+      const { data, error } = await sb.from('kmt_messages').insert({ request_id: rid, body, from_staff: staffMsg, sender_id: S.user.id }).select().single();
+      if (error) { S.msgs = S.msgs.filter(m => m !== tmp); updateChats(); ta.value = body; throw error; }
+      Object.assign(tmp, data); updateChats();
+      if (staffMsg) { const r = S.reqs.find(x => x.id === rid); if (r && r.stage === 'new') { await sb.from('kmt_requests').update({ stage: 'consulting', coordinator_id: r.coordinator_id || S.user.id, coordinator_name: r.coordinator_name || pname(S.user.id) || S.user.email }).eq('id', rid); await logEvent(rid, 'stage', { from: 'new', to: 'consulting', by: 'staff' }); await refresh(); } }
+    }
+    if (k === 'note') { const text = g('note'); if (!text) return; await logEvent(f.dataset.v, 'note', { text }, false); toast('Nota adicionada'); await refresh(); }
+    if (k === 'clinic') await saveClinic(f, fd);
+    if (k === 'treat') await saveTreat(f, fd);
+    if (k === 'rates') { const v = {}; Object.keys(CUR).forEach(c => { const n = Number(String(fd.get(c) || '').replace(',', '.')); if (n > 0) v[c] = n; }); const { error } = await sb.from('kmt_settings').upsert({ key: 'rates', value: v, updated_at: new Date().toISOString() }); if (error) throw error; S.rates = v; await logEvent(null, 'rates', v, false); toast('Câmbio salvo'); render(true); }
+    if (k === 'company') { const v = { ...S.company, email: g('email'), whatsapp: g('whatsapp'), line: g('line') }; const { error } = await sb.from('kmt_settings').upsert({ key: 'company', value: v, updated_at: new Date().toISOString() }); if (error) throw error; S.company = v; toast('Contato salvo'); }
+    if (k === 'promote') { const email = g('email').toLowerCase(); const p = S.profiles.find(x => (x.email || '').toLowerCase() === email); if (!p) { toast('Ninguém com esse e-mail criou conta ainda'); return; } const { error } = await sb.from('kmt_profiles').update({ role: 'staff' }).eq('id', p.id); if (error) throw error; await logEvent(null, 'role', { user: p.id, role: 'staff' }, false); toast('Acesso de equipe dado a ' + email); await refresh(); }
+  } catch (x) { err(x); }
+});
+async function saveClinic(f, fd) {
+  const id = f.dataset.v; const e = $('#cf-err'); const fail = m => { e.textContent = m; e.hidden = false; e.scrollIntoView({ block: 'center' }); };
+  const name = (fd.get('name') || '').trim(); const spec = fd.getAll('specialties');
+  if (!name) return fail('Falta o nome da clínica.');
+  if (!spec.length) return fail('Marque pelo menos uma especialidade.');
+  if (S.clinics.some(c => c.id !== id && c.name.trim().toLowerCase() === name.toLowerCase())) return fail('Já existe uma clínica com esse nome.');
+  const about = {}; LANGS.forEach(l => { const v = (fd.get('about_' + l[0]) || '').trim(); if (v) about[l[0]] = v; });
+  const checks = {}; CHECKS.forEach(k => checks[k] = fd.get('chk_' + k) === 'on');
+  const row = { name, district: (fd.get('district') || '').trim(), specialties: spec, languages: fd.getAll('languages'), founded: num(fd.get('founded')), doctors: num(fd.get('doctors')), intl_patients: num(fd.get('intl_patients')), about, checks, treatment_ids: fd.getAll('treatment_ids'), verified: fd.get('verified') === 'on', active: fd.get('active') === 'on' };
+  let cid = id;
+  if (id) { const { error } = await sb.from('kmt_clinics').update(row).eq('id', id); if (error) throw error; }
+  else { row.tone = Math.floor(Math.random() * 6) + 1; const { data, error } = await sb.from('kmt_clinics').insert(row).select().single(); if (error) throw error; cid = data.id; }
+  const terms = { clinic_id: cid, commission_pct: num(fd.get('commission_pct')), contract_until: fd.get('contract_until') || null, contact_name: fd.get('contact_name') || null, contact_phone: fd.get('contact_phone') || null, notes: fd.get('notes') || null, updated_at: new Date().toISOString() };
+  const { error: te } = await sb.from('kmt_clinic_terms').upsert(terms); if (te) throw te;
+  await logEvent(null, 'clinic_saved', { clinic: cid, name }, false);
+  toast('Clínica salva'); await refresh(true); go('#/admin/clinics');
+}
+async function saveTreat(f, fd) {
+  const id = f.dataset.v; const e = $('#tf-err'); const fail = m => { e.textContent = m; e.hidden = false; };
+  const name = {}; LANGS.forEach(l => { const v = (fd.get('n_' + l[0]) || '').trim(); if (v) name[l[0]] = v; });
+  if (!name.en) return fail('Falta o nome em inglês.');
+  const from = num(fd.get('price_from_krw')); const to = num(fd.get('price_to_krw'));
+  if (!from) return fail('Falta o preço inicial em KRW.');
+  if (to && to < from) return fail('O "preço até" está menor que o "preço de".');
+  const code = (fd.get('code') || '').trim().toLowerCase() || name.en.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 24);
+  if (S.treats.some(x => x.id !== id && x.code === code)) return fail('Esse código já existe. Use outro.');
+  const row = { code, category: fd.get('category'), name, price_from_krw: from, price_to_krw: to, unit: fd.get('unit'), stay_days: num(fd.get('stay_days')), recovery_days: num(fd.get('recovery_days')), sort: num(fd.get('sort')) ?? 100, popular: fd.get('popular') === 'on', active: fd.get('active') === 'on' };
+  const res = id ? await sb.from('kmt_treatments').update(row).eq('id', id) : await sb.from('kmt_treatments').insert(row);
+  if (res.error) throw res.error;
+  await logEvent(null, 'treatment_saved', { code }, false);
+  toast('Tratamento salvo'); await refresh(true); go('#/admin/treats');
+}
+
+/* =====================================================================
+   INÍCIO
+   ===================================================================== */
+async function boot() {
+  setFont();
+  try {
+    const { data } = await sb.auth.getSession();
+    S.user = data.session ? data.session.user : null;
+    await Promise.all([loadPublic(), S.user ? ensureProfile() : null]);
+    await loadPrivate();
+  } catch (e) { console.error(e); toast(t('offline')); }
+  S.loaded = true;
+  render();
+  sb.auth.onAuthStateChange(async (ev, session) => {
+    if (ev === 'PASSWORD_RECOVERY') { const pw = prompt('New password (8+ characters)'); if (pw && pw.length >= 8) { await sb.auth.updateUser({ password: pw }); toast(t('saved')); } }
+    if (ev === 'SIGNED_OUT') { S.user = null; S.profile = null; }
+  });
+  try {
+    if (sb.channel) sb.channel('kmt-msgs').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'kmt_messages' }, p => {
+      const m = p.new; if (!m || S.msgs.some(x => x.id === m.id)) return;
+      if (!isStaff() && !S.reqs.some(r => r.id === m.request_id)) return;
+      S.msgs.push(m); updateChats();
+      const r = route(); const open = (r.p[0] === 'trip' && r.p[1] === m.request_id) || (r.p[2] === m.request_id);
+      if (open) markRead(m.request_id); else if (m.sender_id !== (S.user || {}).id) { toast('💬 ' + m.body.slice(0, 60)); if (!/INPUT|TEXTAREA/.test((document.activeElement || {}).tagName)) render(true); }
+    }).subscribe();
+  } catch (e) { console.warn('realtime off', e); }
+}
+window.addEventListener('hashchange', () => { closeSheet(); render(); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S.loaded) refresh(); });
+setInterval(() => { if (!document.hidden && S.loaded && S.user) refresh(); }, 45000);
+boot();
+
+</script>
+</body>
+</html>
