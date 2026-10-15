@@ -252,6 +252,54 @@ body.staff{font-size:13px}
 .spin{width:18px;height:18px;border-radius:99px;border:2.5px solid var(--line2);border-top-color:var(--acc);animation:sp 0.8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 code{background:var(--surf2);padding:1px 5px;border-radius:5px;font-size:11.5px}
+
+/* V3: ilustrações, cartões, câmera, pacotes */
+.art-svg .sk{stroke:var(--artk);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.art-svg .sk.ac{stroke:var(--arta)}.art-svg .sk.ga,.art-svg .ga{stroke:var(--gold)}.art-svg .sk.wh{stroke:#fff}
+.art-svg .fa{fill:var(--artf)}.art-svg .fk{fill:var(--artk)}.art-svg .fg{fill:var(--gold)}.art-svg .wf{fill:#fff}
+.c-plastic{--artk:#5E2433;--arta:#B4596F;--artf:rgba(180,89,111,.16);--tbg:linear-gradient(150deg,#FBEFF1,#F3DCE1)}
+.c-derma{--artk:#7A3B52;--arta:#D47C93;--artf:rgba(212,124,147,.18);--tbg:linear-gradient(150deg,#FDF2F4,#F7E1E6)}
+.c-dental{--artk:#2F5E63;--arta:#4E9AA0;--artf:rgba(78,154,160,.16);--tbg:linear-gradient(150deg,#EEF6F6,#DCEDEE)}
+.c-checkup{--artk:#34506F;--arta:#5C86B5;--artf:rgba(92,134,181,.16);--tbg:linear-gradient(150deg,#EFF4FA,#DEE8F4)}
+.c-hair{--artk:#5B4630;--arta:#A47E52;--artf:rgba(164,126,82,.16);--tbg:linear-gradient(150deg,#F8F2EA,#EFE3D3)}
+.c-beauty{--artk:#4E3E6B;--arta:#8C76B8;--artf:rgba(140,118,184,.16);--tbg:linear-gradient(150deg,#F4F1FA,#E7E0F3)}
+.atile{background:var(--tbg);display:grid;place-items:center;height:104px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.atile:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.45);right:-34px;top:-44px}
+.atile .art-svg{width:76px;height:76px;position:relative;z-index:1}
+.atile.mini{height:44px;width:44px;border-radius:12px;border:0;flex:none}.atile.mini:after{display:none}.atile.mini .art-svg{width:34px;height:34px}
+.atile.pk{height:120px}.atile.pk .art-svg{width:88px;height:88px}
+.tgrid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:700px){.tgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1000px){.tgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tcard,.pcard{overflow:hidden;display:flex;flex-direction:column;transition:transform .12s}
+.tcard:active,.pcard:active{transform:scale(.985)}
+.tbody{padding:10px 12px 12px;display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.tcat{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.tname{font-weight:600;font-size:14px;line-height:1.3;word-break:keep-all;overflow-wrap:anywhere}
+.tfoot{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;margin-top:auto;padding-top:6px;font-size:13px}
+.tstay{font-size:11px;color:var(--muted);background:var(--surf2);padding:2px 7px;border-radius:99px;white-space:nowrap}
+.pk-sum{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hs .pcard,.hs .tcard{height:100%}
+.thero{display:flex;align-items:center;gap:16px;background:var(--tbg);border-radius:20px;padding:18px;border:1px solid var(--line);overflow:hidden;position:relative}
+.thero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.4);left:-60px;bottom:-110px}
+.thero-art{flex:none;width:110px;height:110px;display:grid;place-items:center;background:rgba(255,255,255,.55);border-radius:24px;position:relative;z-index:1}
+.thero-art .art-svg{width:92px;height:92px}
+.thero-tx{position:relative;z-index:1;min-width:0}.thero-tx .h1{word-break:keep-all}
+@media(max-width:480px){.thero{flex-direction:column;align-items:flex-start}.thero-art{width:88px;height:88px}.thero-art .art-svg{width:72px;height:72px}}
+.pk-it .md-ul{list-style:none;padding-left:0;position:relative}
+.pk-it .md-ul li{position:relative;padding:0 0 12px 22px;margin:0}
+.pk-it .md-ul li:before{content:"";position:absolute;left:3px;top:6px;width:9px;height:9px;border-radius:99px;border:2px solid var(--acc);background:var(--surf)}
+.pk-it .md-ul li:after{content:"";position:absolute;left:7.5px;top:18px;bottom:0;width:2px;background:var(--line)}
+.pk-it .md-ul li:last-child:after{display:none}
+.sheet.sheet-cam{padding:0;max-width:520px;background:#000;overflow:hidden}
+.cam-view{position:relative;background:#000;aspect-ratio:3/4;max-height:72vh;margin:0 auto}
+.cam-view video{width:100%;height:100%;object-fit:cover;display:block}.cam-view video.mirror{transform:scaleX(-1)}
+.cam-guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.cam-hint{position:absolute;left:0;right:0;bottom:12px;text-align:center;color:#fff;font-size:12.5px;text-shadow:0 1px 3px rgba(0,0,0,.6);padding:0 16px}
+.cam-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px calc(14px + env(safe-area-inset-bottom));background:#000}
+.cam-bar .btn{background:rgba(255,255,255,.14);color:#fff;border:0;width:44px;padding:0}
+.cam-shot{width:68px;height:68px;border-radius:99px;background:#fff;border:5px solid rgba(255,255,255,.35);box-shadow:0 0 0 2px #fff}
+.phdrop .btn{min-height:40px}
 </style>
 </head>
 <body>
@@ -798,6 +846,31 @@ reviews:"Opiniones",reviews_none:"Aún no hay opiniones. Solo pueden opinar paci
 };
 for (const l in I18N_V2) { I18N[l] = Object.assign(I18N[l] || {}, I18N_V2[l]); }
 
+/* V3: câmera e pacotes */
+const I18N_V3 = {
+en:{photo_camera:"Open camera",photo_gallery:"Choose from gallery",cam_hint:"Face the camera in good light, no filter",cam_denied:"Camera blocked. Allow camera access in your browser settings, or choose a photo from your gallery.",cam_take:"Take photo",cam_flip:"Switch camera",
+pk_title:"Packages",pk_sub:"Ready-made trips that combine treatments, airport pick-up and a coordinator — at a better price.",pk_days:"{n} days",pk_includes:"What's included",pk_itinerary:"Your itinerary",pk_treatments:"Treatments in this package",pk_request:"Request this package",pk_note:"Prices are 'from' — the final quote depends on your consultation. Hotel and flights are not included.",pk_save:"Save {n}%",pk_popular:"Popular"},
+ko:{photo_camera:"카메라 열기",photo_gallery:"앨범에서 선택",cam_hint:"밝은 곳에서 필터 없이 정면을 바라봐 주세요",cam_denied:"카메라가 차단되어 있어요. 브라우저 설정에서 카메라를 허용하거나 앨범에서 사진을 선택해 주세요.",cam_take:"사진 찍기",cam_flip:"카메라 전환",
+pk_title:"패키지",pk_sub:"시술, 공항 픽업, 코디네이터를 묶은 맞춤 여행 — 더 좋은 가격으로.",pk_days:"{n}일",pk_includes:"포함 사항",pk_itinerary:"일정",pk_treatments:"포함된 시술",pk_request:"이 패키지 문의하기",pk_note:"표시된 가격은 최저가이며, 최종 견적은 상담 후 정해집니다. 숙소와 항공권은 포함되지 않습니다.",pk_save:"{n}% 할인",pk_popular:"인기"},
+ja:{photo_camera:"カメラを起動",photo_gallery:"アルバムから選ぶ",cam_hint:"明るい場所で、フィルターなしで正面を向いてください",cam_denied:"カメラがブロックされています。ブラウザの設定でカメラを許可するか、アルバムから写真を選んでください。",cam_take:"撮影",cam_flip:"カメラ切替",
+pk_title:"パッケージ",pk_sub:"施術・空港送迎・コーディネーターをセットにした、お得なプランです。",pk_days:"{n}日間",pk_includes:"含まれるもの",pk_itinerary:"日程",pk_treatments:"パッケージの施術",pk_request:"このパッケージを依頼",pk_note:"料金は最低価格です。最終見積もりはカウンセリング後に決まります。ホテル・航空券は含まれません。",pk_save:"{n}%お得",pk_popular:"人気"},
+zh:{photo_camera:"開啟相機",photo_gallery:"從相簿選擇",cam_hint:"請在光線充足處、不開濾鏡、正面看鏡頭",cam_denied:"相機被封鎖。請在瀏覽器設定中允許使用相機，或從相簿選擇照片。",cam_take:"拍照",cam_flip:"切換鏡頭",
+pk_title:"套裝行程",pk_sub:"結合療程、機場接送與專屬顧問的套裝行程，價格更優惠。",pk_days:"{n}天",pk_includes:"包含內容",pk_itinerary:"行程",pk_treatments:"套裝包含的療程",pk_request:"申請這個套裝",pk_note:"價格為起價，最終報價以諮詢結果為準。不含住宿與機票。",pk_save:"省{n}%",pk_popular:"熱門"},
+th:{photo_camera:"เปิดกล้อง",photo_gallery:"เลือกจากคลังภาพ",cam_hint:"หันหน้าเข้ากล้องในที่ที่มีแสงดี ไม่ใช้ฟิลเตอร์",cam_denied:"กล้องถูกบล็อก กรุณาอนุญาตการใช้กล้องในการตั้งค่าเบราว์เซอร์ หรือเลือกรูปจากคลังภาพ",cam_take:"ถ่ายรูป",cam_flip:"สลับกล้อง",
+pk_title:"แพ็กเกจ",pk_sub:"ทริปสำเร็จรูปที่รวมทรีตเมนต์ รับส่งสนามบิน และผู้ประสานงาน ในราคาที่คุ้มกว่า",pk_days:"{n} วัน",pk_includes:"สิ่งที่รวมอยู่",pk_itinerary:"แผนการเดินทาง",pk_treatments:"ทรีตเมนต์ในแพ็กเกจ",pk_request:"ขอแพ็กเกจนี้",pk_note:"ราคาเริ่มต้น ราคาสุดท้ายขึ้นอยู่กับการปรึกษา ไม่รวมโรงแรมและตั๋วเครื่องบิน",pk_save:"ประหยัด {n}%",pk_popular:"ยอดนิยม"},
+vi:{photo_camera:"Mở camera",photo_gallery:"Chọn từ thư viện",cam_hint:"Nhìn thẳng vào camera, đủ ánh sáng, không dùng filter",cam_denied:"Camera đang bị chặn. Hãy cho phép camera trong cài đặt trình duyệt, hoặc chọn ảnh từ thư viện.",cam_take:"Chụp ảnh",cam_flip:"Đổi camera",
+pk_title:"Gói dịch vụ",pk_sub:"Chuyến đi trọn gói gồm dịch vụ, đón sân bay và điều phối viên — với giá tốt hơn.",pk_days:"{n} ngày",pk_includes:"Bao gồm",pk_itinerary:"Lịch trình",pk_treatments:"Dịch vụ trong gói",pk_request:"Yêu cầu gói này",pk_note:"Giá khởi điểm — báo giá cuối cùng tùy theo buổi tư vấn. Chưa gồm khách sạn và vé máy bay.",pk_save:"Tiết kiệm {n}%",pk_popular:"Phổ biến"},
+id:{photo_camera:"Buka kamera",photo_gallery:"Pilih dari galeri",cam_hint:"Hadap kamera di tempat terang, tanpa filter",cam_denied:"Kamera diblokir. Izinkan akses kamera di pengaturan browser, atau pilih foto dari galeri.",cam_take:"Ambil foto",cam_flip:"Ganti kamera",
+pk_title:"Paket",pk_sub:"Perjalanan siap pakai yang menggabungkan perawatan, jemput bandara, dan koordinator — dengan harga lebih hemat.",pk_days:"{n} hari",pk_includes:"Yang termasuk",pk_itinerary:"Jadwal perjalanan",pk_treatments:"Perawatan dalam paket",pk_request:"Minta paket ini",pk_note:"Harga mulai dari — penawaran akhir tergantung konsultasi. Tidak termasuk hotel dan tiket pesawat.",pk_save:"Hemat {n}%",pk_popular:"Populer"},
+my:{photo_camera:"ကင်မရာ ဖွင့်ရန်",photo_gallery:"ဓာတ်ပုံပြခန်းမှ ရွေးရန်",cam_hint:"အလင်းကောင်းသောနေရာတွင် ဖီလ်တာမပါဘဲ ကင်မရာကို တည့်တည့်ကြည့်ပါ",cam_denied:"ကင်မရာကို ပိတ်ထားသည်။ ဘရောက်ဇာ ဆက်တင်တွင် ကင်မရာ ခွင့်ပြုပါ သို့မဟုတ် ဓာတ်ပုံပြခန်းမှ ရွေးပါ။",cam_take:"ဓာတ်ပုံ ရိုက်ရန်",cam_flip:"ကင်မရာ ပြောင်းရန်",
+pk_title:"ပက်ကေ့ချ်များ",pk_sub:"ကုသမှု၊ လေဆိပ်ကြိုဆိုမှုနှင့် ညှိနှိုင်းရေးမှူး ပါဝင်သော အဆင်သင့်ခရီးစဉ်များ — ပိုသက်သာသော စျေးနှုန်းဖြင့်။",pk_days:"{n} ရက်",pk_includes:"ပါဝင်သည်များ",pk_itinerary:"ခရီးစဉ်",pk_treatments:"ပက်ကေ့ချ်ရှိ ကုသမှုများ",pk_request:"ဤပက်ကေ့ချ်ကို တောင်းဆိုရန်",pk_note:"စျေးနှုန်းများသည် အနည်းဆုံးစျေးဖြစ်ပြီး နောက်ဆုံးစျေးနှုန်းသည် တိုင်ပင်ဆွေးနွေးမှုပေါ် မူတည်သည်။ ဟိုတယ်နှင့် လေယာဉ်လက်မှတ် မပါဝင်ပါ။",pk_save:"{n}% သက်သာ",pk_popular:"လူကြိုက်များ"},
+pt:{photo_camera:"Abrir câmera",photo_gallery:"Escolher da galeria",cam_hint:"Olhe para a câmera, em boa luz e sem filtro",cam_denied:"A câmera está bloqueada. Permita o acesso à câmera nas configurações do navegador ou escolha uma foto da galeria.",cam_take:"Tirar foto",cam_flip:"Trocar câmera",
+pk_title:"Pacotes",pk_sub:"Viagens prontas que juntam tratamentos, transfer do aeroporto e uma coordenadora — por um preço melhor.",pk_days:"{n} dias",pk_includes:"O que está incluso",pk_itinerary:"Seu roteiro",pk_treatments:"Tratamentos do pacote",pk_request:"Pedir este pacote",pk_note:"Preços 'a partir de' — o orçamento final depende da consulta. Hotel e passagens não estão incluídos.",pk_save:"Economize {n}%",pk_popular:"Popular"},
+es:{photo_camera:"Abrir cámara",photo_gallery:"Elegir de la galería",cam_hint:"Mira a la cámara con buena luz y sin filtros",cam_denied:"La cámara está bloqueada. Permite el acceso a la cámara en la configuración del navegador o elige una foto de tu galería.",cam_take:"Tomar foto",cam_flip:"Cambiar cámara",
+pk_title:"Paquetes",pk_sub:"Viajes listos que combinan tratamientos, traslado desde el aeropuerto y una coordinadora — a mejor precio.",pk_days:"{n} días",pk_includes:"Qué incluye",pk_itinerary:"Tu itinerario",pk_treatments:"Tratamientos del paquete",pk_request:"Pedir este paquete",pk_note:"Precios 'desde' — el presupuesto final depende de tu consulta. No incluye hotel ni vuelos.",pk_save:"Ahorra {n}%",pk_popular:"Popular"},
+};
+for (const l in I18N_V3) { I18N[l] = Object.assign(I18N[l] || {}, I18N_V3[l]); }
+
 </script>
 <script>
 'use strict';
@@ -987,16 +1060,17 @@ const HERO_ART = `<svg class="art" viewBox="0 0 400 400" fill="none" aria-hidden
    DADOS
    ===================================================================== */
 async function loadPublic() {
-  const [c, tr, s, ar, rv] = await Promise.all([
+  const [c, tr, s, ar, rv, pk] = await Promise.all([
     sb.from('kmt_clinics').select('*').order('name'),
     sb.from('kmt_treatments').select('*').order('sort'),
     sb.from('kmt_settings').select('*'),
     sb.from('kmt_articles').select('*').order('sort'),
     sb.from('kmt_reviews').select('*').order('created_at', { ascending: false }),
+    sb.from('kmt_packages').select('*').order('sort'),
   ]).then(x => x);
   if (c.error) throw c.error;
   S.clinics = c.data || []; S.treats = tr.data || [];
-  S.articles = (ar && ar.data) || []; S.reviews = (rv && rv.data) || [];
+  S.articles = (ar && ar.data) || []; S.reviews = (rv && rv.data) || []; S.packages = (pk && pk.data) || [];
   for (const r of (s.data || [])) { if (r.key === 'rates') S.rates = r.value || {}; if (r.key === 'company') S.company = r.value || {}; }
 }
 async function loadPrivate() {
@@ -1065,10 +1139,11 @@ function shellPatient(r, body) {
   const on = p => (r.p[0] === p || (p === 'trips' && r.p[0] === 'trip') || (p === 'clinics' && r.p[0] === 'clinic') || (p === 'treatments' && r.p[0] === 'treatment') || (p === 'guide' && r.p[0] === 'treatment')) ? 'on' : '';
   const un = S.user && !isStaff() ? unreadAll() : 0;
   const nav = [['home','home',t('nav_home')],['clinics','clinic',t('nav_clinics')],['guide','book',t('nav_guide')],['trips','plane',t('nav_trips')],['me','user',t('nav_me')]];
-  const tnavItems = [nav[1], ['treatments','spark',t('nav_treat')], nav[2], nav[3]];
+  const tnavItems = [nav[1], ['treatments','spark',t('nav_treat')], ['packages','tag',t('pk_title')], nav[2], nav[3]];
+  const onT = p => (r.p[0] === p || (p === 'trips' && r.p[0] === 'trip') || (p === 'clinics' && r.p[0] === 'clinic') || (p === 'treatments' && r.p[0] === 'treatment') || (p === 'packages' && r.p[0] === 'package')) ? 'on' : '';
   return `<header class="top"><div class="top-in">
     <a class="logo" href="#/home"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>${esc(BRAND.tag)}</small></span></a>
-    <nav class="tnav">${tnavItems.map(n => `<a class="${on(n[0])}" href="#/${n[0]}">${esc(n[2])}</a>`).join('')}</nav>
+    <nav class="tnav">${tnavItems.map(n => `<a class="${onT(n[0])}" href="#/${n[0]}">${esc(n[2])}</a>`).join('')}</nav>
     <div class="grow"></div>
     <select class="langsel" data-ch="lang" aria-label="${esc(t('language'))}">${LANGS.map(l => `<option value="${l[0]}" ${l[0] === S.lang ? 'selected' : ''}>${l[1]}</option>`).join('')}</select>
     ${isStaff() ? `<a class="iconbtn" href="#/admin" title="${esc(t('staff_panel'))}">${IC.chart.replace('<svg', '<svg width="17" height="17"')}</a>` : ''}
@@ -1089,6 +1164,8 @@ function pagePatient(r) {
     case 'me': return pageMe();
     case 'guide': return r.p[1] ? pageArticle(r.p[1]) : pageGuide();
     case 'photo': return pagePhoto();
+    case 'packages': return pagePackages();
+    case 'package': return pagePackage(r.p[1]);
     default: return pageHome();
   }
 }
@@ -1135,10 +1212,11 @@ function pageHome() {
     <div class="trust">${[['✓', 'trust1'], ['文', 'trust2'], ['₩', 'trust3'], ['♡', 'trust4']].map(x => `<div><i>${x[0]}</i>${esc(t(x[1]))}</div>`).join('')}</div>
   </div></section>
   <div class="chips mt2">${CATS.map(c => `<a class="chip" href="#/treatments?cat=${c}">${CAT_IC[c]} ${esc(t('cat_' + c))}</a>`).join('')}</div>
+  ${S.packages.filter(p => p.active !== false).length ? `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('pk_title'))}</h2><a href="#/packages">${esc(t('see_all'))} →</a></div><div class="hs">${S.packages.filter(p => p.active !== false).sort((a, b) => (b.popular - a.popular) || (a.sort - b.sort)).slice(0, 6).map(packageCard).join('')}</div></section>` : ''}
   <section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_verified'))}</h2><a href="#/clinics">${esc(t('see_all'))} →</a></div>
     <div class="hs">${vc.map(clinicCard).join('')}</div></section>
   <section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_popular'))}</h2><a href="#/treatments">${esc(t('see_all'))} →</a></div>
-    <div class="grid g2">${pop.map(treatCard).join('')}</div>
+    <div class="tgrid">${pop.map(treatCard).join('')}</div>
     <p class="tiny muted mt">${esc(t('indicative'))}</p></section>
   ${pubReviews().length ? `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('sec_reviews'))}</h2></div><div class="hs">${pubReviews().slice(0, 8).map(v => `<a href="#/clinic/${v.clinic_id}" style="display:block">${reviewCard(v)}</a>`).join('')}</div></section>` : ''}
   ${S.articles.length ? `<section class="sec"><div class="sech"><h2 class="h2">${esc(t('guide_title'))}</h2><a href="#/guide">${esc(t('see_all'))} →</a></div><div class="hs">${S.articles.filter(a => a.published !== false).slice(0, 4).map(articleCard).join('')}</div></section>` : ''}
@@ -1177,7 +1255,7 @@ function pageClinic(id) {
   <div class="card pad mt"><div class="h3 mb">${esc(c.verified ? t('verified') : t('under_review'))}</div>
     <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">${CHECKS.map(k => `<div class="row small" style="align-items:flex-start"><span style="color:${chk[k] ? 'var(--ok)' : 'var(--line2)'}">${chk[k] ? '●' : '○'}</span><span class="${chk[k] ? '' : 'muted'}">${esc(t('chk_' + k))}</span></div>`).join('')}</div></div>
   <section class="sec"><div class="sech"><h2 class="h2">${esc(t('treatments_here'))}</h2></div>
-    <div class="grid g2">${trs.map(treatCard).join('')}</div><p class="tiny muted mt">${esc(t('indicative'))}</p></section>
+    <div class="tgrid">${trs.map(treatCard).join('')}</div><p class="tiny muted mt">${esc(t('indicative'))}</p></section>
   ${reviewsSection(c.id)}
   <div class="mt2"><a class="btn acc block" href="#/request?c=${c.id}">${esc(t('quote_this'))}</a></div>${footer()}`;
 }
@@ -1191,16 +1269,16 @@ function pageTreatments(r) {
   return `<h1 class="h2">${esc(t('nav_treat'))}</h1>
   <form class="search mt" data-sub="search" style="max-width:none"><span class="muted">${IC.search}</span><input name="q" value="${esc(S.f.q)}" placeholder="${esc(t('search_ph'))}" autocomplete="off"></form>
   <div class="chips mt">${['all', ...CATS].map(c => `<button class="chip ${S.f.tcat === c ? 'on' : ''}" data-act="ftcat" data-v="${c}">${c === 'all' ? '' : CAT_IC[c] + ' '}${esc(t('cat_' + c))}</button>`).join('')}</div>
-  <div class="grid g2 mt">${list.map(treatCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>
+  <div class="tgrid mt">${list.map(treatCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>
   <p class="tiny muted mt">${esc(t('indicative'))}</p>${footer()}`;
 }
 function pageTreatment(id) {
   const x = treat(id); if (!x) return `<div class="empty">${esc(t('no_results'))}</div>`;
   const cls = S.clinics.filter(c => c.active !== false && (c.treatment_ids || []).includes(id)).sort((a, b) => b.verified - a.verified);
   return `<a class="row small muted mb" href="javascript:history.back()">${IC.back} ${esc(t('back'))}</a>
-  <div class="card pad"><div class="row"><span class="tr" style="padding:0"><span class="ic" style="width:54px;height:54px;font-size:26px">${CAT_IC[x.category]}</span></span>
-    <div class="grow"><div class="kick">${esc(t('cat_' + x.category))}</div><h1 class="h2">${esc(tn(x.name))}</h1></div></div>
-    <div class="grid mt" style="grid-template-columns:repeat(3,1fr);gap:8px">
+  ${treatHero(x)}
+  <div class="card pad mt">
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px">
       <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('from'))}</div><div class="b">${krw(x.price_from_krw)}</div><div class="tiny muted">${local(x.price_from_krw) ? '≈ ' + local(x.price_from_krw) : ''}</div></div>
       <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('stay'))}</div><div class="b">${x.stay_days || '—'} ${esc(t('days'))}</div></div>
       <div class="card pad" style="box-shadow:none;padding:10px"><div class="tiny muted">${esc(t('recovery'))}</div><div class="b">${x.recovery_days ?? '—'} ${esc(t('days'))}</div></div>
@@ -1236,7 +1314,7 @@ function pageRequest(r) {
       return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid" style="gap:6px">${items.map(x => opt(sel.includes(x.id), esc(tn(x.name)), 'rq-t', x.id, `${t('from')} ${krw(x.price_from_krw)}${local(x.price_from_krw) ? ' · ≈ ' + local(x.price_from_krw) : ''}`)).join('')}</div>`;
     }).join('');
     const rel = S.clinics.filter(c => c.active !== false && (!sel.length || sel.some(id => (c.treatment_ids || []).includes(id)))).sort((a, b) => b.verified - a.verified);
-    body = `${rqPhotoCard()}<div class="h3">${esc(t('req_what'))}</div>${byCat}
+    body = `${rqPkgCard()}${rqPhotoCard()}<div class="h3">${esc(t('req_what'))}</div>${byCat}
       <div class="h3 mt2">${esc(t('req_clinics'))}</div>
       <div class="grid mt" style="gap:6px">${opt(!RQ.c.length, esc(t('req_any')), 'rq-c', '')}${rel.map(c => opt(RQ.c.includes(c.id), esc(c.name), 'rq-c', c.id, esc((c.district || '') + (c.verified ? ' · ✓ ' + t('verified') : '')))).join('')}</div>
       <label class="field mt2"><span>${esc(t('req_notes'))}</span><textarea class="in" data-bind="notes" maxlength="2000">${esc(RQ.notes)}</textarea></label>`;
@@ -1329,6 +1407,7 @@ async function submitRequest() {
       consent_privacy_at: now, consent_share_at: now, stage: 'new',
     };
     await attachPhotos(row);
+    if (RQ.pkg) row.package_id = RQ.pkg;
     const { data, error } = await sb.from('kmt_requests').insert(row).select().single();
     if (error) throw error;
     RQ = newDraft(); LS.del('kmt-draft'); PH = newPH();
@@ -1497,10 +1576,10 @@ function staffNav(r) {
   const un = unreadAll();
   const items = [
     ['Operação', [['dash', 'chart', 'Painel', 'Dashboard'], ['reqs', 'list', 'Pedidos', 'Requests', newN + un], ['clinics', 'clinic', 'Clínicas', 'Clinics'], ['treats', 'tag', 'Tratamentos', 'Treatments'], ['reviews', 'star', 'Avaliações', 'Reviews', S.reviews.filter(v => v.status === 'pending').length]]],
-    ['Conteúdo', [['guide', 'book', 'Guia', 'Guide / blog']]],
+    ['Conteúdo', [['packages', 'tag', 'Pacotes', 'Packages'], ['guide', 'book', 'Guia', 'Guide / blog']]],
     ['Gestão', [['history', 'clock', 'Histórico', 'Audit log'], ['config', 'gear', 'Equipe e câmbio', 'Team & rates']]],
   ];
-  const isOn = k => (a === k || (k === 'reqs' && a === 'r') || (k === 'clinics' && a === 'clinic') || (k === 'treats' && a === 'treat') || (k === 'guide' && a === 'article')) ? 'on' : '';
+  const isOn = k => (a === k || (k === 'reqs' && a === 'r') || (k === 'clinics' && a === 'clinic') || (k === 'treats' && a === 'treat') || (k === 'guide' && a === 'article') || (k === 'packages' && a === 'package')) ? 'on' : '';
   const side = `<aside class="side"><a class="logo" href="#/admin"><span class="mk">${BRAND.mark}</span><span>${esc(BRAND.short)}<small>Equipe</small></span></a>
     ${items.map(g => `<div class="grp">${g[0]}</div>${g[1].map(i => `<a class="${isOn(i[0])}" href="#/admin/${i[0]}">${IC[i[1]]}<span>${i[2]}<small>${i[3]}</small></span>${i[4] ? `<span class="n">${i[4]}</span>` : ''}</a>`).join('')}`).join('')}
     <div class="grow"></div><a href="#/home">${IC.home}<span>Ver site do paciente<small>Patient view</small></span></a>
@@ -1523,6 +1602,8 @@ function renderStaff(r) {
     case 'reviews': page = sReviews(); break;
     case 'guide': page = sGuide(); break;
     case 'article': page = sArticle(r.p[2]); break;
+    case 'packages': page = sPackages(); break;
+    case 'package': page = sPackage(r.p[2]); break;
     default: page = sDash();
   }
   return `<div class="st">${side}<div class="smain">${page}</div>${bn}</div>`;
@@ -1652,6 +1733,7 @@ function sReq(id) {
       ${staffPhotos(r)}
       <div class="card pad"><div class="h3 mb">Dados do pedido</div>
         <dl class="kv">
+          ${r.package_id ? `<dt>Pacote</dt><dd><span class="tag gold">${esc(tnEn((S.packages.find(p => p.id === r.package_id) || {}).name) || '—')}</span></dd>` : ''}
           <dt>Tratamentos</dt><dd>${(r.treatment_ids || []).map(x => esc(tnEn((treat(x) || {}).name))).join('<br>') || '—'}</dd>
           <dt>Clínicas preferidas</dt><dd>${pref.map(c => esc(c.name)).join('<br>') || '<span class="muted">Quer recomendação</span>'}</dd>
           <dt>Datas</dt><dd>${r.date_from ? pt(r.date_from, 1) + ' – ' + pt(r.date_to, 1) : '—'} ${r.flexible ? '<span class="tag">flexível</span>' : ''}</dd>
@@ -2121,7 +2203,7 @@ function pageGuide() {
   <p class="muted" style="margin:6px 0 0;max-width:620px">${esc(t('guide_sub'))}</p>
   <section class="sec"><h2 class="h2 mb">${esc(t('guide_general'))}</h2><div class="grid g2">${arts.map(articleCard).join('')}</div></section>
   <section class="sec"><h2 class="h2 mb">${esc(t('guide_treat'))}</h2>
-    ${CATS.map(c => { const items = S.treats.filter(x => x.category === c && x.active !== false); if (!items.length) return ''; return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid g2">${items.map(x => `<a class="card tr" href="#/treatment/${x.id}"><span class="ic">${CAT_IC[x.category]}</span><div class="grow"><div class="b">${esc(tn(x.name))}</div><div class="small muted" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc((guideOf(x) || {}).what || '')}</div></div><span class="muted">›</span></a>`).join('')}</div>`; }).join('')}
+    ${CATS.map(c => { const items = S.treats.filter(x => x.category === c && x.active !== false); if (!items.length) return ''; return `<div class="small b muted mt" style="margin-bottom:6px">${CAT_IC[c]} ${esc(t('cat_' + c))}</div><div class="grid g2">${items.map(x => `<a class="card tr" href="#/treatment/${x.id}">${artTile(x.code, x.category, 'mini')}<div class="grow"><div class="b">${esc(tn(x.name))}</div><div class="small muted" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc((guideOf(x) || {}).what || '')}</div></div><span class="muted">›</span></a>`).join('')}</div>`; }).join('')}
   </section><p class="tiny muted mt">${esc(t('guide_disclaimer'))}</p>${footer()}`;
 }
 function articleCard(a) {
@@ -2164,10 +2246,10 @@ function pagePhoto() {
     <div class="kick">${IC.camera} ${esc(t('photo_cta'))}</div><h1 class="h2" style="margin-top:6px">${esc(t('photo_title'))}</h1>
     <p class="small muted" style="margin:6px 0 12px">${esc(t('photo_sub'))}</p>
     ${PH.photos.length ? `<div class="row wrap mb" style="gap:6px">${PH.photos.map((x, i) => `<button class="phthumb ${i === PH.cur ? 'on' : ''}" data-act="ph-sel" data-v="${i}"><img src="${x.data}" alt=""></button>`).join('')}
-        ${PH.photos.length < 3 ? `<label class="phthumb add"><input type="file" accept="image/*" hidden data-ph-file>＋</label>` : ''}</div>` : ''}
+        ${PH.photos.length < 3 ? photoPickers(false) : ''}</div>` : ''}
     ${p ? `<div class="small b mb">${esc(t('photo_tap'))}</div>${photoView(p, PH.cur, true)}
         <div class="row wrap mt" style="gap:6px"><button class="btn sm ghost" data-act="ph-clear">${esc(t('photo_clear'))}</button><button class="btn sm ghost" data-act="ph-del">${esc(t('photo_remove'))}</button><span class="tiny muted">${esc(t('photo_max'))}</span></div>`
-      : `<label class="phdrop"><input type="file" accept="image/*" hidden data-ph-file>${IC.camera.replace('width="17" height="17"', 'width="34" height="34"')}<span class="b">${esc(t('photo_pick'))}</span><span class="tiny muted">${esc(t('photo_private'))}</span></label>`}
+      : photoPickers(true)}
     <div class="h3 mt2">${esc(t('photo_area'))}</div>
     <div class="row wrap mt" style="gap:6px">${AREAS.map(a => `<button class="chip ${phAreas().includes(a) ? 'on' : ''}" data-act="ph-areachip" data-v="${a}">${esc(t('area_' + a))}</button>`).join('')}</div>
     ${p ? `<div class="aibox mt2">${PH.busy ? `<div class="row"><span class="spin"></span><span class="small">${esc(t('photo_ai_wait'))}</span></div>`
@@ -2220,6 +2302,10 @@ async function attachPhotos(row) {
     photos.push({ path, marks: p.marks || [], ai: p.ai || null });
   }
   row.photos = photos; row.areas = RQ.areas || [];
+}
+function rqPkgCard() {
+  const p = RQ.pkg && S.packages.find(x => x.id === RQ.pkg); if (!p) return '';
+  return `<div class="card pad mb row" style="box-shadow:none;background:var(--goldbg);border-color:#EADBC2">${artTile(p.art, pkgCat(p), 'mini')}<div class="grow"><div class="tiny muted">${esc(t('pk_title'))}</div><div class="small b">${esc(tn(p.name))}</div><div class="tiny muted">${esc(t('from'))} ${krw(p.price_from_krw)}</div></div><button class="btn sm ghost" data-act="rq-unpkg">✕</button></div>`;
 }
 function rqPhotoCard() {
   const ph = RQ.photos || [];
@@ -2398,6 +2484,202 @@ document.addEventListener('input', e => {
   const el = e.target;
   if (el.dataset.rv && S.rvForm) S.rvForm[el.dataset.rv] = el.value;
   if (el.dataset.ed && S.ed) { const l = S.ed.lang; S.ed.data[l] = S.ed.data[l] || {}; S.ed.data[l][el.dataset.ed] = el.value; }
+});
+
+/* =====================================================================
+   ILUSTRAÇÕES (SVG, traço fino) — uma por procedimento/pacote
+   a = acento (cor da categoria), g = dourado
+   ===================================================================== */
+const ART = {
+  eyelid: `<path d="M10 34c7-9 15-13 22-13s15 4 22 13c-7 9-15 13-22 13s-15-4-22-13z" class="sk"/><path d="M13 27c6-7 13-10 19-10s13 3 19 10" class="sk" stroke-dasharray="2 3"/><circle cx="32" cy="34" r="7" class="fa"/><circle cx="32" cy="34" r="3" class="fk"/><circle cx="34.5" cy="31.5" r="1.3" fill="#fff"/><path d="M20 23l-2-4M26 20l-1-4M32 19v-4M38 20l1-4M44 23l2-4" class="sk"/>`,
+  rhino: `<path d="M24 8c-3 6-3 12 0 18l-6 12c-1 2 0 4 2 4h6c0 3 1 6 3 8l-2 6" class="sk"/><path d="M36 14c3 0 5 3 5 7" class="sk" stroke-dasharray="2 3"/><path d="M24 26c4-1 6 2 8 6" class="sk ga"/><circle cx="44" cy="40" r="9" class="fa"/><path d="M40 40l3 3 6-6" class="sk wh"/>`,
+  contour: `<path d="M18 16c0-6 6-10 14-10s14 4 14 10v12c0 10-6 20-14 26-8-6-14-16-14-26z" class="sk"/><path d="M18 28c2 12 7 20 14 26 7-6 12-14 14-26" class="sk ga" stroke-dasharray="3 3"/><circle cx="26" cy="26" r="1.6" class="fk"/><circle cx="38" cy="26" r="1.6" class="fk"/><path d="M28 40c2 2 6 2 8 0" class="sk"/><path d="M50 22l6-4M50 32h7M50 42l6 4" class="sk ac"/>`,
+  fatgraft: `<path d="M18 18c0-7 6-12 14-12s14 5 14 12v10c0 12-6 22-14 28-8-6-14-16-14-28z" class="sk"/><circle cx="26" cy="27" r="1.6" class="fk"/><circle cx="38" cy="27" r="1.6" class="fk"/><path d="M28 42c2 2 6 2 8 0" class="sk"/><g class="fg"><circle cx="20" cy="34" r="1.8"/><circle cx="23" cy="38" r="1.4"/><circle cx="44" cy="34" r="1.8"/><circle cx="41" cy="38" r="1.4"/><circle cx="21" cy="14" r="1.5"/><circle cx="43" cy="14" r="1.5"/></g>`,
+  lipo: `<path d="M24 6c0 6 2 10 2 14-4 6-6 14-4 22l2 16M40 6c0 6-2 10-2 14 4 6 6 14 4 22l-2 16" class="sk"/><path d="M10 30h8M15 26l4 4-4 4M54 30h-8M49 26l-4 4 4 4" class="sk ac"/><ellipse cx="32" cy="32" rx="6" ry="9" class="fa"/>`,
+  lifting: `<path d="M18 20c0-7 6-12 14-12s14 5 14 12v8c0 12-6 20-14 26-8-6-14-14-14-26z" class="sk"/><path d="M22 46c-2-8-1-16 2-22M42 46c2-8 1-16-2-22" class="sk ac"/><path d="M21 26l3-4 3 3M43 26l-3-4-3 3" class="sk ac"/><circle cx="26" cy="28" r="1.5" class="fk"/><circle cx="38" cy="28" r="1.5" class="fk"/><path d="M28 40c2 1.5 6 1.5 8 0" class="sk"/>`,
+  botox: `<path d="M40 12l12 12M46 18L24 40l-6-6 22-22M18 34l-6 6 6 6 6-6M10 48l4 4" class="sk"/><path d="M28 30l4 4M33 25l4 4" class="sk"/><path d="M50 40c0 3-2 6-5 6s-5-3-5-6c0-4 5-9 5-9s5 5 5 9z" class="fa"/>`,
+  filler: `<path d="M10 34c6-6 12-9 16-9 3 0 4 2 6 2s3-2 6-2c4 0 10 3 16 9-6 8-14 12-22 12s-16-4-22-12z" class="fa"/><path d="M10 34c8 2 15 3 22 3s14-1 22-3" class="sk"/><path d="M10 34c6-6 12-9 16-9 3 0 4 2 6 2s3-2 6-2c4 0 10 3 16 9-6 8-14 12-22 12s-16-4-22-12z" class="sk"/><path d="M44 8l8 8M48 12L38 22" class="sk"/><circle cx="36" cy="25" r="1.6" class="fg"/>`,
+  ulthera: `<path d="M16 22c0-7 6-12 14-12s14 5 14 12v8c0 11-6 19-14 24-8-5-14-13-14-24z" class="sk"/><path d="M48 18c4 4 6 9 6 14s-2 10-6 14M44 22c3 3 4 6 4 10s-1 7-4 10M40 26c1.5 2 2 4 2 6s-.5 4-2 6" class="sk ac"/><circle cx="24" cy="28" r="1.5" class="fk"/><circle cx="34" cy="28" r="1.5" class="fk"/>`,
+  thermage: `<rect x="34" y="8" width="12" height="30" rx="5" class="sk"/><rect x="36" y="38" width="8" height="6" rx="2" class="fa"/><path d="M14 52l5-6 4 6 5-6 4 6 5-6 4 6" class="sk ac"/><path d="M38 16h4M38 22h4" class="sk"/><path d="M10 58h44" class="sk"/>`,
+  booster: `<path d="M32 8c8 10 14 18 14 26a14 14 0 0 1-28 0c0-8 6-16 14-26z" class="fa"/><path d="M32 8c8 10 14 18 14 26a14 14 0 0 1-28 0c0-8 6-16 14-26z" class="sk"/><path d="M25 36c0 4 3 7 7 7" class="sk wh"/><path d="M50 12v6M47 15h6M14 40v5M11.5 42.5h5" class="sk ga"/>`,
+  laser: `<path d="M12 8l18 30" class="sk ac" stroke-width="2.2"/><path d="M8 46c8-3 16-4 24-4s16 1 24 4" class="sk"/><path d="M30 38l-4-4M30 38l5-3M30 38l0 6" class="sk ga"/><g class="fk"><circle cx="44" cy="44" r="1.6"/><circle cx="20" cy="48" r="1.2"/><circle cx="50" cy="50" r="1.2"/></g><circle cx="30" cy="38" r="3" class="fa"/>`,
+  implant: `<path d="M20 10c4-3 8-2 12 0 4-2 8-3 12 0 3 3 3 9 1 14H19c-2-5-2-11 1-14z" class="sk"/><path d="M24 24h16v4H24z" class="fa"/><path d="M27 28l2 26h6l2-26M26 34h12M27 40h10M28 46h8" class="sk"/>`,
+  veneer: `<path d="M18 14c5-4 9-3 14-1 5-2 9-3 14 1 4 5 3 13 0 20-2 6-3 14-6 18-2 2-4 0-5-4l-3-10-3 10c-1 4-3 6-5 4-3-4-4-12-6-18-3-7-4-15 0-20z" class="sk"/><path d="M22 18c3-2 6-2 10 0" class="sk wh"/><path d="M46 14c4 5 3 13 0 20" class="sk ac" stroke-width="3" opacity=".55"/>`,
+  whitening: `<path d="M18 16c5-4 9-3 14-1 5-2 9-3 14 1 4 5 3 13 0 20-2 6-3 14-6 18-2 2-4 0-5-4l-3-10-3 10c-1 4-3 6-5 4-3-4-4-12-6-18-3-7-4-15 0-20z" class="fa"/><path d="M18 16c5-4 9-3 14-1 5-2 9-3 14 1 4 5 3 13 0 20-2 6-3 14-6 18-2 2-4 0-5-4l-3-10-3 10c-1 4-3 6-5 4-3-4-4-12-6-18-3-7-4-15 0-20z" class="sk"/><path d="M52 8v8M48 12h8M10 30v6M7 33h6M50 42v5M47.5 44.5h5" class="sk ga"/>`,
+  checkup: `<path d="M32 54C16 42 10 34 10 24a11 11 0 0 1 22-3 11 11 0 0 1 22 3c0 10-6 18-22 30z" class="fa"/><path d="M32 54C16 42 10 34 10 24a11 11 0 0 1 22-3 11 11 0 0 1 22 3c0 10-6 18-22 30z" class="sk"/><path d="M14 32h10l4-8 5 14 4-8h13" class="sk ac" stroke-width="2"/>`,
+  hair: `<path d="M14 42c0-16 8-28 18-28s18 12 18 28" class="sk"/><path d="M14 42h36" class="sk"/><path d="M22 30c0-6 2-10 4-14M28 26c0-6 1-10 3-14M34 26c0-6 1-10 3-12M40 30c0-6-1-9-2-12" class="sk ac"/><g class="fg"><circle cx="26" cy="16" r="1.5"/><circle cx="31" cy="12" r="1.5"/><circle cx="37" cy="14" r="1.5"/></g><path d="M20 50h24" class="sk" stroke-dasharray="2 3"/>`,
+  headspa: `<path d="M20 50c-3-4-4-9-4-14 0-10 7-18 16-18s16 8 16 18c0 5-1 10-4 14" class="sk"/><path d="M16 36c4-6 10-9 16-9s12 3 16 9" class="sk ac"/><g class="sk ac"><circle cx="22" cy="12" r="3"/><circle cx="32" cy="8" r="2.4"/><circle cx="42" cy="12" r="3.4"/></g><path d="M12 56h40" class="sk"/><path d="M24 50c2 2 5 3 8 3s6-1 8-3" class="sk"/>`,
+  facial: `<path d="M18 18c0-7 6-12 14-12s14 5 14 12v10c0 12-6 22-14 28-8-6-14-16-14-28z" class="fa"/><path d="M18 18c0-7 6-12 14-12s14 5 14 12v10c0 12-6 22-14 28-8-6-14-16-14-28z" class="sk"/><ellipse cx="25.5" cy="26" rx="3.5" ry="2.2" class="sk wf"/><ellipse cx="38.5" cy="26" rx="3.5" ry="2.2" class="sk wf"/><path d="M27 40c2 2 8 2 10 0" class="sk"/><path d="M50 10v6M47 13h6" class="sk ga"/>`,
+  personalcolor: `<g><path d="M32 52L14 18a20 20 0 0 1 8-6z" fill="#E7B7A4"/><path d="M32 52L22 12a20 20 0 0 1 10-2z" fill="#C98C9E"/><path d="M32 52V10a20 20 0 0 1 10 2z" fill="#8FA6C9"/><path d="M32 52l10-40a20 20 0 0 1 8 6z" fill="#9FB89A"/><path d="M32 52l18-34a20 20 0 0 1 4 8z" fill="#D9B86A"/></g><path d="M14 18a20 20 0 0 1 40 8L32 52z" class="sk"/><circle cx="32" cy="52" r="3" class="fk"/>`,
+  makeup: `<rect x="12" y="30" width="12" height="24" rx="2" class="sk"/><path d="M14 30v-8c0-3 2-6 4-8 2 2 4 5 4 8v8" class="fa"/><path d="M14 30v-8c0-3 2-6 4-8 2 2 4 5 4 8v8" class="sk"/><path d="M34 54l14-32" class="sk"/><path d="M46 26c2-6 6-12 10-14-1 5-4 11-8 16z" class="fa"/><path d="M46 26c2-6 6-12 10-14-1 5-4 11-8 16z" class="sk"/><path d="M8 10v5M5.5 12.5h5" class="sk ga"/>`,
+  _default: `<circle cx="32" cy="32" r="18" class="fa"/><path d="M32 16l3 10 10 3-10 3-3 10-3-10-10-3 10-3z" class="sk ac"/>`,
+};
+const CAT_TONE = { plastic: 'c-plastic', derma: 'c-derma', dental: 'c-dental', checkup: 'c-checkup', hair: 'c-hair', beauty: 'c-beauty' };
+function artSVG(key, size) {
+  return `<svg class="art-svg" viewBox="0 0 64 64" width="${size || 64}" height="${size || 64}" fill="none" aria-hidden="true">${ART[key] || ART._default}</svg>`;
+}
+function artTile(key, cat, extra) { return `<div class="atile ${CAT_TONE[cat] || 'c-plastic'} ${extra || ''}">${artSVG(key)}</div>`; }
+
+/* =====================================================================
+   V3 — câmera ao vivo, ilustrações nos cartões, pacotes
+   ===================================================================== */
+S.packages = [];
+Object.assign(EV_PT, { package_saved: 'Pacote salvo' });
+
+/* ---------- cartões de tratamento ilustrados ---------- */
+function treatCard(x) {
+  const u = t('u_' + (x.unit || 'case'));
+  return `<a class="card tcard" href="#/treatment/${x.id}">${artTile(x.code, x.category)}
+    <div class="tbody"><div class="tcat">${esc(t('cat_' + x.category))}</div><div class="tname">${esc(tn(x.name))}</div>
+      <div class="tfoot"><div><span class="tiny muted">${esc(t('from'))}</span> <b>${krw(x.price_from_krw)}</b>${u ? ` <span class="tiny muted">${esc(u)}</span>` : ''}${local(x.price_from_krw) ? `<div class="tiny muted">≈ ${local(x.price_from_krw)}</div>` : ''}</div>
+      ${x.stay_days ? `<span class="tstay">${x.stay_days}${esc(dayWord(x.stay_days))}</span>` : ''}</div></div></a>`;
+}
+function dayWord(n) { const d = (S.lang === 'en' && n === 1) ? 'day' : t('days'); return d.length <= 1 ? d : ' ' + d; }
+function treatHero(x) {
+  return `<div class="thero ${CAT_TONE[x.category] || ''}"><div class="thero-art">${artSVG(x.code, 132)}</div>
+    <div class="thero-tx"><div class="kick">${esc(t('cat_' + x.category))}</div><h1 class="h1" style="font-size:30px;margin-top:4px">${esc(tn(x.name))}</h1></div></div>`;
+}
+
+/* ---------- câmera ao vivo ---------- */
+const CAM = { stream: null, facing: 'user' };
+async function openCamera() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { toast(t('cam_denied')); const f = $('[data-ph-file]'); if (f) f.click(); return; }
+  openSheet(`<div class="cam"><div class="cam-view"><video id="cam-v" autoplay playsinline muted></video>
+      <svg class="cam-guide" viewBox="0 0 100 130" preserveAspectRatio="none"><ellipse cx="50" cy="58" rx="30" ry="40" fill="none" stroke="rgba(255,255,255,.85)" stroke-width=".8" stroke-dasharray="3 2"/></svg>
+      <div class="cam-hint">${esc(t('cam_hint'))}</div></div>
+    <div class="cam-bar"><button class="btn ghost sm" data-act="cam-close">✕</button><button class="cam-shot" data-act="cam-shot" aria-label="${esc(t('cam_take'))}"></button><button class="btn ghost sm" data-act="cam-flip" aria-label="${esc(t('cam_flip'))}">⟲</button></div></div>`);
+  $('#sheet .sheet').classList.add('sheet-cam');
+  await startCam();
+}
+async function startCam() {
+  stopCam();
+  try {
+    CAM.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: CAM.facing, width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+    const v = $('#cam-v'); if (v) { v.srcObject = CAM.stream; v.classList.toggle('mirror', CAM.facing === 'user'); }
+  } catch (e) { console.warn(e); closeSheet(); stopCam(); toast(t('cam_denied')); }
+}
+function stopCam() { if (CAM.stream) { CAM.stream.getTracks().forEach(tr => tr.stop()); CAM.stream = null; } }
+function camShot() {
+  const v = $('#cam-v'); if (!v || !v.videoWidth) return;
+  const max = 1080, k = Math.min(1, max / Math.max(v.videoWidth, v.videoHeight));
+  const c = document.createElement('canvas'); c.width = Math.round(v.videoWidth * k); c.height = Math.round(v.videoHeight * k);
+  const g = c.getContext('2d'); if (CAM.facing === 'user') { g.translate(c.width, 0); g.scale(-1, 1); }
+  g.drawImage(v, 0, 0, c.width, c.height);
+  PH.photos.push({ data: c.toDataURL('image/jpeg', 0.82), marks: [], ai: null }); PH.cur = PH.photos.length - 1; PH.aiErr = false;
+  stopCam(); closeSheet(); render(true);
+}
+const _closeSheet = closeSheet;
+closeSheet = function () { stopCam(); _closeSheet(); };
+function photoPickers(big) {
+  return big
+    ? `<div class="phdrop"><span style="color:var(--acc)">${IC.camera.replace('width="17" height="17"', 'width="34" height="34"')}</span><div class="row wrap" style="justify-content:center;gap:8px">
+        <button class="btn acc" data-act="cam-open">${IC.camera} ${esc(t('photo_camera'))}</button>
+        <label class="btn ghost"><input type="file" accept="image/*" hidden data-ph-file>🖼 ${esc(t('photo_gallery'))}</label></div>
+        <span class="tiny muted">${esc(t('photo_private'))}</span></div>`
+    : `<button class="phthumb add" data-act="cam-open" title="${esc(t('photo_camera'))}">${IC.camera}</button><label class="phthumb add" title="${esc(t('photo_gallery'))}"><input type="file" accept="image/*" hidden data-ph-file>＋</label>`;
+}
+
+/* ---------- pacotes ---------- */
+const pkgTreats = p => (p.treatment_codes || []).map(c => S.treats.find(x => x.code === c)).filter(Boolean);
+function pkgSave(p) { const sum = pkgTreats(p).reduce((s, x) => s + Number(x.price_from_krw || 0), 0); return sum > p.price_from_krw ? Math.round((1 - p.price_from_krw / sum) * 100) : 0; }
+function pkgCat(p) { const x = S.treats.find(y => y.code === p.art) || pkgTreats(p)[0]; return x ? x.category : 'beauty'; }
+function packageCard(p) {
+  const sv = pkgSave(p);
+  return `<a class="card pcard" href="#/package/${esc(p.slug)}">${artTile(p.art, pkgCat(p), 'pk')}
+    <div class="tbody"><div class="row between" style="gap:6px"><span class="tcat">${esc(t('pk_days', { n: p.days }))}</span>${p.popular ? `<span class="tag gold">★ ${esc(t('pk_popular'))}</span>` : ''}</div>
+      <div class="tname">${esc(tn(p.name))}</div><div class="small muted pk-sum">${esc(tn(p.summary))}</div>
+      <div class="tfoot"><div><span class="tiny muted">${esc(t('from'))}</span> <b>${krw(p.price_from_krw)}</b>${local(p.price_from_krw) ? `<div class="tiny muted">≈ ${local(p.price_from_krw)}</div>` : ''}</div>${sv >= 3 ? `<span class="tag ok">−${sv}%</span>` : ''}</div></div></a>`;
+}
+function pagePackages() {
+  const list = S.packages.filter(p => p.active !== false).sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  return `<div class="kick">${esc(t('pk_title'))}</div><h1 class="h1" style="font-size:30px;margin-top:4px">${esc(t('pk_title'))}</h1>
+  <p class="muted" style="margin:6px 0 0;max-width:620px">${esc(t('pk_sub'))}</p>
+  <div class="tgrid mt2">${list.map(packageCard).join('') || `<div class="empty">${esc(t('no_results'))}</div>`}</div>
+  <p class="tiny muted mt">${esc(t('pk_note'))}</p>${footer()}`;
+}
+function pagePackage(slug) {
+  const p = S.packages.find(x => x.slug === slug); if (!p) return `<div class="empty">${esc(t('no_results'))}</div>`;
+  const trs = pkgTreats(p); const sv = pkgSave(p);
+  const others = S.packages.filter(x => x.slug !== slug && x.active !== false).slice(0, 3);
+  return `<a class="row small muted mb" href="#/packages">${IC.back} ${esc(t('pk_title'))}</a>
+  <div class="thero ${CAT_TONE[pkgCat(p)] || ''}"><div class="thero-art">${artSVG(p.art, 132)}</div>
+    <div class="thero-tx"><div class="kick">${esc(t('pk_days', { n: p.days }))}${p.popular ? ' · ★ ' + esc(t('pk_popular')) : ''}</div><h1 class="h1" style="font-size:30px;margin-top:4px">${esc(tn(p.name))}</h1>
+      <p style="margin:6px 0 0;color:var(--ink2)">${esc(tn(p.summary))}</p></div></div>
+  <div class="card pad mt row wrap between"><div><div class="tiny muted">${esc(t('from'))}</div><div style="font-size:24px;font-weight:700">${krw(p.price_from_krw)}</div>${local(p.price_from_krw) ? `<div class="small muted">≈ ${local(p.price_from_krw)}</div>` : ''}</div>
+    <div class="row" style="gap:8px">${sv >= 3 ? `<span class="tag ok" style="font-size:12px">${esc(t('pk_save', { n: sv }))}</span>` : ''}<button class="btn acc" data-act="pk-request" data-v="${esc(p.slug)}">${esc(t('pk_request'))}</button></div></div>
+  <div class="two mt">
+    <div class="col">
+      <div class="card pad"><div class="h3 mb">${esc(t('pk_includes'))}</div>${md(tn(p.includes))}</div>
+      <div class="card pad"><div class="h3 mb">${esc(t('pk_treatments'))}</div><div class="col" style="gap:8px">${trs.map(x => `<a class="row" href="#/treatment/${x.id}" style="gap:10px">${artTile(x.code, x.category, 'mini')}<div class="grow"><div class="b small">${esc(tn(x.name))}</div><div class="tiny muted">${esc(t('cat_' + x.category))}</div></div><span class="muted">›</span></a>`).join('')}</div></div>
+    </div>
+    <div class="card pad"><div class="h3 mb">${esc(t('pk_itinerary'))}</div><div class="pk-it">${md(tn(p.itinerary))}</div></div>
+  </div>
+  <p class="tiny muted mt">${esc(t('pk_note'))}</p>
+  ${others.length ? `<section class="sec"><h2 class="h2 mb">${esc(t('related'))}</h2><div class="tgrid">${others.map(packageCard).join('')}</div></section>` : ''}${footer()}`;
+}
+
+/* ---------- equipe: pacotes ---------- */
+function pkgData(p) { const d = {}; LANGS.forEach(([l]) => { const o = {}; ['name', 'summary', 'includes', 'itinerary'].forEach(k => { if (p[k] && p[k][l]) o[k] = p[k][l]; }); if (Object.keys(o).length) d[l] = o; }); return d; }
+function sPackages() {
+  const list = [...S.packages].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  return sTop('Pacotes', 'Packages · produtos prontos', `<a class="btn sm acc" href="#/admin/package/new">+ Novo pacote</a>`) + `
+  <div class="info mb">Pacote = tratamentos + serviços com preço fechado "a partir de". O desconto (%) aparece sozinho comparando com a soma dos tratamentos. Hotel e voo ficam fora.</div>
+  <div class="tblw"><table class="tbl"><thead><tr><th>Pacote</th><th>Dias</th><th class="right">A partir de</th><th>Desconto</th><th>Tratamentos</th><th>Idiomas</th><th>Ativo</th></tr></thead><tbody>
+  ${list.map(p => `<tr class="click" data-href="#/admin/package/${p.id}"><td class="b">${esc(tnEn(p.name))} ${p.popular ? '<span class="tag gold">★</span>' : ''}</td><td>${p.days}</td><td class="right">${krw(p.price_from_krw)}</td><td>${pkgSave(p)}%</td><td class="small">${pkgTreats(p).map(x => esc(tnEn(x.name))).join(', ')}</td><td>${langFill(pkgData(p), ['name']).length}/10</td><td>${p.active !== false ? '●' : '<span class="muted">○</span>'}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+function sPackage(id) {
+  const isNew = id === 'new';
+  const p = isNew ? { slug: '', days: 3, price_from_krw: '', treatment_codes: [], art: 'booster', tone: 1, popular: false, active: true, sort: 100, name: {}, summary: {}, includes: {}, itinerary: {} } : S.packages.find(x => x.id === id);
+  if (!p) return '<div class="empty">Pacote não encontrado.</div>';
+  edInit('package', id, pkgData(p));
+  const sumT = pkgTreats(p).reduce((s, x) => s + Number(x.price_from_krw || 0), 0);
+  return `<a class="row small muted mb" href="#/admin/packages">${IC.back} Pacotes</a>${sTop(isNew ? 'Novo pacote' : esc(tnEn(p.name)), 'Package')}
+  <div class="two"><div>${guideEditor(['name', 'summary', 'includes', 'itinerary'], { name: 'Nome do pacote', summary: 'Resumo (cartão)', includes: 'O que está incluso (uma linha por item, começando com "- ")', itinerary: 'Roteiro (ex.: "- Day 1: ...")' }, ['summary', 'includes', 'itinerary'])}</div>
+    <div class="col"><div class="card pad col"><div class="h3">Preço e conteúdo</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+        <label class="field"><span>Endereço (slug)</span><input class="in" id="pk-slug" value="${esc(p.slug)}" placeholder="seoul-glow"></label>
+        <label class="field"><span>Dias</span><input class="in" id="pk-days" inputmode="numeric" value="${esc(p.days)}"></label>
+        <label class="field"><span>A partir de (KRW) *</span><input class="in" id="pk-price" inputmode="numeric" value="${p.price_from_krw ? fmtN(p.price_from_krw) : ''}"></label>
+        <label class="field"><span>Ordem</span><input class="in" id="pk-sort" inputmode="numeric" value="${esc(p.sort ?? 100)}"></label></div>
+      <div class="small muted">Soma dos tratamentos (preço "de"): ${krw(sumT)}</div>
+      <div class="field"><span>Tratamentos do pacote</span>${chipBox('pk_codes', S.treats.map(x => x.code), p.treatment_codes || [], c => (S.treats.find(x => x.code === c) ? tnEn(S.treats.find(x => x.code === c).name) : c))}</div>
+      <label class="field"><span>Ilustração</span><select class="in" id="pk-art">${Object.keys(ART).filter(k => k[0] !== '_').map(k => `<option ${p.art === k ? 'selected' : ''}>${k}</option>`).join('')}</select></label>
+      <label class="check"><input type="checkbox" id="pk-pop" ${p.popular ? 'checked' : ''}> Destacar como popular</label>
+      <label class="check"><input type="checkbox" id="pk-act" ${p.active !== false ? 'checked' : ''}> Ativo no site</label></div>
+      <div id="pk-err" class="err-msg" hidden></div>
+      <div class="row"><a class="btn ghost" href="#/admin/packages">Voltar</a>${!isNew ? `<a class="btn ghost" href="#/package/${esc(p.slug)}" target="_blank">Ver no site</a>` : ''}<div class="grow"></div><button class="btn acc" data-act="pk-save" data-v="${isNew ? '' : id}">Salvar pacote</button></div></div></div>`;
+}
+async function savePackage(id) {
+  const E = S.ed; const e = $('#pk-err'); const fail = m => { e.textContent = m; e.hidden = false; };
+  const slug = ($('#pk-slug').value || '').trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '');
+  const price = num($('#pk-price').value);
+  const codes = $$('input[name=pk_codes]:checked').map(i => i.value);
+  if (!E.data.en || !E.data.en.name) return fail('Falta o nome em inglês (idioma reserva).');
+  if (!slug) return fail('Falta o endereço (slug).');
+  if (!price) return fail('Falta o preço "a partir de".');
+  if (!codes.length) return fail('Marque pelo menos um tratamento.');
+  if (S.packages.some(p => p.slug === slug && p.id !== id)) return fail('Já existe um pacote com esse endereço.');
+  const row = { slug, days: num($('#pk-days').value) || 1, price_from_krw: price, sort: num($('#pk-sort').value) ?? 100, treatment_codes: codes, art: $('#pk-art').value, popular: $('#pk-pop').checked, active: $('#pk-act').checked, updated_at: new Date().toISOString(), name: {}, summary: {}, includes: {}, itinerary: {} };
+  Object.entries(E.data).forEach(([l, o]) => ['name', 'summary', 'includes', 'itinerary'].forEach(k => { if (o[k]) row[k][l] = o[k]; }));
+  const res = id ? await sb.from('kmt_packages').update(row).eq('id', id) : await sb.from('kmt_packages').insert(row);
+  if (res.error) return fail(res.error.message);
+  await logEvent(null, 'package_saved', { slug }, false);
+  S.ed = null; toast('Pacote salvo'); await refresh(true); go('#/admin/packages');
+}
+
+Object.assign(ACT, {
+  'cam-open': () => openCamera(),
+  'cam-close': () => closeSheet(),
+  'cam-shot': () => camShot(),
+  'cam-flip': () => { CAM.facing = CAM.facing === 'user' ? 'environment' : 'user'; startCam(); },
+  'pk-request': (v) => {
+    const p = S.packages.find(x => x.slug === v); if (!p) return;
+    pkgTreats(p).forEach(x => { if (!RQ.t.includes(x.id)) RQ.t.push(x.id); });
+    RQ.pkg = p.id; RQ.step = 1; saveDraft(); go('#/request');
+  },
+  'pk-save': (v) => savePackage(v || null),
+  'rq-unpkg': () => { RQ.pkg = null; saveDraft(); render(true); },
 });
 
 /* =====================================================================
